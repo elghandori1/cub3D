@@ -29,11 +29,11 @@ int check_empty(char *f_name)
 void check_map(t_cub3d **cub3d,char *file)
 {
     if (open(file, __O_DIRECTORY) != -1)
-	    ft_error("this is a directory!\n");
+	    ft_error("this is a directory !");
     if (!has_cub_extension(file))
-	    ft_error("bad extention!\n");
+	    ft_error("bad extention !");
     if (!check_empty(file))
-	    ft_error("empty file!\n");
+	    ft_error("empty file !");
     *cub3d = malloc(sizeof(t_cub3d));
     (*cub3d)->map = malloc(sizeof(t_map));
     fill_content_map(file, *cub3d);
