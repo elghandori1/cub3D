@@ -26,5 +26,6 @@ void 	check_map(t_cub3d **cub3d,char *file);
 char	*get_next_line(int fd);
 void 	fill_content_map(char *map_file, t_cub3d *cub3d);
 void	check_content(t_cub3d *cub3d);
+void 	check_textures(char **content);
 
 #endif

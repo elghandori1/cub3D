@@ -2,85 +2,64 @@
 
 void check_identifier(char **content)
 {
-    int	i;
-	i = -1;
-	while (content[++i])
-	{
-		if (!ft_strcmp(&content[i][0],"\n"))
-			continue ;
-		else if (ft_strncmp(content[i], "WE", 2)
-			&& ft_strncmp(content[i], "NO", 2)
-			&& ft_strncmp(content[i], "EA", 2)
-			&& ft_strncmp(content[i], "SO", 2))
-			ft_error("error:probelm in identifier\n");
-	}
+    int i = 0;
+    int we = 0, so = 0, no = 0, ea = 0, c = 0, f = 0;
+
+    while (content[i])
+    {
+        if (ft_strncmp(content[i], "WE", 2) == 0)
+            we++;
+        else if (ft_strncmp(content[i], "SO", 2) == 0)
+            so++;
+        else if (ft_strncmp(content[i], "NO", 2) == 0)
+            no++;
+        else if (ft_strncmp(content[i], "EA", 2) == 0)
+            ea++;
+        else if (ft_strncmp(content[i], "C", 1) == 0)
+            c++;
+        else if (ft_strncmp(content[i], "F", 1) == 0)
+            f++;
+        else if (ft_strncmp(content[i], "1", 1) == 0 || ft_strncmp(content[i], "0", 1) == 0)
+            break;
+        else if (ft_strcmp(content[i], "\n") == 0)
+        {
+            i++;
+            continue;
+        }
+        else
+            ft_error("Error: Problem in identifier\n");
+        i++;
+    }
+    if (we != 1 || so != 1 || no != 1 || ea != 1)
+        ft_error("Error: Duplicate textures in the file!\n");
+    if (c != 1 || f != 1)
+        ft_error("Error: Problem in color\n");
 }
 
-int line_counter(char *str)
+int check_map_last(char **check_last)
 {
     int i = 0;
-    while(str[i] && str[i] != '\n')
-        i++;
-    return i;
-}
-
-void check_texture_file(char *path)
-{
-    const char *ext;
-    int len, fd;
-
-    ext = ".xpm";
-    fd = 0;
-    while(path && *path == ' ')
-        path++;
-    len = line_counter(path)-4;
-    if(!(ft_strncmp(path + len, ext, 4) == 0))
-        ft_error("Error: Texture file must have .xpm extension\n");
-    fd = open(path, O_RDONLY);
-    if (fd == -1) {
-        perror("Error opening texture file");
-        exit(EXIT_FAILURE);
-    }
-    close(fd);
-}
-
-void check_textures(char **content)
-{
-    int i;
-
-    i = 0;
-    char *path;
-    int no_flag = 0, so_flag = 0, we_flag = 0, ea_flag = 0;
-    while(content[i])
+    while (check_last[i])
     {
-        if (ft_strncmp(content[i], "NO", 2) == 0) {
-            if (no_flag)
-                ft_error("Error: Duplicate NO texture\n");
-            no_flag = 1;
-        }else if (ft_strncmp(content[i], "SO", 2) == 0) {
-            if (so_flag)
-                ft_error("Error: Duplicate SO texture\n");
-            so_flag = 1;
-        } else if (ft_strncmp(content[i], "WE", 2) == 0) {
-            if (we_flag)
-                ft_error("Error: Duplicate WE texture\n");
-            we_flag = 1;
-        } else if (ft_strncmp(content[i], "EA", 2) == 0) {
-            if (ea_flag)
-                ft_error("Error: Duplicate EA texture\n");
-            ea_flag = 1;
-        } 
-        if (ft_strcmp(&content[i][0],"\n"))
-            path = ft_strchr(content[i],' ');
-        if (path == NULL)
-            ft_error("Error: Missing path for texture identifier\n");
-        check_texture_file(path);
+        if (ft_strncmp(check_last[i], "WE", 2) == 0 || ft_strncmp(check_last[i], "NO", 2) == 0 \
+            || ft_strncmp(check_last[i], "EA", 2) == 0 || ft_strncmp(check_last[i], "SO", 2) == 0 \
+            || ft_strncmp(check_last[i], "C", 1) == 0 || ft_strncmp(check_last[i], "F", 1) == 0)
+            break;
+        if (ft_strncmp(check_last[i], "1", 1) == 0 || ft_strncmp(check_last[i], "0", 1) == 0)
+            return 1;
         i++;
     }
+    return 0;
 }
 
 void	check_content(t_cub3d *cub3d)
 {
-    check_identifier(cub3d->map->content);
-    check_textures(cub3d->map->content);
+	if(check_map_last(cub3d->map->content))
+		ft_error("the map must be the last !\n");
+	else
+	{
+    	check_identifier(cub3d->map->content);
+    	check_textures(cub3d->map->content);
+	}
+
 }
