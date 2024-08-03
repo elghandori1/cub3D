@@ -1,9 +1,6 @@
-WE      textures/NO.xpm
-SO      textures/WE.xpm
-NO      textures/SO.xpm
-EA      textures/EA.xpm
-
-
-
-
+C
+F
+WE     textures/WE.xpm
+SO      textures/SO.xpm
+NO      textures/NO.xpm
 EA      textures/EA.xpm
