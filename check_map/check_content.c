@@ -30,13 +30,11 @@ void check_identifier(char **content)
             ft_error("Error: Problem in identifier\n");
         i++;
     }
-    if (we != 1 || so != 1 || no != 1 || ea != 1)
-        ft_error("Error: Duplicate textures in the file!\n");
-    if (c != 1 || f != 1)
-        ft_error("Error: Problem in color\n");
+    if (we != 1 || so != 1 || no != 1 || ea != 1 || c != 1 || f != 1)
+        ft_error("Error: Duplicate identifier in the file!\n");
 }
 
-int check_map_last(char **check_last)
+void check_map_last(char **check_last)
 {
     int i = 0;
     while (check_last[i])
@@ -46,20 +44,16 @@ int check_map_last(char **check_last)
             || ft_strncmp(check_last[i], "C", 1) == 0 || ft_strncmp(check_last[i], "F", 1) == 0)
             break;
         if (ft_strncmp(check_last[i], "1", 1) == 0 || ft_strncmp(check_last[i], "0", 1) == 0)
-            return 1;
+            ft_error("the map must be the last !\n");
         i++;
     }
-    return 0;
 }
 
 void	check_content(t_cub3d *cub3d)
 {
-	if(check_map_last(cub3d->map->content))
-		ft_error("the map must be the last !\n");
-	else
-	{
-    	check_identifier(cub3d->map->content);
-    	check_textures(cub3d->map->content);
-	}
-
+	check_map_last(cub3d->map->content);
+    check_identifier(cub3d->map->content);
+    check_textures_path(cub3d->map->content);
+	//get_textures(cub3d);
+	get_colors(cub3d);
 }

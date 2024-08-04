@@ -1,5 +1,5 @@
-C
-F
+C       3,5,4
+F       200,6,8
 WE     textures/WE.xpm
 SO      textures/SO.xpm
 NO      textures/NO.xpm

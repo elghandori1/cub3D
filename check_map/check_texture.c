@@ -10,7 +10,7 @@ int	line_counter(char *str)
 	return (i);
 }
 
-void check_texture_file(char *path)
+void check_extension_file(char *path)
 {
     const char *ext = ".xpm";
     while (path && *path == ' ')
@@ -20,7 +20,7 @@ void check_texture_file(char *path)
         ft_error("Error: Texture file must have .xpm extension\n");
 }
 
-void check_textures(char **content)
+void check_textures_path(char **content)
 {
     int i = 0;
     char *path;
@@ -32,7 +32,7 @@ void check_textures(char **content)
         {
             path = ft_strchr(content[i], ' ');
             if (path != NULL)
-                check_texture_file(path);
+                check_extension_file(path);
             else
                 ft_error("Error: Missing texture file path\n");
         }
