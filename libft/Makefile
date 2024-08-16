@@ -38,7 +38,8 @@ ft_putendl_fd.c	\
 ft_putnbr_fd.c	\
 ft_strcat.c \
 ft_atol.c \
-ft_strjoin3.c
+ft_strjoin3.c \
+ft_strpbrk.c
 
 SRCSB = ft_lstnew_bonus.c\
 		ft_lstadd_front_bonus.c\

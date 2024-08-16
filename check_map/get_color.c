@@ -56,4 +56,3 @@ void get_colors(t_cub3d *cub3d)
     ft_free(ciel);
     ft_free(floor);
 }
-
