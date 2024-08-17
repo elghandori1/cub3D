@@ -31,6 +31,6 @@ void get_textures(t_cub3d *cub3d)
 		|| open(cub3d->map->so_texture, O_RDONLY) < 0
 		|| open(cub3d->map->we_texture, O_RDONLY) < 0
 		||open(cub3d->map->no_texture, O_RDONLY) < 0)
-		ft_error("couldn't open texture !\n");
+		ft_error(cub3d,"couldn't open texture !\n");
 }
 
