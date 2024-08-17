@@ -10,17 +10,17 @@ int	line_counter(char *str)
 	return (i);
 }
 
-void check_extension_file(char *path)
+void check_extension_file(char *path, t_cub3d *cub3d)
 {
     const char *ext = ".xpm";
     while (path && *path == ' ')
         path++;
     int len = line_counter(path) - 4;
     if (len < 0 || ft_strncmp(path + len, ext, 4) != 0)
-        ft_error("Error: Texture file must have .xpm extension\n");
+        ft_error(cub3d, "Error: Texture file must have .xpm extension\n");
 }
 
-void check_textures_path(char **content)
+void check_textures_path(char **content, t_cub3d *cub3d)
 {
     int i = 0;
     char *path;
@@ -32,9 +32,9 @@ void check_textures_path(char **content)
         {
             path = ft_strchr(content[i], ' ');
             if (path != NULL)
-                check_extension_file(path);
+                check_extension_file(path, cub3d);
             else
-                ft_error("Error: Missing texture file path\n");
+                ft_error(cub3d, "Error: Missing texture file path\n");
         }
         i++;
     }
