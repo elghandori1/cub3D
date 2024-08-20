@@ -1,5 +1,14 @@
 #include "cub3D.h"
 
+typedef struct	s_data
+{
+	void	*img;
+	char	*addr;
+	int		bits_per_pixel;
+	int		line_length;
+	int		endian;
+}				t_data;
+
 t_game  *instance(void)
 {
 	static  t_game game;
@@ -11,50 +20,60 @@ int	window_init(t_game *game)
 	game->mlx_ptr = mlx_init();
 	if (!game->mlx_ptr)
 		return (-1);
-	game->mlx_win = mlx_new_window(game->mlx_ptr, 1280, 960, "cub3D"); // 640x 480 // 1280x960
+	game->mlx_win = mlx_new_window(game->mlx_ptr, HEIGHT, WIDTH, "cub3D"); // 640x 480 // 1280x960
 	if (!game->mlx_win)
 		return (-1);
 	return (0);
+}
+
+void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
+{
+	char	*dst;
+
+	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
+	*(unsigned int*)dst = color;
 }
 
 void	render_map(t_game *game)
 {
 	int x = 0, y = 0, i = 0, j = 0;
 	int color = 0;
-	char **map;
-	int px, py;
-
-	map = game->map->map;
+	t_data img;
+	img.img = mlx_new_image(game->mlx_ptr, HEIGHT, WIDTH);
+	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length,
+								&img.endian);
 	while (y < game->map->len)
 	{
 		x = 0;
-		while (x < ft_strlen(map[y]))
+		while (x < ft_strlen(game->map->map[y]))
 		{
-			if (map[y][x] == '1')
+			if (game->map->map[y][x] == '1')
 				color = 0xFFFFFF;
-			else if (map[y][x] == '0')
+			else if (game->map->map[y][x] == '0')
 				color = 0x808080;
-			else if (map[y][x] == 'N')
-				color = 0xFF0000;
-			else if (map[y][x] == ' ')
+			else
 				color = 0x0;
-			px = x * 10;
-			py = y * 10;
-			i = 0;
-			while (i < 10)
-			{
-				j = 0;
-				while (j < 10)
-				{
-					mlx_pixel_put(game->mlx_ptr, game->mlx_win, px + i, py + j, color);
-					j++;
+			for (i = 0; i < 32; i++) { 
+				for (j = 0; j < 32; j++) {
+					my_mlx_pixel_put(&img, x * (SIZE / 2) + i, y * (SIZE / 2) + j, color);
 				}
-				i++;
 			}
 			x++;
 		}
 		y++;
 	}
+	mlx_put_image_to_window(game->mlx_ptr, game->mlx_win, img.img, 0,  0);
+}
+
+void	render_player(t_game *game)
+{
+	int x = 0, y = 0, i = 0, j = 0;
+	int color = 0;
+	t_data img;
+	img.img = mlx_new_image(game->mlx_ptr, HEIGHT, WIDTH);
+	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length,
+								&img.endian);
+	
 }
 
 int main(int ac, char **av)
@@ -69,15 +88,8 @@ int main(int ac, char **av)
 	// TODO : RENDER 2D MAP ON THE SCREEN
 	if (window_init(cub3d))
 		return (EXIT_FAILURE);
-	// char **map = cub3d->map->map;
-
-	// int x = 0, y = 0;
-	// while (map[y])
-	// {
-	// 	printf("%s", map[y]);
-	// 	y++;
-	// }
 	render_map(cub3d);
+	render_player(cub3d);
 	mlx_loop(cub3d->mlx_ptr);
 	free_cub3d(cub3d);
 	return 0;
