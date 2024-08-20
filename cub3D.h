@@ -27,6 +27,7 @@ typedef struct s_player
 
 typedef struct s_map
 {
+    void		*mlx;
     int         rows;
     char        **content;
     char        **map;
@@ -39,7 +40,6 @@ typedef struct s_map
     t_color     *ciel_color;
     t_color     *floor_color;
     t_player    player;
-    size_t      max_len;
     int         len;
     int         we;
     int         so; 
@@ -48,7 +48,6 @@ typedef struct s_map
     int         c; 
     int         f;
 } t_map;
-
 
 typedef struct s_cub3d
 {

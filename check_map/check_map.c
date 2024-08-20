@@ -25,34 +25,6 @@ int check_empty(char *f_name)
     close(fd);
     return rslt;
 }
-t_map *initialize_map(void)
-{
-    t_map *map = malloc(sizeof(t_map));
-    if (!map)
-        return NULL;
-
-    map->we = 0;
-    map->so = 0;
-    map->no = 0;
-    map->ea = 0;
-    map->f = 0;
-    map->c = 0;
-    map->content = NULL;
-    map->so_texture = NULL;
-    map->no_texture = NULL;
-    map->ea_texture = NULL;
-    map->we_texture = NULL;
-    map->c_color = NULL;
-    map->f_color = NULL;
-    map->floor_color = NULL;
-    map->ciel_color = NULL;
-    map->map = NULL;
-    map->len = 0;
-    map->max_len = 0;
-
-    return map;
-}
-
 
 void check_map(t_cub3d **cub3d, char *file)
 {
@@ -69,12 +41,13 @@ void check_map(t_cub3d **cub3d, char *file)
     if (!*cub3d)
         ft_error(NULL, "Memory allocation failed for cub3d!");
 
-    (*cub3d)->map = initialize_map();
+    (*cub3d)->map = malloc(sizeof(t_map));
     if (!(*cub3d)->map)
     {
         free(*cub3d);
         ft_error(NULL, "Memory allocation failed for map!");
     }
+    ft_memset((*cub3d)->map, 0, sizeof(t_map));
     fill_content_map(file, *cub3d);
     check_content(*cub3d);
 }
