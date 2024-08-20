@@ -35,8 +35,7 @@ void check_map_last(t_cub3d *cub3d,char **check_last)
 
 void validate_map_borders(t_cub3d *cub3d)
 {
-     int i,j;
-     int rows;
+     int i,j,rows;
      i=0;
     while (cub3d->map->map[0][i] && cub3d->map->map[0][i] != '\n')
     {
@@ -66,9 +65,9 @@ void validate_map_borders(t_cub3d *cub3d)
 
 void get_map(t_cub3d *cub3d)
 {
-    int i, j, len;
-    int map_start = 0;
-
+    int i, j, len,map_start;
+    
+    map_start = 0;
     j = 0;
     i = 0;
     cub3d->map->len = map_len(cub3d->map->content);
@@ -76,8 +75,6 @@ void get_map(t_cub3d *cub3d)
     if (len == 0)
         ft_error(cub3d, "Error: the map does not exist!\n");
     cub3d->map->map = malloc((len + 1) * sizeof(char *));
-    if (!cub3d->map->map)
-        ft_error(cub3d, "Error: Memory allocation failed for map.\n");
     while (cub3d->map->content[i] && !map_start)
     {
         if (ft_search(cub3d->map->content[i][0], "01 "))
@@ -88,8 +85,6 @@ void get_map(t_cub3d *cub3d)
     while (cub3d->map->content[i])
     {
         cub3d->map->map[j] = ft_strdup(cub3d->map->content[i]);
-        if (!cub3d->map->map[j])
-            ft_error(cub3d, "Error: Memory allocation failed while copying map.\n");
         i++;
         j++;
     }

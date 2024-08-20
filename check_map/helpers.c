@@ -22,7 +22,6 @@ void free_map(t_map *map)
             free(map->content[i++]);
         free(map->content);
     }
-
     if (map->so_texture)
         free(map->so_texture);
     if (map->no_texture)
@@ -40,7 +39,6 @@ void free_map(t_map *map)
         free(map->floor_color);
     if (map->ciel_color)
         free(map->ciel_color);
-
     if (map->map)
     {
         i = 0;
