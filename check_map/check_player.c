@@ -1,6 +1,6 @@
 #include "../cub3D.h"
 
-void	get_player(t_cub3d *cub3d, int i, int j, int *found)
+void	get_player(t_game *cub3d, int i, int j, int *found)
 {
     if ((*found)++)
 		ft_error(cub3d,"one player must exist in the map !\n");
@@ -16,7 +16,7 @@ void	get_player(t_cub3d *cub3d, int i, int j, int *found)
 		cub3d->map->player.angle = 0;
 
 }
-void check_player(t_cub3d *cub3d)
+void check_player(t_game *cub3d)
 {
     int i = 0;
     int j = 0;

@@ -1,6 +1,6 @@
 #include "../cub3D.h"
 
-void	check_content(t_cub3d *cub3d)
+void	check_content(t_game *cub3d)
 {
     check_identifier(cub3d);
     check_textures_path(cub3d->map->content, cub3d);

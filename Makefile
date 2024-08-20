@@ -10,10 +10,10 @@ OBJ = $(SRC:.c=.o)
 
 CC = cc
 
-CFLAGS = -Wall -Wextra -Werror #-g3
+# CFLAGS = -Wall -Wextra -Werror
 
 %.o : %.c
-	$(CC) $(CFLAGS) -c $? -o $@
+	$(CC) $(CFLAGS) -I/usr/include -Imlx -O3 -c $< -o $@
 
 all : $(NAME)
 
@@ -21,7 +21,7 @@ $(LIBFT):
 	make -C libft
 
 $(NAME) : $(OBJ) $(LIBFT)
-	$(CC) $(CFLAGS) $(OBJ) $(LIBFT) -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJ) $(LIBFT) -Lmlx -lmlx -L/usr/lib -Imlx -lXext -lX11 -lm -lz -o $(NAME)
 
 clean:
 	rm -rf $(OBJ)

@@ -10,7 +10,7 @@ int	line_counter(char *str)
 	return (i);
 }
 
-void check_extension_file(char *path, t_cub3d *cub3d)
+void check_extension_file(char *path, t_game *cub3d)
 {
     const char *ext = ".xpm";
     while (path && *path == ' ')
@@ -20,7 +20,7 @@ void check_extension_file(char *path, t_cub3d *cub3d)
         ft_error(cub3d, "Error: Texture file must have .xpm extension\n");
 }
 
-void check_textures_path(char **content, t_cub3d *cub3d)
+void check_textures_path(char **content, t_game *cub3d)
 {
     int i = 0;
     char *path;

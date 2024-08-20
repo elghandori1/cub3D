@@ -54,7 +54,7 @@ void free_map(t_map *map)
 }
 
 
-void free_cub3d(t_cub3d *cub3d)
+void free_cub3d(t_game *cub3d)
 {
     if (!cub3d)
         return;
@@ -66,7 +66,7 @@ void free_cub3d(t_cub3d *cub3d)
     free(cub3d);
 }
 
-void ft_error(t_cub3d *cub3d, char *message)
+void ft_error(t_game *cub3d, char *message)
 {
     if (cub3d)
         free_cub3d(cub3d);

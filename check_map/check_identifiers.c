@@ -10,7 +10,7 @@ void initialize_identifiers(t_map *map)
     map->f = 0;
 }
 
-void check_texture_identifiers(t_map *map, char *line, t_cub3d *cub3d)
+void check_texture_identifiers(t_map *map, char *line, t_game *cub3d)
 {
     if (ft_strncmp(line, "WE", 2) == 0)
     {
@@ -39,7 +39,7 @@ void check_texture_identifiers(t_map *map, char *line, t_cub3d *cub3d)
 }
 
 
-void check_color_identifiers(t_map *map, char *line, t_cub3d *cub3d)
+void check_color_identifiers(t_map *map, char *line, t_game *cub3d)
 {
     if (ft_strncmp(line, "C", 1) == 0)
     {
@@ -55,7 +55,7 @@ void check_color_identifiers(t_map *map, char *line, t_cub3d *cub3d)
     }
 }
 
-void validate_identifiers(t_map *map, t_cub3d *cub3d)
+void validate_identifiers(t_map *map, t_game *cub3d)
 {
     if (!map->we || !map->so || !map->no || !map->ea)
         ft_error(cub3d, "Error: Missing texture identifier\n");
@@ -65,7 +65,7 @@ void validate_identifiers(t_map *map, t_cub3d *cub3d)
 }
 
 
-void check_identifier(t_cub3d *content)
+void check_identifier(t_game *content)
 {
    
     int i;

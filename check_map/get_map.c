@@ -2,7 +2,7 @@
 
 int map_len(char **content)
 {
-int	i;
+    int	i;
 	int	len;
 
 	i = 0;
@@ -18,7 +18,7 @@ int	i;
 	return (len);
 }
 
-void check_map_last(t_cub3d *cub3d,char **check_last)
+void check_map_last(t_game *cub3d,char **check_last)
 {
     int i = 0;
     while (check_last[i])
@@ -33,7 +33,7 @@ void check_map_last(t_cub3d *cub3d,char **check_last)
     }
 }
 
-void validate_map_borders(t_cub3d *cub3d)
+void validate_map_borders(t_game *cub3d)
 {
      int i,j;
      int rows;
@@ -64,7 +64,7 @@ void validate_map_borders(t_cub3d *cub3d)
     }
 }
 
-void get_map(t_cub3d *cub3d)
+void get_map(t_game *cub3d)
 {
     int i, j, len;
     int map_start = 0;
