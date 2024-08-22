@@ -11,7 +11,7 @@ OBJ = $(SRC:.c=.o)
 CC = cc
 
 # CFLAGS = -Wall -Wextra -Werror
-%.o : %.c
+%.o : %.c libft/libft.h cub3D.h
 	$(CC) $(CFLAGS) -I/usr/include -Imlx -O3 -c $< -o $@
 
 all : $(NAME)

@@ -14,7 +14,8 @@ void	get_player(t_game *cub3d, int i, int j, int *found)
 		cub3d->map->player.angle = 180;
 	else
 		cub3d->map->player.angle = 0;
-
+    cub3d->map->player.dir_x = cos(cub3d->map->player.angle);
+    cub3d->map->player.dir_y = -sin(cub3d->map->player.angle);
 }
 void check_player(t_game *cub3d)
 {

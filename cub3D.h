@@ -10,7 +10,7 @@
 # include <math.h>
 # include "../mlx/mlx.h"
 
-# define SIZE 32
+# define SIZE 16
 # define PY 3.14159265358
 
 /* Keysyms from : keysymdef.h */
@@ -23,8 +23,8 @@
 # define ALLOC 'A'
 # define FREE 'F'
 
-# define WIDTH  960
-# define HEIGHT 1280  // 1280x960
+# define WIDTH  1280
+# define HEIGHT 720  // 1280x960
 
 typedef struct s_gc
 {
@@ -45,6 +45,9 @@ typedef struct s_player
 	float		x;
 	float		y;
 	float 		angle;
+	float		dir_x;
+	float		dir_y;
+	
 }	t_player;
 
 typedef struct s_data

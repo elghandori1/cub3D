@@ -80,6 +80,34 @@ void	render_map(t_game *game)
 	mlx_put_image_to_window(game->mlx_ptr, game->mlx_win, img.img, 0,  0);
 }
 
+void draw_line(t_game *game, int x0, int y0, int x1, int y1, int color)
+{
+    int dx = abs(x1 - x0);
+    int dy = abs(y1 - y0);
+    int sx = x0 < x1 ? 1 : -1;
+    int sy = y0 < y1 ? 1 : -1;
+    int err = (dx > dy ? dx : -dy) / 2;
+    int e2;
+
+    while (1)
+    {
+        mlx_pixel_put(game->mlx_ptr, game->mlx_win, x0, y0, color);
+        if (x0 == x1 && y0 == y1)
+            break;
+        e2 = err;
+        if (e2 > -dx)
+        {
+            err -= dy;
+            x0 += sx;
+        }
+        if (e2 < dy)
+        {
+            err += dx;
+            y0 += sy;
+        }
+    }
+}
+
 void render_player(t_game *game, t_player *player)
 {
     int px = player->x * SIZE;
@@ -89,16 +117,20 @@ void render_player(t_game *game, t_player *player)
 	int j;
 
 	i = 0;
-	while (i < 5)
+	while (i < 16)
 	{
 		j = 0;
-		while (j < 5)
+		while (j < 16)
 		{
 			mlx_pixel_put(game->mlx_ptr, game->mlx_win, px + i, py + j, color);
 			j++;
 		}
 		i++;
 	}
+    int line_length = 30;
+    int end_x = px + cos(player->angle) * line_length;
+    int end_y = py - sin(player->angle) * line_length;  // Subtract because y-axis is inverted in most graphical systems
+    draw_line(game, px, py, end_x, end_y, 0x00FF00);  // Green color for direction line
 }
 
 int		exit_game()
@@ -115,12 +147,12 @@ int is_valid_position(t_game *game, int x, int y)
 
 void move_player_up(t_game *game)
 {
-    float new_y = game->map->player.y - 0.3;
-    int new_x = (int)game->map->player.x;
-    int new_y_int = (int)new_y;
-
-    if (is_valid_position(game, new_x, new_y_int))
-	{
+    float new_x = game->map->player.x + game->map->player.dir_x * 0.3;
+    float new_y = game->map->player.y + game->map->player.dir_y * 0.3;
+    
+    if (is_valid_position(game, (int)new_x, (int)new_y))
+    {
+        game->map->player.x = new_x;
         game->map->player.y = new_y;
         render_map(game);
         render_player(game, &game->map->player);
@@ -129,24 +161,70 @@ void move_player_up(t_game *game)
 
 void move_player_down(t_game *game)
 {
-	 if (game->map->map[(int)(game->map->player.y + 0.3)][(int)game->map->player.x] != '1')
-    	game->map->player.y += 0.3;
-    render_map(game);
-    render_player(game, &game->map->player);
+    float new_x = game->map->player.x - game->map->player.dir_x * 0.3;
+    float new_y = game->map->player.y - game->map->player.dir_y * 0.3;
+    
+    if (is_valid_position(game, (int)new_x, (int)new_y))
+    {
+        game->map->player.x = new_x;
+        game->map->player.y = new_y;
+        render_map(game);
+        render_player(game, &game->map->player);
+    }
 }
 
 void move_player_left(t_game *game)
 {
-	if (game->map->map[(int)game->map->player.y][(int)(game->map->player.x - 0.3)] != '1')
-   		game->map->player.x -= 0.3;
-    render_map(game);
-    render_player(game, &game->map->player);
+    float perpendicular_x = -game->map->player.dir_y;
+    float perpendicular_y = game->map->player.dir_x;
+    float new_x = game->map->player.x + perpendicular_x * 0.3;
+    float new_y = game->map->player.y + perpendicular_y * 0.3;
+    
+    if (is_valid_position(game, (int)new_x, (int)new_y))
+    {
+        game->map->player.x = new_x;
+        game->map->player.y = new_y;
+        render_map(game);
+        render_player(game, &game->map->player);
+    }
 }
 
 void move_player_right(t_game *game)
 {
-	if (game->map->map[(int)game->map->player.y][(int)(game->map->player.x + 0.3)] != '1')
-    	game->map->player.x += 0.3;
+    float perpendicular_x = game->map->player.dir_y;
+    float perpendicular_y = -game->map->player.dir_x;
+    float new_x = game->map->player.x + perpendicular_x * 0.3;
+    float new_y = game->map->player.y + perpendicular_y * 0.3;
+    
+    if (is_valid_position(game, (int)new_x, (int)new_y))
+    {
+        game->map->player.x = new_x;
+        game->map->player.y = new_y;
+        render_map(game);
+        render_player(game, &game->map->player);
+    }
+}
+
+void rotate_player_left(t_game *game)
+{
+    float rotation_speed = 0.1;
+    game->map->player.angle -= rotation_speed;
+    if (game->map->player.angle < 0)
+        game->map->player.angle += 2 * PY;
+    game->map->player.dir_x = cos(game->map->player.angle);
+    game->map->player.dir_y = -sin(game->map->player.angle);
+    render_map(game);
+    render_player(game, &game->map->player);
+}
+
+void rotate_player_right(t_game *game)
+{
+    float rotation_speed = 0.1;
+    game->map->player.angle += rotation_speed;
+    if (game->map->player.angle > 2 * PY)
+        game->map->player.angle -= 2 * PY;
+    game->map->player.dir_x = cos(game->map->player.angle);
+    game->map->player.dir_y = -sin(game->map->player.angle);
     render_map(game);
     render_player(game, &game->map->player);
 }
@@ -163,7 +241,12 @@ int	game_events(int keycode, t_game *game)
 	else if (keycode == A)
 		move_player_left(game);
 	else if (keycode == D)
-		move_player_right(game); 
+		move_player_right(game);
+    else if (keycode == 65363) // Left arrow key
+        rotate_player_left(game);
+    else if (keycode == 65361) // Right arrow key
+        rotate_player_right(game);
+
 	return (0);
 }
 
@@ -178,9 +261,10 @@ int main(int ac, char **av)
 {
 	t_game *cub3d;
 	
-	cub3d = instance();
+	cub3d = NULL;
 	if (ac != 2)
 		ft_error(cub3d, "Error: Usage: ./cub3d <map_file.cub>\n");
+	cub3d = instance();
 	check_map(&cub3d, av[1]);
 	// RENDERING 
 	// TODO : RENDER 2D MAP ON THE SCREEN
