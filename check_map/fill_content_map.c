@@ -18,7 +18,7 @@ int rows_nbr(int fd)
     
 }
 
-void	fill_content_map(char *map_file, t_game *cub3d)
+void	fill_content_data(char *map_file, t_game *cub3d)
 {
     int fd;
     int i;

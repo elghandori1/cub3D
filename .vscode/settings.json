@@ -3,6 +3,8 @@
         "minishell.h": "c",
         "libft.h": "c",
         "readline.h": "c",
-        "cub3d.h": "c"
+        "cub3d.h": "c",
+        "mlx.h": "c",
+        "fcntl.h": "c"
     }
 }

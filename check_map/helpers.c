@@ -10,7 +10,7 @@ void	ft_free(char	**arr)
 	free(arr);
 }
 
-void free_map(t_map *map)
+void free_map(t_data *map)
 {
     int i;
      if (!map)

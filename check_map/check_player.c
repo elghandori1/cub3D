@@ -4,8 +4,8 @@ void	get_player(t_game *cub3d, int i, int j, int *found)
 {
     if ((*found)++)
 		ft_error(cub3d,"one player must exist in the map !\n");
-	cub3d->map->player.x = j * SIZE + SIZE / 2;
-	cub3d->map->player.y = i * SIZE + SIZE / 2;
+	cub3d->map->player.x = (float)j;
+	cub3d->map->player.y = (float)i;
 	if (cub3d->map->map[i][j] == 'N')
 		cub3d->map->player.angle = 270;
 	else if (cub3d->map->map[i][j] == 'S')

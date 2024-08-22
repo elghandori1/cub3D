@@ -25,9 +25,9 @@ int check_empty(char *f_name)
     close(fd);
     return rslt;
 }
-t_map   *initialize_map(void)
+t_data   *initialize_map(void)
 {
-    t_map *map = malloc(sizeof(t_map));
+    t_data *map = malloc(sizeof(t_data));
     if (!map)
         return NULL;
 
@@ -75,6 +75,6 @@ void check_map(t_game **cub3d, char *file)
         free(*cub3d);
         ft_error(NULL, "Memory allocation failed for map!");
     }
-    fill_content_map(file, *cub3d);
+    fill_content_data(file, *cub3d);
     check_content(*cub3d);
 }

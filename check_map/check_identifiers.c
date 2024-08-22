@@ -1,6 +1,6 @@
 #include "../cub3D.h"
 
-void initialize_identifiers(t_map *map)
+void initialize_identifiers(t_data *map)
 {
     map->we = 0;
     map->so = 0;
@@ -10,7 +10,7 @@ void initialize_identifiers(t_map *map)
     map->f = 0;
 }
 
-void check_texture_identifiers(t_map *map, char *line, t_game *cub3d)
+void check_texture_identifiers(t_data *map, char *line, t_game *cub3d)
 {
     if (ft_strncmp(line, "WE", 2) == 0)
     {
@@ -39,7 +39,7 @@ void check_texture_identifiers(t_map *map, char *line, t_game *cub3d)
 }
 
 
-void check_color_identifiers(t_map *map, char *line, t_game *cub3d)
+void check_color_identifiers(t_data *map, char *line, t_game *cub3d)
 {
     if (ft_strncmp(line, "C", 1) == 0)
     {
@@ -55,7 +55,7 @@ void check_color_identifiers(t_map *map, char *line, t_game *cub3d)
     }
 }
 
-void validate_identifiers(t_map *map, t_game *cub3d)
+void validate_identifiers(t_data *map, t_game *cub3d)
 {
     if (!map->we || !map->so || !map->no || !map->ea)
         ft_error(cub3d, "Error: Missing texture identifier\n");

@@ -10,13 +10,21 @@
 # include <math.h>
 # include "../mlx/mlx.h"
 
-# define SIZE 64
+# define SIZE 32
+# define PY 3.14159265358
+
+/* Keysyms from : keysymdef.h */
+# define ESC 0xff1b
+# define W 0x0077
+# define S 0x0073
+# define A 0x0061
+# define D 0x0064
 
 # define ALLOC 'A'
 # define FREE 'F'
 
-# define WIDTH  920
-# define HEIGHT 1280
+# define WIDTH  960
+# define HEIGHT 1280  // 1280x960
 
 typedef struct s_gc
 {
@@ -34,12 +42,12 @@ typedef struct s_color
 
 typedef struct s_player
 {
-	int			x;
-	int			y;
+	float		x;
+	float		y;
 	float 		angle;
 }	t_player;
 
-typedef struct s_map
+typedef struct s_data
 {
 	int         rows;
 	char        **content;
@@ -61,11 +69,11 @@ typedef struct s_map
 	int         ea; 
 	int         c; 
 	int         f;
-} t_map;
+} t_data;
 
 typedef struct s_game
 {
-	t_map		*map;
+	t_data		*map;
 	void		*mlx_ptr;
 	void		*mlx_win;
 
@@ -77,7 +85,7 @@ typedef struct s_game
 t_game		*instance(void);
 
 void    ft_error(t_game *cub3d,char *message);
-void    free_map(t_map *map);
+void    free_map(t_data *map);
 void    free_cub3d(t_game *cub3d);
 void	ft_free(char	**arr);
 int		ft_search(char c, char *set);
@@ -85,18 +93,18 @@ int		has_cub_extension(const char *f_name);
 int 	check_empty(char *f_name);
 void 	check_map(t_game **cub3d,char *file);
 char	*get_next_line(int fd);
-void 	fill_content_map(char *map_file, t_game *cub3d);
+void 	fill_content_data(char *map_file, t_game *cub3d);
 void	check_content(t_game *cub3d);
-void    initialize_identifiers(t_map *map);
-void    check_texture_identifiers(t_map *map, char *line, t_game *cub3d);
-void    check_color_identifiers(t_map *map, char *line, t_game *cub3d);
-void    validate_identifiers(t_map *map, t_game *cub3d);
+void    initialize_identifiers(t_data *map);
+void    check_texture_identifiers(t_data *map, char *line, t_game *cub3d);
+void    check_color_identifiers(t_data *map, char *line, t_game *cub3d);
+void    validate_identifiers(t_data *map, t_game *cub3d);
 void    check_identifier(t_game *content);
 void 	check_textures_path(char **content,t_game *cub3d);
 void 	get_textures(t_game *cub3d);
 char	*get_from_file(char **content, char *target);
 void 	get_colors(t_game *cub3d);
-void 	get_map(t_game *cub3d);
+void 	get_data(t_game *cub3d);
 void    check_map_last(t_game *cub3d,char **check_last);
 void	check_player(t_game *cub3d);
 

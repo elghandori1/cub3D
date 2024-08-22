@@ -64,7 +64,7 @@ void validate_map_borders(t_game *cub3d)
     }
 }
 
-void get_map(t_game *cub3d)
+void get_data(t_game *cub3d)
 {
     int i, j, len;
     int map_start = 0;
