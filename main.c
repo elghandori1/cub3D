@@ -66,7 +66,7 @@ void	render_map(t_game *game)
 		{
 			if (game->map->map[y][x] == '1')
 				color = 0xFFFFFF;
-			else if (game->map->map[y][x] == '0')
+			else if (game->map->map[y][x] == '0' || ft_search(game->map->map[y][x], "NSEW"))
 				color = 0x808080;
 			else if (game->map->map[y][x] == ' ')
 				color = 0x0;
@@ -117,10 +117,10 @@ void render_player(t_game *game, t_player *player)
 	int j;
 
 	i = 0;
-	while (i < 16)
+	while (i < SIZE / 2)
 	{
 		j = 0;
-		while (j < 16)
+		while (j <SIZE / 2)
 		{
 			mlx_pixel_put(game->mlx_ptr, game->mlx_win, px + i, py + j, color);
 			j++;
@@ -147,8 +147,8 @@ int is_valid_position(t_game *game, int x, int y)
 
 void move_player_up(t_game *game)
 {
-    float new_x = game->map->player.x + game->map->player.dir_x * 0.3;
-    float new_y = game->map->player.y + game->map->player.dir_y * 0.3;
+    float new_x = game->map->player.x + game->map->player.dir_x * 0.2;
+    float new_y = game->map->player.y + game->map->player.dir_y * 0.2;
     
     if (is_valid_position(game, (int)new_x, (int)new_y))
     {
@@ -161,24 +161,8 @@ void move_player_up(t_game *game)
 
 void move_player_down(t_game *game)
 {
-    float new_x = game->map->player.x - game->map->player.dir_x * 0.3;
-    float new_y = game->map->player.y - game->map->player.dir_y * 0.3;
-    
-    if (is_valid_position(game, (int)new_x, (int)new_y))
-    {
-        game->map->player.x = new_x;
-        game->map->player.y = new_y;
-        render_map(game);
-        render_player(game, &game->map->player);
-    }
-}
-
-void move_player_left(t_game *game)
-{
-    float perpendicular_x = -game->map->player.dir_y;
-    float perpendicular_y = game->map->player.dir_x;
-    float new_x = game->map->player.x + perpendicular_x * 0.3;
-    float new_y = game->map->player.y + perpendicular_y * 0.3;
+    float new_x = game->map->player.x - game->map->player.dir_x * 0.2;
+    float new_y = game->map->player.y - game->map->player.dir_y * 0.2;
     
     if (is_valid_position(game, (int)new_x, (int)new_y))
     {
@@ -191,10 +175,27 @@ void move_player_left(t_game *game)
 
 void move_player_right(t_game *game)
 {
+    float perpendicular_x = -game->map->player.dir_y;
+    float perpendicular_y = game->map->player.dir_x;
+    float new_x = game->map->player.x + perpendicular_x * 0.2;
+    float new_y = game->map->player.y + perpendicular_y * 0.2;
+    
+    if (is_valid_position(game, (int)new_x, (int)new_y))
+    {
+        game->map->player.x = new_x;
+        game->map->player.y = new_y;
+        render_map(game);
+        render_player(game, &game->map->player);
+    }
+}
+
+void move_player_left(t_game *game)
+{
+	
     float perpendicular_x = game->map->player.dir_y;
     float perpendicular_y = -game->map->player.dir_x;
-    float new_x = game->map->player.x + perpendicular_x * 0.3;
-    float new_y = game->map->player.y + perpendicular_y * 0.3;
+    float new_x = game->map->player.x + perpendicular_x * 0.2;
+    float new_y = game->map->player.y + perpendicular_y * 0.2;
     
     if (is_valid_position(game, (int)new_x, (int)new_y))
     {
@@ -220,6 +221,7 @@ void rotate_player_left(t_game *game)
 void rotate_player_right(t_game *game)
 {
     float rotation_speed = 0.1;
+	
     game->map->player.angle += rotation_speed;
     if (game->map->player.angle > 2 * PY)
         game->map->player.angle -= 2 * PY;

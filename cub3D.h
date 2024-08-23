@@ -19,6 +19,8 @@
 # define S 0x0073
 # define A 0x0061
 # define D 0x0064
+# define LEFT 65363
+# define RIGHT 65461
 
 # define ALLOC 'A'
 # define FREE 'F'
