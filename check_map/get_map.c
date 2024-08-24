@@ -93,6 +93,8 @@ void get_data(t_game *cub3d)
         i++;
         j++;
     }
+    cub3d->map->height = j;
+    cub3d->map->width = ft_strlen(cub3d->map->map[0]);
     cub3d->map->map[j] = NULL;
     check_map_last(cub3d,cub3d->map->content);
     validate_map_borders(cub3d);

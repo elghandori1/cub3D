@@ -39,15 +39,13 @@ void	put_pixels(t_img *img, int color, int x, int y)
 	int j;
 
 	i = 0;
-	while (i < SIZE)
+	while (++i < SIZE)
 	{
 		j = 0;
-		while (j < SIZE)
+		while (++j < SIZE)
 		{
 			my_mlx_pixel_put(img, x * SIZE + i, y * SIZE + j, color);
-			j++;
 		}
-		i++;
 	}
 }
 
@@ -59,7 +57,7 @@ void	render_map(t_game *game)
 	img.img = mlx_new_image(game->mlx_ptr, HEIGHT, WIDTH);
 	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length,
 								&img.endian);
-	while (y < game->map->len)
+	while (y < game->map->height)
 	{
 		x = 0;
 		while (x < ft_strlen(game->map->map[y]))
@@ -68,10 +66,8 @@ void	render_map(t_game *game)
 				color = 0xFFFFFF;
 			else if (game->map->map[y][x] == '0' || ft_search(game->map->map[y][x], "NSEW"))
 				color = 0x808080;
-			else if (game->map->map[y][x] == ' ')
-				color = 0x0;
 			else
-				color = 0xFFFFFF;
+				color = 0x0;
 			put_pixels(&img, color, x, y);
 			x++;
 		}
@@ -120,17 +116,17 @@ void render_player(t_game *game, t_player *player)
 	while (i < SIZE / 2)
 	{
 		j = 0;
-		while (j <SIZE / 2)
+		while (j < SIZE / 2)
 		{
 			mlx_pixel_put(game->mlx_ptr, game->mlx_win, px + i, py + j, color);
 			j++;
 		}
 		i++;
 	}
-    int line_length = 30;
+    int line_length = SIZE / 2;
     int end_x = px + cos(player->angle) * line_length;
-    int end_y = py - sin(player->angle) * line_length;  // Subtract because y-axis is inverted in most graphical systems
-    draw_line(game, px, py, end_x, end_y, 0x00FF00);  // Green color for direction line
+    int end_y = py - sin(player->angle) * line_length;
+    draw_line(game, px, py , end_x, end_y, 0x00FF00); 
 }
 
 int		exit_game()
@@ -142,7 +138,8 @@ int		exit_game()
 
 int is_valid_position(t_game *game, int x, int y)
 {
-    return (x >= 0 && x < ft_strlen(game->map->map[0]) && y >= 0 && y < game->map->len && game->map->map[y][x] != '1');
+    return (x >= 0 && x < ft_strlen(game->map->map[0])
+		&& y >= 0 && y < game->map->len && game->map->map[y][x] != '1');
 }
 
 void move_player_up(t_game *game)
@@ -156,6 +153,7 @@ void move_player_up(t_game *game)
         game->map->player.y = new_y;
         render_map(game);
         render_player(game, &game->map->player);
+		mlx_put_image_to_window(game->mlx_ptr, game->mlx_win, game->compas->xpm_data, 0, 0);
     }
 }
 
@@ -170,6 +168,7 @@ void move_player_down(t_game *game)
         game->map->player.y = new_y;
         render_map(game);
         render_player(game, &game->map->player);
+		mlx_put_image_to_window(game->mlx_ptr, game->mlx_win, game->compas->xpm_data, 0, 0);
     }
 }
 
@@ -186,6 +185,7 @@ void move_player_right(t_game *game)
         game->map->player.y = new_y;
         render_map(game);
         render_player(game, &game->map->player);
+		mlx_put_image_to_window(game->mlx_ptr, game->mlx_win, game->compas->xpm_data, 0, 0);
     }
 }
 
@@ -203,32 +203,34 @@ void move_player_left(t_game *game)
         game->map->player.y = new_y;
         render_map(game);
         render_player(game, &game->map->player);
+		mlx_put_image_to_window(game->mlx_ptr, game->mlx_win, game->compas->xpm_data, 0, 0);
     }
 }
 
 void rotate_player_left(t_game *game)
 {
-    float rotation_speed = 0.1;
-    game->map->player.angle -= rotation_speed;
+    game->map->player.angle -= .05;
     if (game->map->player.angle < 0)
-        game->map->player.angle += 2 * PY;
+        game->map->player.angle += 2 * PI;
     game->map->player.dir_x = cos(game->map->player.angle);
     game->map->player.dir_y = -sin(game->map->player.angle);
     render_map(game);
     render_player(game, &game->map->player);
+	mlx_put_image_to_window(game->mlx_ptr, game->mlx_win, game->compas->xpm_data, 0, 0);
+
 }
 
 void rotate_player_right(t_game *game)
-{
-    float rotation_speed = 0.1;
-	
-    game->map->player.angle += rotation_speed;
-    if (game->map->player.angle > 2 * PY)
-        game->map->player.angle -= 2 * PY;
+{	
+    game->map->player.angle += .05;
+	if (game->map->player.angle > 2 * PI)
+		game->map->player.angle -= 2 * PI;
     game->map->player.dir_x = cos(game->map->player.angle);
     game->map->player.dir_y = -sin(game->map->player.angle);
     render_map(game);
     render_player(game, &game->map->player);
+	mlx_put_image_to_window(game->mlx_ptr, game->mlx_win, game->compas->xpm_data, 0, 0);
+
 }
 
 
@@ -244,9 +246,9 @@ int	game_events(int keycode, t_game *game)
 		move_player_left(game);
 	else if (keycode == D)
 		move_player_right(game);
-    else if (keycode == 65363) // Left arrow key
+    else if (keycode == LEFT) // Left arrow key
         rotate_player_left(game);
-    else if (keycode == 65361) // Right arrow key
+    else if (keycode == RIGHT) // Right arrow key
         rotate_player_right(game);
 
 	return (0);
@@ -256,6 +258,19 @@ void	capture_hooks(t_game *game)
 {
 	mlx_hook(game->mlx_win, 17, 0, exit_game, NULL);
 	mlx_hook(game->mlx_win, 2, (1L << 0), game_events, game);
+}
+t_xpm	*create_image(t_game *game, char *path)
+{
+	t_xpm	*asset;
+
+	asset = malloc(sizeof(t_xpm));
+	if (!asset)
+		return (NULL);
+	*asset = (t_xpm){0};
+	asset->path = path;
+	asset->xpm_data = mlx_xpm_file_to_image(game->mlx_ptr, asset->path,
+			&asset->width, &asset->height);
+	return (asset);
 }
 
 
@@ -270,15 +285,17 @@ int main(int ac, char **av)
 	check_map(&cub3d, av[1]);
 	// RENDERING 
 	// TODO : RENDER 2D MAP ON THE SCREEN
-	// printf("%d\n", cub3d->map->len);
-	// printf("%d\n", cub3d->map->max_len);
-	// printf("%d\n", cub3d->map->rows);
+
+	// printf("map H = %d map W = %d\n", cub3d->map->rows, cub3d->map->len);
 	// exit(1);
 	if (window_init(cub3d))
 		return (EXIT_FAILURE);
+	
+	cub3d->compas = create_image(cub3d, "./textures/compas.xpm");
 	render_map(cub3d);
 	render_player(cub3d, &cub3d->map->player);
 	capture_hooks(cub3d);
+	mlx_put_image_to_window(cub3d->mlx_ptr, cub3d->mlx_win, cub3d->compas->xpm_data, 0, 0);
 	mlx_loop(cub3d->mlx_ptr);
 	free_cub3d(cub3d);
 	return 0;

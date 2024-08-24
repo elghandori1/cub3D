@@ -10,8 +10,8 @@
 # include <math.h>
 # include "../mlx/mlx.h"
 
-# define SIZE 16
-# define PY 3.14159265358
+# define SIZE 32
+# define PI 3.14159265358
 
 /* Keysyms from : keysymdef.h */
 # define ESC 0xff1b
@@ -20,13 +20,13 @@
 # define A 0x0061
 # define D 0x0064
 # define LEFT 65363
-# define RIGHT 65461
+# define RIGHT 65361
 
 # define ALLOC 'A'
 # define FREE 'F'
 
-# define WIDTH  1280
-# define HEIGHT 720  // 1280x960
+# define WIDTH  720
+# define HEIGHT 1280  // 1280x960
 
 typedef struct s_gc
 {
@@ -34,6 +34,16 @@ typedef struct s_gc
 	struct s_gc	*next;
 	struct s_gc	*prev;
 }				t_gc;
+
+typedef struct xpm
+{
+	int			width;
+	int			height;
+	int			x;
+	int			y;
+	char		*path;
+	void		*xpm_data;
+}				t_xpm;
 
 typedef struct s_color
 {
@@ -55,6 +65,8 @@ typedef struct s_player
 typedef struct s_data
 {
 	int         rows;
+	int			height;
+	int			width;
 	char        **content;
 	char        **map;
 	char        *so_texture;
@@ -67,6 +79,7 @@ typedef struct s_data
 	t_color     *floor_color;
 	t_player    player;
 	size_t      max_len;
+	
 	int         len;
 	int         we;
 	int         so; 
@@ -81,7 +94,7 @@ typedef struct s_game
 	t_data		*map;
 	void		*mlx_ptr;
 	void		*mlx_win;
-
+	t_xpm		*compas;
 	t_gc	*gc_lst;
 	//  
 }   t_game;
