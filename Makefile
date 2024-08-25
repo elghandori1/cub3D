@@ -1,10 +1,12 @@
 NAME = cub3D
 LIBFT = libft/libft.a
 
-SRC = main.c ./check_map/check_map.c ./check_map/fill_content_map.c ./check_map/check_content.c \
-      get_next_line.c ./check_map/check_texture.c ./check_map/get_textures.c \
-	  ./check_map/helpers.c ./check_map/get_color.c ./check_map/get_map.c ./check_map/check_player.c \
-	  ./check_map/check_identifiers.c
+SRC = main.c get_next_line.c \
+	  $(addprefix ./check_map/, check_map.c fill_content_map.c check_content.c check_texture.c \
+	  	get_textures.c helpers.c get_color.c get_map.c check_player.c check_identifiers.c) \
+	  $(addprefix ./Rendering/, render_map.c rendering.c utils.c) \
+	  $(addprefix ./hooks/, moves.c)
+
 
 OBJ = $(SRC:.c=.o)
 

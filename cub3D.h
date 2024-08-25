@@ -10,7 +10,7 @@
 # include <math.h>
 # include "../mlx/mlx.h"
 
-# define SIZE 32
+# define SIZE 40
 # define PI 3.14159265358
 
 /* Keysyms from : keysymdef.h */
@@ -26,7 +26,7 @@
 # define FREE 'F'
 
 # define WIDTH  720
-# define HEIGHT 1280  // 1280x960
+# define HEIGHT 1360  // 1280x960
 
 typedef struct s_gc
 {
@@ -45,12 +45,36 @@ typedef struct xpm
 	void		*xpm_data;
 }				t_xpm;
 
+typedef struct	s_img
+{
+	void	*img;
+	char	*addr;
+	int		bits_per_pixel;
+	int		line_length;
+	int		endian;
+}				t_img;
+
 typedef struct s_color
 {
 	int	r;
 	int	g;
 	int	b;
 }	t_color;
+
+typedef struct s_point
+{
+	int	x;
+	int	y;
+}	t_point;
+
+typedef struct s_line
+{
+	int	dx;
+	int	dy;
+	int	sx;
+	int	sy;
+	int	err;
+}	t_line;
 
 typedef struct s_player
 {
@@ -101,6 +125,17 @@ typedef struct s_game
 
 /*		Singleton pattern	(Global like)	*/
 t_game		*instance(void);
+
+/*		Rendring		*/
+void	render_map(t_game *game);
+void 	render_player(t_game *game, t_player *player);
+void	put_pixels(t_img *img, int color, int x, int y);
+void	my_mlx_pixel_put(t_img *data, int x, int y, int color);
+
+/*		hooks	*/
+int		game_events(int keycode, t_game *game);
+
+int		exit_game();
 
 void    ft_error(t_game *cub3d,char *message);
 void    free_map(t_data *map);
