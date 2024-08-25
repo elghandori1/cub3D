@@ -27,29 +27,12 @@ int check_empty(char *f_name)
 }
 t_data   *initialize_map(void)
 {
-    t_data *map = malloc(sizeof(t_data));
+    t_data *map;
+    
+    map = malloc(sizeof(t_data));
     if (!map)
         return NULL;
-
-    map->we = 0;
-    map->so = 0;
-    map->no = 0;
-    map->ea = 0;
-    map->f = 0;
-    map->c = 0;
-    map->content = NULL;
-    map->so_texture = NULL;
-    map->no_texture = NULL;
-    map->ea_texture = NULL;
-    map->we_texture = NULL;
-    map->c_color = NULL;
-    map->f_color = NULL;
-    map->floor_color = NULL;
-    map->ciel_color = NULL;
-    map->map = NULL;
-    map->len = 0;
-    map->max_len = 0;
-
+    ft_memset(map, 0, sizeof(t_data));
     return map;
 }
 
