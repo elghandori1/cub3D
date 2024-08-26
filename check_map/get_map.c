@@ -33,7 +33,7 @@ void check_map_last(t_game *cub3d,char **check_last)
     }
 }
 
-void	get_square_map(t_cub3d *cub3d)
+void	get_square_map(t_game *cub3d)
 {
 	int	i;
 	int	j;

@@ -1,6 +1,6 @@
 #include "../cub3D.h"
 
-int	check_right(t_cub3d *cub3d, int i, int j)
+int	check_right(t_game *cub3d, int i, int j)
 {
 	while (cub3d->map->square_map[i][j])
 	{
@@ -13,7 +13,7 @@ int	check_right(t_cub3d *cub3d, int i, int j)
 	return (0);
 }
 
-int	check_left(t_cub3d *cub3d, int i, int j)
+int	check_left(t_game *cub3d, int i, int j)
 {
 	while (j >= 0 && cub3d->map->map[i][j])
 	{
@@ -26,7 +26,7 @@ int	check_left(t_cub3d *cub3d, int i, int j)
 	return (0);
 }
 
-int	check_above(t_cub3d *cub3d, int i, int j)
+int	check_above(t_game *cub3d, int i, int j)
 {
 	while (i >= 0)
 	{
@@ -41,7 +41,7 @@ int	check_above(t_cub3d *cub3d, int i, int j)
 	return (0);
 }
 
-int	check_bellow(t_cub3d *cub3d, int i, int j)
+int	check_bellow(t_game *cub3d, int i, int j)
 {
 	while (cub3d->map->square_map[i] && cub3d->map->square_map[i][j])
 	{
@@ -56,7 +56,7 @@ int	check_bellow(t_cub3d *cub3d, int i, int j)
 	return (0);
 }
 
-int	check_walls(t_cub3d *cub3d)
+int	check_walls(t_game *cub3d)
 {
 	int	i;
 	int	j;

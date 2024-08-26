@@ -20,7 +20,7 @@ if (cub3d->map->map[i][j] == 'N')
     cub3d->map->player.dir_y = -sin(cub3d->map->player.angle);
 }
 
-void check_player(t_cub3d *cub3d)
+void check_player(t_game *cub3d)
 {
     int i = 0;
     int j = 0;
