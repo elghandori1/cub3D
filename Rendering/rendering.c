@@ -17,29 +17,25 @@ void	draw_line_step(t_point *start, t_line *params)
 	}
 }
 
-void	draw_line(t_game *game, t_point start, t_point end, int color)
-{
-	t_line	params;
 
-	params.dx = abs(end.x - start.x);
-	params.dy = abs(end.y - start.y);
-	params.sx = -1;
-	params.sy = -1;
-	if (start.x < end.x)
-		params.sx = 1;
-	if (start.y < end.y)
-		params.sy = 1;
-	if (params.dx > params.dy)
-		params.err = params.dx / 2;
-	else
-		params.err = -params.dy / 2;
-	while (1)
-	{
-		mlx_pixel_put(game->mlx_ptr, game->mlx_win, start.x, start.y, color);
-		if (start.x == end.x && start.y == end.y)
-			break ;
-		draw_line_step(&start, &params);
-	}
+void draw_player_direction(t_game *game)
+{
+    t_player *player = &game->map->player;
+    float start_x = player->x * SIZE;
+    float start_y = player->y * SIZE;
+    float end_x = (player->x + player->dir_x * 5) * SIZE;
+    float end_y = (player->y + player->dir_y * 5) * SIZE;
+    
+    float step = 0.001;
+    float t = 0;
+
+    while (t <= 0.1)
+    {
+        int x = start_x + t * (end_x - start_x);
+        int y = start_y + t * (end_y - start_y);
+        mlx_pixel_put(game->mlx_ptr, game->mlx_win, x, y, 0xFF0000);
+        t += step;
+    }
 }
 
 void render_player(t_game *game, t_player *player)
@@ -61,8 +57,9 @@ void render_player(t_game *game, t_player *player)
 		}
 		i++;
 	}
-    int line_length = SIZE / 2;
-    int end_x = px + cos(player->angle) * line_length;
-    int end_y = py - sin(player->angle) * line_length;
-    draw_line(game, (t_point){ .x = px, .y = py}, (t_point){ .x = end_x, .y = end_y} , 0x00FF00); 
+	draw_player_direction(game);
+    // int line_length = SIZE / 2;
+    // int end_x = px + cos(player->angle) * line_length;
+    // int end_y = py - sin(player->angle) * line_length;
+    // draw_line(game, (t_point){ .x = px, .y = py}, (t_point){ .x = end_x, .y = end_y} , 0x00FF00); 
 }
