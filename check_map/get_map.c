@@ -33,34 +33,31 @@ void check_map_last(t_cub3d *cub3d,char **check_last)
     }
 }
 
-void validate_map_borders(t_cub3d *cub3d)
+void	get_square_map(t_cub3d *cub3d)
 {
-     int i,j,rows;
-     i=0;
-    while (cub3d->map->map[0][i] && cub3d->map->map[0][i] != '\n')
-    {
-        if (cub3d->map->map[0][i] != '1' && cub3d->map->map[0][i] != ' ')
-            ft_error(cub3d, "Error: Map is not surrounded by walls.\n");
-         i++;
-    }
-    i = 0;
-    rows = cub3d->map->len - 1;
-    while (cub3d->map->map[rows][i] && cub3d->map->map[rows][i] != '\n')
-    {
-        if (cub3d->map->map[rows][i] != '1' && cub3d->map->map[rows][i] != ' ')
-            ft_error(cub3d, "Error: Map is not surrounded by walls.\n");
-        i++;
-    }
-    i = 0;
-    while (i < rows)
-    {
-        if (cub3d->map->map[i][0] != '1' && cub3d->map->map[i][0] != ' ')
-            ft_error(cub3d, "Error: Map is not surrounded by walls.\n");
-        j = ft_strlen(cub3d->map->map[i]) - 2;
-        if (j >= 0 && cub3d->map->map[i][j] != '1' && cub3d->map->map[i][j] != ' ')
-            ft_error(cub3d, "Error: Map is not surrounded by walls.\n");
-        i++;  
-    }
+	int	i;
+	int	j;
+	int	tmp;
+
+	i = 0;
+	j = 0;
+	tmp = 0;
+	while (cub3d->map->map[i])
+	{
+		cub3d->map->square_map[i] = malloc(sizeof(char) * cub3d->map->max_len + 1);
+		cub3d->map->square_map[i][cub3d->map->max_len] = 0;
+		cub3d->map->square_map[i][cub3d->map->max_len - 1] = '\n';
+		ft_memset(cub3d->map->square_map[i], 'V', cub3d->map->max_len - 1);
+		tmp = 0;
+		while (cub3d->map->map[i][j] && cub3d->map->map[i][j] != '\n')
+		{
+			cub3d->map->square_map[i][j] = cub3d->map->map[i][j];
+			j++;
+		}
+		i++;
+		j = 0;
+	}
+	cub3d->map->square_map[i] = NULL;
 }
 
 void get_map(t_cub3d *cub3d)
@@ -70,11 +67,13 @@ void get_map(t_cub3d *cub3d)
     map_start = 0;
     j = 0;
     i = 0;
+    cub3d->map->max_len = 0;
     cub3d->map->len = map_len(cub3d->map->content);
-    len = cub3d->map->len;
-    if (len == 0)
+    len = cub3d->map->len + 1;
+    if (len == 1)
         ft_error(cub3d, "Error: the map does not exist!\n");
-    cub3d->map->map = malloc((len + 1) * sizeof(char *));
+    cub3d->map->map = malloc(len * sizeof(char *));
+	cub3d->map->square_map = malloc(len * sizeof(char *));
     while (cub3d->map->content[i] && !map_start)
     {
         if (ft_search(cub3d->map->content[i][0], "01 "))
@@ -85,10 +84,11 @@ void get_map(t_cub3d *cub3d)
     while (cub3d->map->content[i])
     {
         cub3d->map->map[j] = ft_strdup(cub3d->map->content[i]);
+        if (ft_strlen(cub3d->map->map[j]) > cub3d->map->max_len)
+			cub3d->map->max_len = ft_strlen(cub3d->map->map[j]);
         i++;
         j++;
     }
     cub3d->map->map[j] = NULL;
-    check_map_last(cub3d,cub3d->map->content);
-    validate_map_borders(cub3d);
+	check_map_last(cub3d,cub3d->map->content);
 }
