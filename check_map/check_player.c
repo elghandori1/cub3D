@@ -19,11 +19,13 @@ if (cub3d->map->map[i][j] == 'N')
     cub3d->map->player.dir_x = cos(cub3d->map->player.angle);
     cub3d->map->player.dir_y = -sin(cub3d->map->player.angle);
 }
-void check_player(t_game *cub3d)
+
+void check_player(t_cub3d *cub3d)
 {
     int i = 0;
     int j = 0;
     int found = 0;
+    int bad_char = 0;
 
     while (cub3d->map->map[i])
     {
@@ -31,11 +33,15 @@ void check_player(t_game *cub3d)
         {
             if (ft_search(cub3d->map->map[i][j], "ENSW"))
                 get_player(cub3d, i, j, &found);
-            else if (!ft_search(cub3d->map->map[i][j], "10 \n"))
-                ft_error(cub3d, "Error: Invalid character in the map!\n");
-            j++;
+            else if (!ft_search(cub3d->map->map[i][j], "1 0\n"))
+                bad_char++;
+        j++;
         }
         j = 0;
         i++;
     }
+   	if (found != 1)
+		ft_error(cub3d,"one player must exist in the map \n");
+	if (bad_char)
+		ft_error(cub3d,"bad charachter in the map !\n");
 }

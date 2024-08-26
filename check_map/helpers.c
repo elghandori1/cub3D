@@ -22,7 +22,6 @@ void free_map(t_data *map)
             free(map->content[i++]);
         free(map->content);
     }
-
     if (map->so_texture)
         free(map->so_texture);
     if (map->no_texture)
@@ -40,21 +39,22 @@ void free_map(t_data *map)
         free(map->floor_color);
     if (map->ciel_color)
         free(map->ciel_color);
-
-    if (map->map)
+    if (map->map && map->square_map)
     {
         i = 0;
         while (i < map->len)
         {
             free(map->map[i]);
+            free(map->square_map[i]);
             i++;
         }
         free(map->map);
+        free(map->square_map);
     }
 }
 
+void free_cub3d(t_cub3d *cub3d)
 
-void free_cub3d(t_game *cub3d)
 {
     if (!cub3d)
         return;

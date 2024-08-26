@@ -103,7 +103,6 @@ typedef struct s_data
 	t_color     *floor_color;
 	t_player    player;
 	size_t      max_len;
-	
 	int         len;
 	int         we;
 	int         so; 
@@ -113,7 +112,7 @@ typedef struct s_data
 	int         f;
 } t_data;
 
-typedef struct s_game
+typedef struct s_cub3d
 {
 	t_data		*map;
 	void		*mlx_ptr;
@@ -156,9 +155,10 @@ void    check_identifier(t_game *content);
 void 	check_textures_path(char **content,t_game *cub3d);
 void 	get_textures(t_game *cub3d);
 char	*get_from_file(char **content, char *target);
-void 	get_colors(t_game *cub3d);
-void 	get_data(t_game *cub3d);
-void    check_map_last(t_game *cub3d,char **check_last);
-void	check_player(t_game *cub3d);
-
+void 	get_colors(t_cub3d *cub3d);
+void 	get_map(t_cub3d *cub3d);
+void	get_square_map(t_cub3d *cub3d);
+void    check_map_last(t_cub3d *cub3d,char **check_last);
+void	check_player(t_cub3d *cub3d);
+int	    check_walls(t_cub3d *cub3d);
 #endif
