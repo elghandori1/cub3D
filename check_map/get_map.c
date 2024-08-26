@@ -2,7 +2,7 @@
 
 int map_len(char **content)
 {
-int	i;
+    int	i;
 	int	len;
 
 	i = 0;
@@ -18,7 +18,7 @@ int	i;
 	return (len);
 }
 
-void check_map_last(t_cub3d *cub3d,char **check_last)
+void check_map_last(t_game *cub3d,char **check_last)
 {
     int i = 0;
     while (check_last[i])
@@ -60,7 +60,7 @@ void	get_square_map(t_cub3d *cub3d)
 	cub3d->map->square_map[i] = NULL;
 }
 
-void get_map(t_cub3d *cub3d)
+void get_data(t_game *cub3d)
 {
     int i, j, len,map_start;
     
@@ -89,6 +89,8 @@ void get_map(t_cub3d *cub3d)
         i++;
         j++;
     }
+    cub3d->map->height = j;
+    cub3d->map->width = ft_strlen(cub3d->map->map[0]);
     cub3d->map->map[j] = NULL;
 	check_map_last(cub3d,cub3d->map->content);
 }

@@ -1,6 +1,6 @@
 #include "../cub3D.h"
 
-int	check_colors_format(char **tab,t_cub3d *cub3d)
+int	check_colors_format(char **tab,t_game *cub3d)
 {
 	int	i;
 	int	j;
@@ -24,7 +24,7 @@ int	check_colors_format(char **tab,t_cub3d *cub3d)
 	return (i);
 }
 
-int	get_rgb(int color, t_cub3d *cub3d)
+int	get_rgb(int color, t_game *cub3d)
 {
 	if (color >= 0 && color <= 255)
 		return (color);
@@ -33,7 +33,7 @@ int	get_rgb(int color, t_cub3d *cub3d)
 	return (0);
 }
 
-void get_colors(t_cub3d *cub3d)
+void get_colors(t_game *cub3d)
 {
     char **floor;
     char **ciel;

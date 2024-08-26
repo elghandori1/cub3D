@@ -21,9 +21,9 @@ char	*get_from_file(char **content, char *target)
 	return (NULL);
 }
 
-void get_textures(t_cub3d *cub3d)
+void get_textures(t_game *cub3d)
 {
-    cub3d->map->ea_texture = get_from_file(cub3d->map->content, "EA");
+	cub3d->map->ea_texture = get_from_file(cub3d->map->content, "EA");
 	cub3d->map->no_texture = get_from_file(cub3d->map->content, "NO");
 	cub3d->map->so_texture = get_from_file(cub3d->map->content, "SO");
 	cub3d->map->we_texture = get_from_file(cub3d->map->content, "WE");
