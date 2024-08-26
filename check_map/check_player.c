@@ -1,26 +1,26 @@
 #include "../cub3D.h"
 
-void	get_player(t_cub3d *cub3d, int i, int j, int *found)
+void	get_player(t_game *cub3d, int i, int j, int *found)
 {
-    (*found)++;
-    if (*found > 1)
-        ft_error(cub3d, "Only one player must exist in the map!\n");
+    double rad;
 
-    cub3d->map->player.x = j * SIZE + SIZE / 2;
-	cub3d->map->player.y = i * SIZE + SIZE / 2;
-	if (cub3d->map->map[i][j] == 'N')
-		cub3d->map->player.angle = 270;
-	else if (cub3d->map->map[i][j] == 'S')
-		cub3d->map->player.angle = 90;
-	else if (cub3d->map->map[i][j] == 'E')
-		cub3d->map->player.angle = 180;
-	else
-		cub3d->map->player.angle = 0;
-
+    if ((*found)++)
+		ft_error(cub3d,"one player must exist in the map !\n");
+	cub3d->map->player.x = (float)j;
+	cub3d->map->player.y = (float)i;
+if (cub3d->map->map[i][j] == 'N')
+        cub3d->map->player.angle = PI / 2;
+    else if (cub3d->map->map[i][j] == 'S')
+        cub3d->map->player.angle = 3 * PI / 2;
+    else if (cub3d->map->map[i][j] == 'E')
+        cub3d->map->player.angle = 0;
+    else // 'W'
+        cub3d->map->player.angle = PI;
+    cub3d->map->player.dir_x = cos(cub3d->map->player.angle);
+    cub3d->map->player.dir_y = -sin(cub3d->map->player.angle);
 }
 
-
-void check_player(t_cub3d *cub3d)
+void check_player(t_game *cub3d)
 {
     int i = 0;
     int j = 0;

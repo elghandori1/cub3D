@@ -1,19 +1,19 @@
 NAME = cub3D
 LIBFT = libft/libft.a
 
-SRC = main.c ./check_map/check_map.c ./check_map/fill_content_map.c ./check_map/check_content.c \
-      get_next_line.c ./check_map/check_texture.c ./check_map/get_textures.c \
-	  ./check_map/helpers.c ./check_map/get_color.c ./check_map/get_map.c ./check_map/check_player.c \
-	  ./check_map/check_identifiers.c ./check_map/check_walls.c
+SRC = main.c get_next_line.c \
+	  $(addprefix ./check_map/, check_map.c  check_content.c check_texture.c \
+	  	get_textures.c helpers.c get_color.c get_map.c check_player.c check_identifiers.c check_walls.c fill_content_map.c)  \
+	  $(addprefix ./Rendering/, render_map.c rendering.c utils.c  )\
+	  $(addprefix ./hooks/, moves.c)
 
 OBJ = $(SRC:.c=.o)
 
 CC = cc
 
-CFLAGS = -Wall -Wextra -Werror #-g3
-
-%.o : %.c
-	$(CC) $(CFLAGS) -c $? -o $@
+# CFLAGS = -Wall -Wextra -Werror
+%.o : %.c libft/libft.h cub3D.h
+	$(CC) $(CFLAGS) -I/usr/include -Imlx -O3 -c $< -o $@
 
 all : $(NAME)
 
@@ -21,7 +21,7 @@ $(LIBFT):
 	make -C libft
 
 $(NAME) : $(OBJ) $(LIBFT)
-	$(CC) $(CFLAGS) $(OBJ) $(LIBFT) -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJ) $(LIBFT) -Lmlx -lmlx -L/usr/lib -Imlx -lXext -lX11 -lm -lz -o $(NAME)
 
 clean:
 	rm -rf $(OBJ)
@@ -34,5 +34,5 @@ fclean:
 clear:
 	clear
 
-re: fclean all clean  clear
+re: fclean all clean clear
 
