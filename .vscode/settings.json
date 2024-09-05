@@ -5,6 +5,8 @@
         "readline.h": "c",
         "cub3d.h": "c",
         "mlx.h": "c",
-        "fcntl.h": "c"
+        "fcntl.h": "c",
+        "stdbool.h": "c",
+        "mlx_int.h": "c"
     }
 }

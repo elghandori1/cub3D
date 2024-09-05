@@ -54,14 +54,15 @@ void free_map(t_data *map)
 }
 
 void free_cub3d(t_game *cub3d)
-
 {
     if (!cub3d)
         return;
-    if (cub3d->map)
+    if (cub3d->mlx_ptr)
+        mlx_destroy_display(cub3d->mlx_ptr);  
+    if (cub3d->data)
     {
-        free_map(cub3d->map);
-        free(cub3d->map);
+        free_map(cub3d->data);
+        free(cub3d->data);
     }
     free(cub3d);
 }
@@ -70,8 +71,9 @@ void ft_error(t_game *cub3d, char *message)
 {
     if (cub3d)
         free_cub3d(cub3d);
-     ft_putstr_fd(message,2);
-     exit(EXIT_FAILURE);
+    ft_putstr_fd("Error\n",2);
+    ft_putstr_fd(message,2);
+    exit(EXIT_FAILURE);
 }
 
 int	ft_search(char c, char *set)
