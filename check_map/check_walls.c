@@ -2,11 +2,11 @@
 
 int	check_right(t_game *cub3d, int i, int j)
 {
-	while (cub3d->map->square_map[i][j])
+	while (cub3d->data->square_map[i][j])
 	{
-		if (cub3d->map->square_map[i][j] == '1')
+		if (cub3d->data->square_map[i][j] == '1')
 			return (1);
-		else if (cub3d->map->square_map[i][j] == ' ')
+		else if (cub3d->data->square_map[i][j] == ' ')
 			return (0);
 		j++;
 	}
@@ -15,11 +15,11 @@ int	check_right(t_game *cub3d, int i, int j)
 
 int	check_left(t_game *cub3d, int i, int j)
 {
-	while (j >= 0 && cub3d->map->map[i][j])
+	while (j >= 0 && cub3d->data->map[i][j])
 	{
-		if (cub3d->map->square_map[i][j] == '1')
+		if (cub3d->data->square_map[i][j] == '1')
 			return (1);
-		else if (cub3d->map->square_map[i][j] == ' ')
+		else if (cub3d->data->square_map[i][j] == ' ')
 			return (0);
 		j--;
 	}
@@ -30,11 +30,11 @@ int	check_above(t_game *cub3d, int i, int j)
 {
 	while (i >= 0)
 	{
-		if (cub3d->map->square_map[i][j] == '1')
+		if (cub3d->data->square_map[i][j] == '1')
 			return (1);
-		else if (cub3d->map->square_map[i][j] == ' ')
+		else if (cub3d->data->square_map[i][j] == ' ')
 			return (0);
-		else if (cub3d->map->square_map[i][j] == 'V')
+		else if (cub3d->data->square_map[i][j] == 'V')
 			break ;
 		i--;
 	}
@@ -43,13 +43,13 @@ int	check_above(t_game *cub3d, int i, int j)
 
 int	check_bellow(t_game *cub3d, int i, int j)
 {
-	while (cub3d->map->square_map[i] && cub3d->map->square_map[i][j])
+	while (cub3d->data->square_map[i] && cub3d->data->square_map[i][j])
 	{
-		if (cub3d->map->square_map[i][j] == '1')
+		if (cub3d->data->square_map[i][j] == '1')
 			return (1);
-		else if (cub3d->map->square_map[i][j] == ' ')
+		else if (cub3d->data->square_map[i][j] == ' ')
 			return (0);
-		else if (cub3d->map->square_map[i][j] == 'V')
+		else if (cub3d->data->square_map[i][j] == 'V')
 			break ;
 		i++;
 	}
@@ -62,12 +62,12 @@ int	check_walls(t_game *cub3d)
 	int	j;
 
 	i = 0;
-	while (cub3d->map->square_map[i])
+	while (cub3d->data->square_map[i])
 	{
 		j = 0;
-		while (cub3d->map->square_map[i][j])
+		while (cub3d->data->square_map[i][j])
 		{
-			if (cub3d->map->square_map[i][j] == '0')
+			if (cub3d->data->square_map[i][j] == '0')
 			{
 				if (!check_right(cub3d, i, j + 1))
 					return (0);

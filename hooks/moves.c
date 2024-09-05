@@ -2,115 +2,115 @@
 
 int is_valid_position(t_game *game, int x, int y)
 {
-    return (x >= 0 && x < ft_strlen(game->map->map[0])
-		&& y >= 0 && y < game->map->len && game->map->map[y][x] != '1');
+    return (game->data->map[(y / SIZE)][(x / SIZE)] != '1');
 }
 
 void move_player_up(t_game *game)
 {
-    float new_x = game->map->player.x + game->map->player.dir_x * 0.2;
-    float new_y = game->map->player.y + game->map->player.dir_y * 0.2;
+    double new_x = game->data->player.x + game->data->player.dir_x * MOVE_SPEED;
+    double new_y = game->data->player.y + game->data->player.dir_y * MOVE_SPEED;
     
     if (is_valid_position(game, (int)new_x, (int)new_y))
     {
-        game->map->player.x = new_x;
-        game->map->player.y = new_y;
-        render_map(game);
-        render_player(game, &game->map->player);
-		mlx_put_image_to_window(game->mlx_ptr, game->mlx_win, game->compas->xpm_data, 0, 0);
+        game->data->player.x = new_x;
+        game->data->player.y = new_y;
     }
 }
 
 void move_player_down(t_game *game)
 {
-    float new_x = game->map->player.x - game->map->player.dir_x * 0.2;
-    float new_y = game->map->player.y - game->map->player.dir_y * 0.2;
+    double new_x = game->data->player.x - game->data->player.dir_x * MOVE_SPEED;
+    double new_y = game->data->player.y - game->data->player.dir_y * MOVE_SPEED;
     
     if (is_valid_position(game, (int)new_x, (int)new_y))
     {
-        game->map->player.x = new_x;
-        game->map->player.y = new_y;
-        render_map(game);
-        render_player(game, &game->map->player);
-		mlx_put_image_to_window(game->mlx_ptr, game->mlx_win, game->compas->xpm_data, 0, 0);
+        game->data->player.x = new_x;
+        game->data->player.y = new_y;
     }
 }
 
 void move_player_right(t_game *game)
 {
-    float perpendicular_x = -game->map->player.dir_y;
-    float perpendicular_y = game->map->player.dir_x;
-    float new_x = game->map->player.x + perpendicular_x * 0.2;
-    float new_y = game->map->player.y + perpendicular_y * 0.2;
+    double perpendicular_x = -game->data->player.dir_y;
+    double perpendicular_y = game->data->player.dir_x;
+    double new_x = game->data->player.x + perpendicular_x * MOVE_SPEED;
+    double new_y = game->data->player.y + perpendicular_y * MOVE_SPEED;
     
     if (is_valid_position(game, (int)new_x, (int)new_y))
     {
-        game->map->player.x = new_x;
-        game->map->player.y = new_y;
-        render_map(game);
-        render_player(game, &game->map->player);
-		mlx_put_image_to_window(game->mlx_ptr, game->mlx_win, game->compas->xpm_data, 0, 0);
+        game->data->player.x = new_x;
+        game->data->player.y = new_y;
     }
 }
 
 void move_player_left(t_game *game)
 {
 	
-    float perpendicular_x = game->map->player.dir_y;
-    float perpendicular_y = -game->map->player.dir_x;
-    float new_x = game->map->player.x + perpendicular_x * 0.2;
-    float new_y = game->map->player.y + perpendicular_y * 0.2;
+    double perpendicular_x = game->data->player.dir_y;
+    double perpendicular_y = -game->data->player.dir_x;
+    double new_x = game->data->player.x + perpendicular_x * MOVE_SPEED;
+    double new_y = game->data->player.y + perpendicular_y * MOVE_SPEED;
     
     if (is_valid_position(game, (int)new_x, (int)new_y))
     {
-        game->map->player.x = new_x;
-        game->map->player.y = new_y;
-        render_map(game);
-        render_player(game, &game->map->player);
-		mlx_put_image_to_window(game->mlx_ptr, game->mlx_win, game->compas->xpm_data, 0, 0);
+        game->data->player.x = new_x;
+        game->data->player.y = new_y;
     }
 }
 
-void rotate_player_left(t_game *game)
-{
-    game->map->player.angle -= .05;
-    if (game->map->player.angle < 0)
-        game->map->player.angle += 2 * PI;
-    game->map->player.dir_x = cos(game->map->player.angle);
-    game->map->player.dir_y = -sin(game->map->player.angle);
-    render_map(game);
-    render_player(game, &game->map->player);
-	mlx_put_image_to_window(game->mlx_ptr, game->mlx_win, game->compas->xpm_data, 0, 0);
-}
-
 void rotate_player_right(t_game *game)
-{	
-    game->map->player.angle += .05;
-	if (game->map->player.angle > 2 * PI)
-		game->map->player.angle -= 2 * PI;
-    game->map->player.dir_x = cos(game->map->player.angle);
-    game->map->player.dir_y = -sin(game->map->player.angle);
-    render_map(game);
-    render_player(game, &game->map->player);
-	mlx_put_image_to_window(game->mlx_ptr, game->mlx_win, game->compas->xpm_data, 0, 0);
+{
+    game->data->player.angle -= ROTATION_SPEED;
+    if (game->data->player.angle < 0)
+        game->data->player.angle += 2 * PI;
 }
 
+void rotate_player_left(t_game *game)
+{	
+    game->data->player.angle += ROTATION_SPEED;
+	if (game->data->player.angle > 2 * PI)
+		game->data->player.angle -= 2 * PI;
+}
+void    move_player(t_game *game)
+{
+    t_player *p;
+
+    p = &game->data->player;
+    if (p->keys.up)
+        move_player_up(game);
+    if (p->keys.down)
+        move_player_down(game);
+    if (p->keys.left)
+        move_player_left(game);
+    if (p->keys.right)
+        move_player_right(game);
+    if (p->keys.rot_left)
+        p->angle += ROTATION_SPEED;
+    if (p->keys.rot_right)
+        p->angle -= ROTATION_SPEED;
+    normalize_angle(p->angle); 
+    game->data->player.dir_x = cos(game->data->player.angle);
+    game->data->player.dir_y = sin(game->data->player.angle);
+}
 
 int	game_events(int keycode, t_game *game)
 {
+    t_player *p;
+
+    p = &game->data->player;
 	if (keycode == ESC)
 		exit_game();
 	else if (keycode == W)
-		move_player_up(game);
+		p->keys.up = 1;
 	else if (keycode == S)
-		move_player_down(game);
+		p->keys.down = 1;
 	else if (keycode == A)
-		move_player_left(game);
+		p->keys.left = 1;
 	else if (keycode == D)
-		move_player_right(game);
-    else if (keycode == LEFT)
-        rotate_player_left(game);
+		p->keys.right = 1;
+    if (keycode == LEFT)
+        p->keys.rot_left = 1;
     else if (keycode == RIGHT)
-        rotate_player_right(game);
+        p->keys.rot_right = 1;
 	return (0);
 }

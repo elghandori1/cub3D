@@ -23,14 +23,14 @@ char	*get_from_file(char **content, char *target)
 
 void get_textures(t_game *cub3d)
 {
-	cub3d->map->ea_texture = get_from_file(cub3d->map->content, "EA");
-	cub3d->map->no_texture = get_from_file(cub3d->map->content, "NO");
-	cub3d->map->so_texture = get_from_file(cub3d->map->content, "SO");
-	cub3d->map->we_texture = get_from_file(cub3d->map->content, "WE");
-    if (open(cub3d->map->ea_texture, O_RDONLY) < 0
-		|| open(cub3d->map->so_texture, O_RDONLY) < 0
-		|| open(cub3d->map->we_texture, O_RDONLY) < 0
-		||open(cub3d->map->no_texture, O_RDONLY) < 0)
+	cub3d->data->ea_texture = get_from_file(cub3d->data->content, "EA");
+	cub3d->data->no_texture = get_from_file(cub3d->data->content, "NO");
+	cub3d->data->so_texture = get_from_file(cub3d->data->content, "SO");
+	cub3d->data->we_texture = get_from_file(cub3d->data->content, "WE");
+    if (open(cub3d->data->ea_texture, O_RDONLY) < 0
+		|| open(cub3d->data->so_texture, O_RDONLY) < 0
+		|| open(cub3d->data->we_texture, O_RDONLY) < 0
+		||open(cub3d->data->no_texture, O_RDONLY) < 0)
 		ft_error(cub3d,"couldn't open texture !\n");
 }
 

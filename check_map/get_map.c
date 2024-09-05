@@ -42,22 +42,22 @@ void	get_square_map(t_game *cub3d)
 	i = 0;
 	j = 0;
 	tmp = 0;
-	while (cub3d->map->map[i])
+	while (cub3d->data->map[i])
 	{
-		cub3d->map->square_map[i] = malloc(sizeof(char) * cub3d->map->max_len + 1);
-		cub3d->map->square_map[i][cub3d->map->max_len] = 0;
-		cub3d->map->square_map[i][cub3d->map->max_len - 1] = '\n';
-		ft_memset(cub3d->map->square_map[i], 'V', cub3d->map->max_len - 1);
+		cub3d->data->square_map[i] = malloc(sizeof(char) * cub3d->data->max_len + 1);
+		cub3d->data->square_map[i][cub3d->data->max_len] = 0;
+		cub3d->data->square_map[i][cub3d->data->max_len - 1] = '\n';
+		ft_memset(cub3d->data->square_map[i], 'V', cub3d->data->max_len - 1);
 		tmp = 0;
-		while (cub3d->map->map[i][j] && cub3d->map->map[i][j] != '\n')
+		while (cub3d->data->map[i][j] && cub3d->data->map[i][j] != '\n')
 		{
-			cub3d->map->square_map[i][j] = cub3d->map->map[i][j];
+			cub3d->data->square_map[i][j] = cub3d->data->map[i][j];
 			j++;
 		}
 		i++;
 		j = 0;
 	}
-	cub3d->map->square_map[i] = NULL;
+	cub3d->data->square_map[i] = NULL;
 }
 
 void get_data(t_game *cub3d)
@@ -67,30 +67,30 @@ void get_data(t_game *cub3d)
     map_start = 0;
     j = 0;
     i = 0;
-    cub3d->map->max_len = 0;
-    cub3d->map->len = map_len(cub3d->map->content);
-    len = cub3d->map->len + 1;
+    cub3d->data->max_len = 0;
+    cub3d->data->len = map_len(cub3d->data->content);
+    len = cub3d->data->len + 1;
     if (len == 1)
         ft_error(cub3d, "Error: the map does not exist!\n");
-    cub3d->map->map = malloc(len * sizeof(char *));
-	cub3d->map->square_map = malloc(len * sizeof(char *));
-    while (cub3d->map->content[i] && !map_start)
+    cub3d->data->map = malloc(len * sizeof(char *));
+	cub3d->data->square_map = malloc(len * sizeof(char *));
+    while (cub3d->data->content[i] && !map_start)
     {
-        if (ft_search(cub3d->map->content[i][0], "01 "))
+        if (ft_search(cub3d->data->content[i][0], "01 "))
             map_start = 1;
         else
             i++;
     }
-    while (cub3d->map->content[i])
+    while (cub3d->data->content[i])
     {
-        cub3d->map->map[j] = ft_strdup(cub3d->map->content[i]);
-        if (ft_strlen(cub3d->map->map[j]) > cub3d->map->max_len)
-			cub3d->map->max_len = ft_strlen(cub3d->map->map[j]);
+        cub3d->data->map[j] = ft_strdup(cub3d->data->content[i]);
+        if (ft_strlen(cub3d->data->map[j]) > cub3d->data->max_len)
+			cub3d->data->max_len = ft_strlen(cub3d->data->map[j]) - 1;
         i++;
         j++;
     }
-    cub3d->map->height = j;
-    cub3d->map->width = ft_strlen(cub3d->map->map[0]);
-    cub3d->map->map[j] = NULL;
-	check_map_last(cub3d,cub3d->map->content);
+    cub3d->data->height = j;
+    cub3d->data->width = ft_strlen(cub3d->data->map[0]);
+    cub3d->data->map[j] = NULL;
+	check_map_last(cub3d,cub3d->data->content);
 }
