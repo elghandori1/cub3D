@@ -53,6 +53,7 @@ typedef struct xpm
 	int			y;
 	char		*path;
 	void		*img;
+	int		*addr;
 }				t_xpm;
 
 typedef struct	s_image
@@ -157,7 +158,7 @@ typedef struct s_game
 	void		*mlx_ptr;
 	void		*mlx_win;
 	t_gc		*gc_lst;
-	t_xpm		*textures[4];
+	int		*textures[4];
 }   t_game;
 
 /*		Singleton pattern	(Global like)	*/

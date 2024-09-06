@@ -64,13 +64,13 @@ void	cast_ray(t_game *g, t_ray *ray)
 	{
 		ray->distance = hit.x;
 		ray->was_hit_vertical = 1;
-		ray->wall_hit = (t_point){g->data->player.x + hit.x * cos(ray->angle), g->data->player.y + hit.x * sin(ray->angle)};
+		ray->wall_hit.x = g->data->player.x + hit.x * cos(ray->angle);
 	}
 	else
 	{
 		ray->distance = hit.y;
 		ray->was_hit_vertical = 0;
-		ray->wall_hit = (t_point){g->data->player.x + hit.y * cos(ray->angle), g->data->player.y + hit.y * sin(ray->angle)};
+		ray->wall_hit.y = g->data->player.y + hit.y * sin(ray->angle);
 	}
 	ray->distance *= cos(g->data->player.angle - ray->angle);
 }

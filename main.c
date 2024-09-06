@@ -103,17 +103,16 @@ int rendering(void *data)
     return (0);
 }
 
-t_xpm	*load_texture(t_game *game, char *path)
+int	*load_texture(t_game *game, char *path)
 {
-	t_xpm	*texture;
-
-	texture = malloc(sizeof(t_xpm));
-	if (!texture)
-		ft_error(game, "Error\n malloc failed in load texture\n");
-	texture->img = mlx_xpm_file_to_image(game->mlx_ptr, path, &texture->width, &texture->height);
-	if (!texture->img)
+	int		n;
+	void	*img;
+	int 	*addr;
+	img = mlx_xpm_file_to_image(game->mlx_ptr, path, &n, &n);
+	if (!img)
 		ft_error(game, "Error\nTexture loading failed\n"); // need to check if all the mem are freed !!
-	return (texture);
+	addr = mlx_get_data_addr(img, &n, &n, &n);
+	return (addr);
 }
 
 void	load_textures(t_game *game)
