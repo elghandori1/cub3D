@@ -9,9 +9,14 @@
 # include <fcntl.h>
 # include <math.h>
 # include "../mlx/mlx.h"
+# include "../mlx/mlx_int.h"
+# include <stdbool.h>
 
-# define SIZE 40
+# define SIZE 32
+
 # define PI 3.14159265358
+# define PI_2 1.57079632679489661923
+# define PI2 6.28318530718
 
 /* Keysyms from : keysymdef.h */
 # define ESC 0xff1b
@@ -25,8 +30,13 @@
 # define ALLOC 'A'
 # define FREE 'F'
 
-# define WIDTH  720
-# define HEIGHT 1360  // 1280x960
+# define WIDTH  1000
+# define HEIGHT 700
+# define FOV 78
+# define FOV_RD 1.04719755119
+# define MOVE_SPEED 1.2
+# define ROTATION_SPEED .03
+# define DISTANCE_PROJ_PLANE ((WIDTH / 2) / tan(FOV_RD / 2))
 
 typedef struct s_gc
 {
@@ -42,17 +52,19 @@ typedef struct xpm
 	int			x;
 	int			y;
 	char		*path;
-	void		*xpm_data;
+	void		*img;
 }				t_xpm;
 
-typedef struct	s_img
+typedef struct	s_image
 {
 	void	*img;
 	char	*addr;
 	int		bits_per_pixel;
 	int		line_length;
 	int		endian;
-}				t_img;
+	int		width;
+	int		height;
+}				t_image;
 
 typedef struct s_color
 {
@@ -61,10 +73,20 @@ typedef struct s_color
 	int	b;
 }	t_color;
 
+typedef struct s_keys
+{
+	int up;
+	int down;
+	int left;
+	int right;
+	int rot_left;
+	int rot_right;
+}	t_keys;
+
 typedef struct s_point
 {
-	int	x;
-	int	y;
+	double	x;
+	double	y;
 }	t_point;
 
 typedef struct s_line
@@ -78,12 +100,12 @@ typedef struct s_line
 
 typedef struct s_player
 {
-	float		x;
-	float		y;
-	float 		angle;
-	float		dir_x;
-	float		dir_y;
-	
+	double		x;
+	double		y;
+	double 		angle;
+	double		dir_x;
+	double		dir_y;
+	t_keys		keys;
 }	t_player;
 
 typedef struct s_data
@@ -113,30 +135,52 @@ typedef struct s_data
 	int         f;
 } t_data;
 
-typedef struct s_cub3d
+typedef struct s_ray
 {
-	t_data		*map;
+	int			id;
+	double		angle;
+	char		dir;
+	t_point		wall_hit;
+	double		distance;
+	int			was_hit_vertical;
+	int			facing_up;
+	int			facing_right;
+	unsigned int		wall_strip_height;
+	int		wall_top;
+	int		wall_bottom;
+}               t_ray;
+
+typedef struct s_game
+{
+	t_data		*data;
+	t_image   	frame_buffer;
 	void		*mlx_ptr;
 	void		*mlx_win;
-	t_xpm		*compas;
-	t_gc	*gc_lst;
-	//  
+	t_gc		*gc_lst;
+	t_xpm		*textures[4];
 }   t_game;
 
 /*		Singleton pattern	(Global like)	*/
 t_game		*instance(void);
 
+/* 		Raycasting	*/
+
+int		raycasting(t_game *game, t_ray *rays);
+
+double	normalize_angle(double angle);
+void    move_player(t_game *game);
 /*		Rendring		*/
+void 	render_wall(t_game *g, t_ray ray);
 void	render_map(t_game *game);
 void 	render_player(t_game *game, t_player *player);
-void	put_pixels(t_img *img, int color, int x, int y);
-void	my_mlx_pixel_put(t_img *data, int x, int y, int color);
+void	put_pixels(t_image *img, int color, int x, int y);
+void	my_mlx_pixel_put(t_image *data, int x, int y, int color);
 
 /*		hooks	*/
 int		game_events(int keycode, t_game *game);
 
 int		exit_game();
-
+int		rendering(void	*data);
 void    ft_error(t_game *cub3d,char *message);
 void    free_map(t_data *map);
 void    free_cub3d(t_game *cub3d);

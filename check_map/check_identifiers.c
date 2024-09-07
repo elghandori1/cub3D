@@ -71,19 +71,19 @@ void check_identifier(t_game *content)
     int i;
 
     i = 0;
-    initialize_identifiers(content->map);
-    while (content->map->content[i])
+    initialize_identifiers(content->data);
+    while (content->data->content[i])
     {
-        if (ft_strcmp(content->map->content[i], "\n") == 0 \
-            || ft_strncmp(content->map->content[i], "1", 1) == 0 \
-            || ft_strncmp(content->map->content[i], "0", 1) == 0)
+        if (ft_strcmp(content->data->content[i], "\n") == 0 \
+            || ft_strncmp(content->data->content[i], "1", 1) == 0 \
+            || ft_strncmp(content->data->content[i], "0", 1) == 0)
         {
             i++;
             continue;
         }
-        check_texture_identifiers(content->map, content->map->content[i],content);
-        check_color_identifiers(content->map, content->map->content[i],content);
+        check_texture_identifiers(content->data, content->data->content[i],content);
+        check_color_identifiers(content->data, content->data->content[i],content);
         i++;
     }
-    validate_identifiers(content->map,content);
+    validate_identifiers(content->data,content);
 }
