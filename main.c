@@ -70,6 +70,7 @@ void render_wall(t_game *g, t_ray ray)
     int tx, ty;
     int color;
     int *texture;
+	int distance_from_top;
     texture = g->textures[0];
 
     wall_h = (SIZE / ray.distance) * DISTANCE_PROJ_PLANE;
@@ -77,26 +78,22 @@ void render_wall(t_game *g, t_ray ray)
     start_y = (HEIGHT - wall_h) / 2;
     end_y = start_y + wall_h;
 
-    if (start_y < 0)
+	if (start_y < 0)
 		start_y = 0;
-    if (end_y >= HEIGHT)
+    if (end_y > HEIGHT)
 		end_y = HEIGHT - 1;
 
     if (ray.was_hit_vertical)
-        tx = (int)ray.wall_hit.y % 64;
+        tx = (int)ray.wall_hit.y % SIZE;
     else
-        tx = (int)ray.wall_hit.x % 64;
-
-    double step = 64.0 / wall_h;
-    
-    double tex_pos = (start_y - (HEIGHT - wall_h) / 2) * step;
+        tx = (int)ray.wall_hit.x % SIZE;
 
     for (int y = start_y; y <= end_y; y++)
     {
-        ty = (int)tex_pos & 63;
-        color = texture[ty * 64 + tx];
+		distance_from_top = y + (wall_h / 2) - (HEIGHT / 2);
+        ty = distance_from_top * ((float)64 / wall_h);
+        color = texture[(ty * 64) + tx];
         my_mlx_pixel_put(&g->frame_buffer, ray.id, y, color);
-        tex_pos += step;
     }
 
     for (int y = 0; y < start_y; y++)
@@ -174,3 +171,4 @@ int main(int ac, char **av)
 	free_cub3d(game);
 	return (0);
 }
+

@@ -12,7 +12,7 @@
 # include "../mlx/mlx_int.h"
 # include <stdbool.h>
 
-# define SIZE 32
+# define SIZE 64
 
 # define PI 3.14159265358
 # define PI_2 1.57079632679489661923
@@ -33,8 +33,8 @@
 # define WIDTH  1000
 # define HEIGHT 700
 # define FOV_RD 1.04719755119
-# define MOVE_SPEED 1
-# define ROTATION_SPEED .01
+# define MOVE_SPEED 2
+# define ROTATION_SPEED .02
 # define DISTANCE_PROJ_PLANE ((WIDTH / 2) / tan(FOV_RD / 2))
 
 typedef struct s_gc
