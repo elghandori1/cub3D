@@ -6,7 +6,7 @@ int wall_hit(double x, double y, t_game *g)
 		&& g->data->map[(int)(y / SIZE)][(int)(x / SIZE)] != '1'));
 }
 
-double ray_hor_intersect(t_game *g, t_ray *ray, t_point delta)
+t_point ray_hor_intersect(t_game *g, t_ray *ray, t_point delta)
 {
 	t_point	inter;
 	int		pixel;
@@ -19,10 +19,10 @@ double ray_hor_intersect(t_game *g, t_ray *ray, t_point delta)
 		inter.x += delta.x;
 		inter.y += delta.y;
 	}
-	return (sqrt(pow(inter.x - g->data->player.x, 2) + pow(inter.y - g->data->player.y, 2)));
+	return (inter);
 }
 
-double ray_ver_intersect(t_game *g, t_ray *ray, t_point delta)
+t_point ray_ver_intersect(t_game *g, t_ray *ray, t_point delta)
 {
 	t_point	inter;
 	int		pixel;
@@ -35,7 +35,7 @@ double ray_ver_intersect(t_game *g, t_ray *ray, t_point delta)
 		inter.x += delta.x;
 		inter.y += delta.y;
 	}
-	return (sqrt(pow(inter.x - g->data->player.x, 2) + pow(inter.y - g->data->player.y, 2)));
+	return (inter);
 }
 
 void	set_ray_direction(t_ray *ray)
@@ -52,25 +52,30 @@ void	set_ray_direction(t_ray *ray)
 
 void	cast_ray(t_game *g, t_ray *ray)
 {
-	t_point		hit;
+	t_point		vhit;
+	t_point		hhit;
 	t_point 	stp;
 
 	set_ray_direction(ray);
 	stp.x = 1 - 2 * !ray->facing_right; // -1 if ray is facing left, 1 if ray is facing right
 	stp.y = 1 - 2 * ray->facing_up; // -1 if ray is facing up, 1 if ray is facing down
-	hit.x = ray_ver_intersect(g, ray, (t_point){stp.x * SIZE, stp.x * SIZE * tan(ray->angle)});
-	hit.y = ray_hor_intersect(g, ray, (t_point){stp.y * SIZE / tan(ray->angle), stp.y * SIZE});
-	if (hit.x < hit.y)
+	vhit = ray_ver_intersect(g, ray, (t_point){stp.x * SIZE, stp.x * SIZE * tan(ray->angle)});
+	double dis1 = sqrt(pow(g->data->player.x - vhit.x, 2) + pow(g->data->player.y - vhit.y, 2));
+	hhit = ray_hor_intersect(g, ray, (t_point){stp.y * SIZE / tan(ray->angle), stp.y * SIZE});
+	double dis2 = sqrt(pow(g->data->player.x - hhit.x, 2) + pow(g->data->player.y - hhit.y, 2));
+	if (dis1 < dis2)
 	{
-		ray->distance = hit.x;
+		ray->distance = dis1;
 		ray->was_hit_vertical = 1;
-		ray->wall_hit.x = g->data->player.x + hit.x * cos(ray->angle);
+		ray->wall_hit.x = vhit.x;
+		ray->wall_hit.y = vhit.y;
 	}
 	else
 	{
-		ray->distance = hit.y;
+		ray->distance = dis2;
 		ray->was_hit_vertical = 0;
-		ray->wall_hit.y = g->data->player.y + hit.y * sin(ray->angle);
+		ray->wall_hit.x = hhit.x;
+		ray->wall_hit.y = hhit.y;
 	}
 	ray->distance *= cos(g->data->player.angle - ray->angle);
 }

@@ -68,7 +68,11 @@ void render_wall(t_game *g, t_ray ray)
 	double wall_h;
 	double bp;
 	double tp;
-
+	int tx;
+	int ty;
+	int color;
+	int *texture;
+	texture = g->textures[1];
 
 	wall_h = (SIZE / ray.distance) * ((WIDTH / 2) / tan(FOV_RD / 2));
 	bp = (HEIGHT / 2) + (wall_h / 2);
@@ -77,8 +81,19 @@ void render_wall(t_game *g, t_ray ray)
 		bp = HEIGHT;
 	if (tp <= 0)
 		tp = 0;
-	while (tp < bp)
-		my_mlx_pixel_put(&g->frame_buffer, ray.id, tp++, 0x808080);
+	// draw wall
+	if (ray.was_hit_vertical)
+		tx = (int)ray.wall_hit.y % SIZE;
+	else
+		tx = (int)ray.wall_hit.x % SIZE;
+	tx = (tx * 64) / SIZE;
+	while (bp < tp)
+	{
+		ty = (int)((bp - (HEIGHT / 2) + (wall_h / 2)) * (64 / wall_h));
+		ty = ty % 64;
+		color = 0xFFFFFFFF;
+		my_mlx_pixel_put(&g->frame_buffer, ray.id, bp++, color);
+	}
 	while (bp < HEIGHT)
 		my_mlx_pixel_put(&g->frame_buffer, ray.id, bp++, get_color(g->data->floor_color));
 	tp = 0;
@@ -108,10 +123,11 @@ int	*load_texture(t_game *game, char *path)
 	int		n;
 	void	*img;
 	int 	*addr;
+	
 	img = mlx_xpm_file_to_image(game->mlx_ptr, path, &n, &n);
 	if (!img)
 		ft_error(game, "Error\nTexture loading failed\n"); // need to check if all the mem are freed !!
-	addr = mlx_get_data_addr(img, &n, &n, &n);
+	addr = (int *)mlx_get_data_addr(img, &n, &n, &n);
 	return (addr);
 }
 
