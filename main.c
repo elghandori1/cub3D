@@ -65,40 +65,45 @@ int	get_color(t_color *color)
 
 void render_wall(t_game *g, t_ray ray)
 {
-	double wall_h;
-	double bp;
-	double tp;
-	int tx;
-	int ty;
-	int color;
-	int *texture;
-	texture = g->textures[1];
+    double wall_h;
+    int start_y, end_y;
+    int tx, ty;
+    int color;
+    int *texture;
+    texture = g->textures[0];
 
-	wall_h = (SIZE / ray.distance) * ((WIDTH / 2) / tan(FOV_RD / 2));
-	bp = (HEIGHT / 2) + (wall_h / 2);
-	tp = (HEIGHT / 2) - (wall_h / 2);
-	if (bp >= HEIGHT)
-		bp = HEIGHT;
-	if (tp <= 0)
-		tp = 0;
-	// draw wall
-	if (ray.was_hit_vertical)
-		tx = (int)ray.wall_hit.y % SIZE;
-	else
-		tx = (int)ray.wall_hit.x % SIZE;
-	tx = (tx * 64) / SIZE;
-	while (bp < tp)
-	{
-		ty = (int)((bp - (HEIGHT / 2) + (wall_h / 2)) * (64 / wall_h));
-		ty = ty % 64;
-		color = 0xFFFFFFFF;
-		my_mlx_pixel_put(&g->frame_buffer, ray.id, bp++, color);
-	}
-	while (bp < HEIGHT)
-		my_mlx_pixel_put(&g->frame_buffer, ray.id, bp++, get_color(g->data->floor_color));
-	tp = 0;
-	while (tp < (HEIGHT / 2) - (wall_h / 2))
-		my_mlx_pixel_put(&g->frame_buffer, ray.id, tp++, get_color(g->data->ciel_color));
+    wall_h = (SIZE / ray.distance) * DISTANCE_PROJ_PLANE;
+    
+    start_y = (HEIGHT - wall_h) / 2;
+    end_y = start_y + wall_h;
+
+    if (start_y < 0)
+		start_y = 0;
+    if (end_y >= HEIGHT)
+		end_y = HEIGHT - 1;
+
+    if (ray.was_hit_vertical)
+        tx = (int)ray.wall_hit.y % 64;
+    else
+        tx = (int)ray.wall_hit.x % 64;
+
+    double step = 64.0 / wall_h;
+    
+    double tex_pos = (start_y - (HEIGHT - wall_h) / 2) * step;
+
+    for (int y = start_y; y <= end_y; y++)
+    {
+        ty = (int)tex_pos & 63;
+        color = texture[ty * 64 + tx];
+        my_mlx_pixel_put(&g->frame_buffer, ray.id, y, color);
+        tex_pos += step;
+    }
+
+    for (int y = 0; y < start_y; y++)
+        my_mlx_pixel_put(&g->frame_buffer, ray.id, y, 0x80808080);
+
+    for (int y = end_y + 1; y < HEIGHT; y++)
+        my_mlx_pixel_put(&g->frame_buffer, ray.id, y, 0x80808080);
 }
 
 int rendering(void *data)

@@ -32,10 +32,9 @@
 
 # define WIDTH  1000
 # define HEIGHT 700
-# define FOV 78
 # define FOV_RD 1.04719755119
-# define MOVE_SPEED 1.2
-# define ROTATION_SPEED .03
+# define MOVE_SPEED 1
+# define ROTATION_SPEED .01
 # define DISTANCE_PROJ_PLANE ((WIDTH / 2) / tan(FOV_RD / 2))
 
 typedef struct s_gc
@@ -53,7 +52,7 @@ typedef struct xpm
 	int			y;
 	char		*path;
 	void		*img;
-	int		*addr;
+	int			*addr;
 }				t_xpm;
 
 typedef struct	s_image
