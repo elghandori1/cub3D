@@ -65,59 +65,63 @@ int	get_color(t_color *color)
 
 void render_wall(t_game *g, t_ray ray)
 {
-    double wall_h;
-    int start_y, end_y;
-    int tx, ty;
-    int color;
-    int *texture;
-	int distance_from_top;
-    texture = g->textures[0];
+	double wall_h;
+	int 	start_y, end_y;
+	int 	tx, ty;
+	int 	color;
+	int 	*texture;
+	double	distance_from_top;
 
-    wall_h = (SIZE / ray.distance) * DISTANCE_PROJ_PLANE;
-    
-    start_y = (HEIGHT - wall_h) / 2;
-    end_y = start_y + wall_h;
+	texture = g->textures[0];
+	wall_h = (SIZE / ray.distance) * DISTANCE_PROJ_PLANE;
+	start_y = (HEIGHT - (int)wall_h) / 2;
+	end_y = start_y + (int)wall_h;
 
 	if (start_y < 0)
 		start_y = 0;
-    if (end_y > HEIGHT)
-		end_y = HEIGHT - 1;
+	if (end_y > HEIGHT)
+		end_y = HEIGHT;
 
-    if (ray.was_hit_vertical)
-        tx = (int)ray.wall_hit.y % SIZE;
-    else
-        tx = (int)ray.wall_hit.x % SIZE;
-
-    for (int y = start_y; y <= end_y; y++)
-    {
+	if (ray.was_hit_vertical)
+		tx = (int)ray.wall_hit.y % SIZE;
+	else
+		tx = (int)ray.wall_hit.x % SIZE;
+	for (int y = 0; y < start_y; y++)
+	    my_mlx_pixel_put(&g->frame_buffer, ray.id, y, 0x80808080);
+	int y = start_y;
+	
+	while (y < end_y)
+	{
 		distance_from_top = y + (wall_h / 2) - (HEIGHT / 2);
-        ty = distance_from_top * ((float)64 / wall_h);
-        color = texture[(ty * 64) + tx];
-        my_mlx_pixel_put(&g->frame_buffer, ray.id, y, color);
-    }
+		ty = (distance_from_top * (64 / wall_h));
+		// printf("%f, %f,%d, %d\n", distance_from_top, wall_h, tx, ty);
+		if (((ty * 64) + tx) >= 0 && ((ty * 64) + tx) <= 64 * 64)
+			color = texture[(ty * 64) + tx];
+		my_mlx_pixel_put(&g->frame_buffer, ray.id, y, color);		
+		y++;
+	}
 
-    for (int y = 0; y < start_y; y++)
-        my_mlx_pixel_put(&g->frame_buffer, ray.id, y, 0x80808080);
 
-    for (int y = end_y + 1; y < HEIGHT; y++)
-        my_mlx_pixel_put(&g->frame_buffer, ray.id, y, 0x80808080);
+
+	for (int y = end_y + 1; y < HEIGHT; y++)
+	    my_mlx_pixel_put(&g->frame_buffer, ray.id, y, 0x80808080);
 }
 
 int rendering(void *data)
 {
-    t_game *game;
-    t_ray ray[WIDTH];
+	t_game *game;
+	t_ray ray[WIDTH];
 
-    game = (t_game *)data;
+	game = (t_game *)data;
 
 	ft_memset(game->frame_buffer.addr, 0, WIDTH * HEIGHT * 4);
 	move_player(game);
-    raycasting(game, ray);
+	raycasting(game, ray);
 	// render_map(game);
 	// render_player(game, &game->data->player);
-    mlx_put_image_to_window(game->mlx_ptr, game->mlx_win, game->frame_buffer.img, 0, 0);
+	mlx_put_image_to_window(game->mlx_ptr, game->mlx_win, game->frame_buffer.img, 0, 0);
 	// mlx_destroy_image(game->mlx_ptr, game->frame_buffer.img);
-    return (0);
+	return (0);
 }
 
 int	*load_texture(t_game *game, char *path)
