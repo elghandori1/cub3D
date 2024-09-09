@@ -71,6 +71,7 @@ void render_wall(t_game *g, t_ray ray)
 	int 	color;
 	int 	*texture;
 	double	distance_from_top;
+	int 	y;
 
 	texture = g->textures[0];
 	wall_h = (SIZE / ray.distance) * DISTANCE_PROJ_PLANE;
@@ -87,11 +88,15 @@ void render_wall(t_game *g, t_ray ray)
 	else
 		tx = (int)ray.wall_hit.x % SIZE;
 
-	for (int y = 0; y < start_y; y++)
+	y = 0;
+	while (y < start_y)
+	{
 	    my_mlx_pixel_put(&g->frame_buffer, ray.id, y, 0x80808080);
+		y++;
+	}
 	tx = (tx * 64) / 64;
-	int y = start_y;
 
+	y = start_y;
 	while (y < end_y)
 	{
 		distance_from_top = y + (wall_h / 2) - (HEIGHT / 2);
@@ -101,10 +106,12 @@ void render_wall(t_game *g, t_ray ray)
 		y++;
 	}
 
-
-
-	for (int y = end_y + 1; y < HEIGHT; y++)
-	    my_mlx_pixel_put(&g->frame_buffer, ray.id, y, 0x80808080);
+	y = end_y + 1;
+	while (y < HEIGHT)
+	{
+	    my_mlx_pixel_put(&g->frame_buffer, ray.id, y, 0x444444);
+		y++;
+	}
 }
 
 int rendering(void *data)
