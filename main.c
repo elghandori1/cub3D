@@ -86,17 +86,17 @@ void render_wall(t_game *g, t_ray ray)
 		tx = (int)ray.wall_hit.y % SIZE;
 	else
 		tx = (int)ray.wall_hit.x % SIZE;
+
 	for (int y = 0; y < start_y; y++)
 	    my_mlx_pixel_put(&g->frame_buffer, ray.id, y, 0x80808080);
+	tx = (tx * 64) / 64;
 	int y = start_y;
-	
+
 	while (y < end_y)
 	{
 		distance_from_top = y + (wall_h / 2) - (HEIGHT / 2);
-		ty = (distance_from_top * (64 / wall_h));
-		// printf("%f, %f,%d, %d\n", distance_from_top, wall_h, tx, ty);
-		if (((ty * 64) + tx) >= 0 && ((ty * 64) + tx) <= 64 * 64)
-			color = texture[(ty * 64) + tx];
+		ty = (int)(distance_from_top * (64 / wall_h)) % 64;
+		color = texture[ty * 64 + tx];
 		my_mlx_pixel_put(&g->frame_buffer, ray.id, y, color);		
 		y++;
 	}

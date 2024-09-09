@@ -30,11 +30,12 @@
 # define ALLOC 'A'
 # define FREE 'F'
 
+# define PLAYER_SIZE 10
 # define WIDTH  1000
 # define HEIGHT 700
 # define FOV_RD 1.04719755119
-# define MOVE_SPEED 2
-# define ROTATION_SPEED 0.01
+# define MOVE_SPEED 4
+# define ROTATION_SPEED 0.02
 # define DISTANCE_PROJ_PLANE ((WIDTH / 2) / tan(FOV_RD / 2))
 
 typedef struct s_gc
