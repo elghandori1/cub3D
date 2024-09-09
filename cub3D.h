@@ -30,9 +30,9 @@
 # define ALLOC 'A'
 # define FREE 'F'
 
-# define PLAYER_SIZE 10
-# define WIDTH  1000
-# define HEIGHT 700
+# define PLAYER_SIZE 0.2
+# define WIDTH  800
+# define HEIGHT 600
 # define FOV_RD 1.04719755119
 # define MOVE_SPEED 4
 # define ROTATION_SPEED 0.02

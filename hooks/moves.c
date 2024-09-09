@@ -1,9 +1,15 @@
 #include "../cub3D.h"
 
-int is_valid_position(t_game *game, int x, int y)
+int is_valid_position(t_game *game, double x, double y)
 {
-    // if (x > )
-    if (game->data->map[(unsigned)(y / SIZE)][(unsigned)(x / SIZE)] != '1')
+    char **map;
+
+    map = game->data->map;
+
+    int x1 = floor(x / SIZE);
+    int y1 = floor(y / SIZE);
+    
+    if (game->data->map[y1][(x1)] != '1')
         return (1);
     return (0);
 }
@@ -13,7 +19,7 @@ void move_player_up(t_game *game)
     double new_x = game->data->player.x + game->data->player.dir_x * MOVE_SPEED;
     double new_y = game->data->player.y + game->data->player.dir_y * MOVE_SPEED;
     
-    if (is_valid_position(game, (int)new_x, (int)new_y))
+    if (is_valid_position(game, new_x, new_y))
     {
         game->data->player.x = new_x;
         game->data->player.y = new_y;
@@ -25,7 +31,7 @@ void move_player_down(t_game *game)
     double new_x = game->data->player.x - game->data->player.dir_x * MOVE_SPEED;
     double new_y = game->data->player.y - game->data->player.dir_y * MOVE_SPEED;
     
-    if (is_valid_position(game, (int)new_x, (int)new_y))
+    if (is_valid_position(game, new_x, new_y))
     {
         game->data->player.x = new_x;
         game->data->player.y = new_y;
@@ -39,7 +45,7 @@ void move_player_right(t_game *game)
     double new_x = game->data->player.x + perpendicular_x * MOVE_SPEED;
     double new_y = game->data->player.y + perpendicular_y * MOVE_SPEED;
     
-    if (is_valid_position(game, (int)new_x, (int)new_y))
+    if (is_valid_position(game, new_x, new_y))
     {
         game->data->player.x = new_x;
         game->data->player.y = new_y;
@@ -54,7 +60,7 @@ void move_player_left(t_game *game)
     double new_x = game->data->player.x + perpendicular_x * MOVE_SPEED;
     double new_y = game->data->player.y + perpendicular_y * MOVE_SPEED;
     
-    if (is_valid_position(game, (int)new_x, (int)new_y))
+    if (is_valid_position(game, new_x, new_y))
     {
         game->data->player.x = new_x;
         game->data->player.y = new_y;
