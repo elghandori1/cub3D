@@ -100,8 +100,10 @@ void render_wall(t_game *g, t_ray ray)
 	while (y < end_y)
 	{
 		distance_from_top = y + (wall_h / 2) - (HEIGHT / 2);
-		ty = (int)(distance_from_top * (64 / wall_h)) % 64;
-		color = texture[ty * 64 + tx];
+		ty = (int)(distance_from_top * (64 / wall_h));
+		ty = ty % 64;
+		if (tx >= 0 && ty <= 64 && ((ty * 64) + tx) >= 0)
+			color = texture[(ty * 64) + tx];
 		my_mlx_pixel_put(&g->frame_buffer, ray.id, y, color);		
 		y++;
 	}
