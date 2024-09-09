@@ -2,7 +2,10 @@
 
 int is_valid_position(t_game *game, int x, int y)
 {
-    return (game->data->map[(y / SIZE)][(x / SIZE)] != '1');
+    // if (x > )
+    if (game->data->map[(unsigned)(y / SIZE)][(unsigned)(x / SIZE)] != '1')
+        return (1);
+    return (0);
 }
 
 void move_player_up(t_game *game)

@@ -12,7 +12,7 @@
 # include "../mlx/mlx_int.h"
 # include <stdbool.h>
 
-# define SIZE 32
+# define SIZE 64
 
 # define PI 3.14159265358
 # define PI_2 1.57079632679489661923
@@ -30,12 +30,12 @@
 # define ALLOC 'A'
 # define FREE 'F'
 
+# define PLAYER_SIZE 10
 # define WIDTH  1000
 # define HEIGHT 700
-# define FOV 78
 # define FOV_RD 1.04719755119
-# define MOVE_SPEED 1.2
-# define ROTATION_SPEED .03
+# define MOVE_SPEED 4
+# define ROTATION_SPEED 0.02
 # define DISTANCE_PROJ_PLANE ((WIDTH / 2) / tan(FOV_RD / 2))
 
 typedef struct s_gc
@@ -53,6 +53,7 @@ typedef struct xpm
 	int			y;
 	char		*path;
 	void		*img;
+	int			*addr;
 }				t_xpm;
 
 typedef struct	s_image
@@ -157,7 +158,7 @@ typedef struct s_game
 	void		*mlx_ptr;
 	void		*mlx_win;
 	t_gc		*gc_lst;
-	t_xpm		*textures[4];
+	int		*textures[4];
 }   t_game;
 
 /*		Singleton pattern	(Global like)	*/

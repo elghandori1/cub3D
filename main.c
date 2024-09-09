@@ -66,54 +66,82 @@ int	get_color(t_color *color)
 void render_wall(t_game *g, t_ray ray)
 {
 	double wall_h;
-	double bp;
-	double tp;
+	int 	start_y, end_y;
+	int 	tx, ty;
+	int 	color;
+	int 	*texture;
+	double	distance_from_top;
+	int 	y;
 
+	texture = g->textures[0];
+	wall_h = (SIZE / ray.distance) * DISTANCE_PROJ_PLANE;
+	start_y = (HEIGHT - (int)wall_h) / 2;
+	end_y = start_y + (int)wall_h;
 
-	wall_h = (SIZE / ray.distance) * ((WIDTH / 2) / tan(FOV_RD / 2));
-	bp = (HEIGHT / 2) + (wall_h / 2);
-	tp = (HEIGHT / 2) - (wall_h / 2);
-	if (bp >= HEIGHT)
-		bp = HEIGHT;
-	if (tp <= 0)
-		tp = 0;
-	while (tp < bp)
-		my_mlx_pixel_put(&g->frame_buffer, ray.id, tp++, 0x808080);
-	while (bp < HEIGHT)
-		my_mlx_pixel_put(&g->frame_buffer, ray.id, bp++, get_color(g->data->floor_color));
-	tp = 0;
-	while (tp < (HEIGHT / 2) - (wall_h / 2))
-		my_mlx_pixel_put(&g->frame_buffer, ray.id, tp++, get_color(g->data->ciel_color));
+	if (start_y < 0)
+		start_y = 0;
+	if (end_y > HEIGHT)
+		end_y = HEIGHT;
+
+	if (ray.was_hit_vertical)
+		tx = (int)ray.wall_hit.y % SIZE;
+	else
+		tx = (int)ray.wall_hit.x % SIZE;
+
+	y = 0;
+	while (y < start_y)
+	{
+	    my_mlx_pixel_put(&g->frame_buffer, ray.id, y, 0x80808080);
+		y++;
+	}
+	tx = (tx * 64) / 64;
+
+	y = start_y;
+	while (y < end_y)
+	{
+		distance_from_top = y + (wall_h / 2) - (HEIGHT / 2);
+		ty = (int)(distance_from_top * (64 / wall_h)) % 64;
+		color = texture[ty * 64 + tx];
+		my_mlx_pixel_put(&g->frame_buffer, ray.id, y, color);		
+		y++;
+	}
+
+	y = end_y + 1;
+	while (y < HEIGHT)
+	{
+	    my_mlx_pixel_put(&g->frame_buffer, ray.id, y, 0x444444);
+		y++;
+	}
 }
 
 int rendering(void *data)
 {
-    t_game *game;
-    t_ray ray[WIDTH];
+	t_game *game;
+	t_ray ray[WIDTH];
 
-    game = (t_game *)data;
+	game = (t_game *)data;
 
 	ft_memset(game->frame_buffer.addr, 0, WIDTH * HEIGHT * 4);
 	move_player(game);
-    raycasting(game, ray);
+	raycasting(game, ray);
 	// render_map(game);
 	// render_player(game, &game->data->player);
-    mlx_put_image_to_window(game->mlx_ptr, game->mlx_win, game->frame_buffer.img, 0, 0);
+	mlx_put_image_to_window(game->mlx_ptr, game->mlx_win, game->frame_buffer.img, 0, 0);
 	// mlx_destroy_image(game->mlx_ptr, game->frame_buffer.img);
-    return (0);
+	return (0);
 }
 
-t_xpm	*load_texture(t_game *game, char *path)
+int	*load_texture(t_game *game, char *path)
 {
-	t_xpm	*texture;
-
-	texture = malloc(sizeof(t_xpm));
-	if (!texture)
-		ft_error(game, "Error\n malloc failed in load texture\n");
-	texture->img = mlx_xpm_file_to_image(game->mlx_ptr, path, &texture->width, &texture->height);
-	if (!texture->img)
+	int		n;
+	void	*img;
+	int 	*addr;
+	
+	img = mlx_xpm_file_to_image(game->mlx_ptr, path, &n, &n);
+	if (!img)
 		ft_error(game, "Error\nTexture loading failed\n"); // need to check if all the mem are freed !!
-	return (texture);
+	addr = (int *)mlx_get_data_addr(img, &n, &n, &n);
+	return (addr);
 }
 
 void	load_textures(t_game *game)
@@ -154,3 +182,4 @@ int main(int ac, char **av)
 	free_cub3d(game);
 	return (0);
 }
+
