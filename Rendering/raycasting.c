@@ -66,16 +66,16 @@ void	cast_ray(t_game *g, t_ray *ray)
 	if (dis1 < dis2)
 	{
 		ray->distance = dis1;
+		ray->dir = "EW"[vhit.x < g->data->player.x];
 		ray->was_hit_vertical = 1;
-		ray->wall_hit.x = vhit.x;
-		ray->wall_hit.y = vhit.y;
+		ray->wall_hit = vhit;
 	}
 	else
 	{
+		ray->dir = "SN"[hhit.y < g->data->player.y];
 		ray->distance = dis2;
 		ray->was_hit_vertical = 0;
-		ray->wall_hit.x = hhit.x;
-		ray->wall_hit.y = hhit.y;
+		ray->wall_hit = hhit;
 	}
 	ray->distance *= cos(g->data->player.angle - ray->angle);
 }
