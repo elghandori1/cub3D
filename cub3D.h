@@ -31,10 +31,10 @@
 # define FREE 'F'
 
 # define PLAYER_SIZE 0.2
-# define WIDTH  800
-# define HEIGHT 600
+# define WIDTH  1200
+# define HEIGHT 1000
 # define FOV_RD 1.04719755119
-# define MOVE_SPEED 4
+# define MOVE_SPEED 3
 # define ROTATION_SPEED 0.04
 # define DISTANCE_PROJ_PLANE ((WIDTH / 2) / tan(FOV_RD / 2))
 # define WALL_BUFFER 0.1
@@ -179,7 +179,8 @@ void	put_pixels(t_image *img, int color, int x, int y);
 void	my_mlx_pixel_put(t_image *data, int x, int y, int color);
 
 /*		hooks	*/
-int		game_events(int keycode, t_game *game);
+int		key_press(int keycode, t_game *game);
+
 
 int		exit_game();
 int		rendering(void	*data);

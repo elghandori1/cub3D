@@ -44,7 +44,7 @@ int		key_release(int key, t_game *game)
 
 void	capture_hooks(t_game *game)
 {
-	mlx_hook(game->mlx_win, 2, (1L << 0), game_events, game);
+	mlx_hook(game->mlx_win, 2, (1L << 0), key_press, game);
 	mlx_hook(game->mlx_win, 3, (1L << 1), key_release, game);
 	mlx_hook(game->mlx_win, 17, (1L << 17), exit_game, NULL);
 }
@@ -62,6 +62,10 @@ int	get_color(t_color *color)
 {
 	return (color->r << 16 | color->g << 8 | color->b);
 }
+// int *set_wall_textures(t_game *g, t_ray *r)
+// {
+
+// }
 
 void render_wall(t_game *g, t_ray ray)
 {
@@ -74,7 +78,8 @@ void render_wall(t_game *g, t_ray ray)
 	int 	y;
 
 	// TODO : set textures based on wall directions
-	texture = g->textures[1];
+	// texture = set_wall_texture(g, ray);
+	texture = g->textures[3];
 	wall_h = (SIZE / ray.distance) * DISTANCE_PROJ_PLANE;
 	start_y = (HEIGHT - (int)wall_h) / 2;
 	end_y = start_y + (int)wall_h;
@@ -109,7 +114,7 @@ void render_wall(t_game *g, t_ray ray)
 		y++;
 	}
 
-	y = end_y + 1;
+	y = end_y;
 	while (y < HEIGHT)
 	{
 	    my_mlx_pixel_put(&g->frame_buffer, ray.id, y, get_color(g->data->floor_color));
@@ -119,12 +124,10 @@ void render_wall(t_game *g, t_ray ray)
 
 int rendering(void *data)
 {
-	t_game *game;
-	t_ray ray[WIDTH];
+	t_game	*game;
+	t_ray	ray[WIDTH];
 
 	game = (t_game *)data;
-
-	ft_memset(game->frame_buffer.addr, 0, WIDTH * HEIGHT * 4);
 	move_player(game);
 	raycasting(game, ray);
 	// render_map(game);
@@ -149,7 +152,7 @@ int	*load_texture(t_game *game, char *path)
 
 void	load_textures(t_game *game)
 {
-	game->textures[0] = load_texture(game, game->data->no_texture);
+	game->textures[0] = load_texture(game, game->data->no_texture); // i need to check for errors
 	game->textures[1] = load_texture(game, game->data->so_texture);
 	game->textures[2] = load_texture(game, game->data->we_texture);
 	game->textures[3] = load_texture(game, game->data->ea_texture);
