@@ -1,13 +1,14 @@
 
-WE      ./textures/WE.xpm
-SO      ./textures/SO.xpm
-NO      ./textures/NO.xpm
-EA      ./textures/White6.xpm
+WE      ./textures/wall2.xpm
+SO      ./textures/wall2.xpm
+NO      ./textures/wall2.xpm
+EA      ./textures/wall2.xpm
 
 
-C       135,206,235
+C       10,10,50
 
-F       65,152,10
+F       105,105,105
+
 
 
 1111111111111111111111111
