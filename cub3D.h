@@ -14,30 +14,32 @@
 
 # define SIZE 64
 
-# define PI 3.14159265358
-# define PI_2 1.57079632679489661923
-# define PI2 6.28318530718
+# define PI 	3.14159265358
+# define PI_2	1.57079632679489661923
+# define PI2	6.28318530718
 
 /* Keysyms from : keysymdef.h */
-# define ESC 0xff1b
-# define W 0x0077
-# define S 0x0073
-# define A 0x0061
-# define D 0x0064
-# define LEFT 65363
-# define RIGHT 65361
+# define ESC	0xff1b
+# define W		0x0077
+# define S		0x0073
+# define A		0x0061
+# define D		0x0064
+# define LEFT	65363
+# define RIGHT	65361
 
-# define ALLOC 'A'
-# define FREE 'F'
+# define ALLOC	'A'
+# define FREE	'F'
 
-# define PLAYER_SIZE 10
-# define WIDTH  1000
-# define HEIGHT 700
+# define PLAYER_SIZE 0.2
+# define PLAYER_COLOR 0xFF0000
+# define WIDTH  800
+# define HEIGHT 600
 # define FOV_RD 1.04719755119
-# define MOVE_SPEED 4
-# define ROTATION_SPEED 0.02
+# define MOVE_SPEED 1
+# define ROTATION_SPEED 0.01
 # define DISTANCE_PROJ_PLANE ((WIDTH / 2) / tan(FOV_RD / 2))
-
+# define WALL_BUFFER 0.1
+# define MAP_SCALE 10
 typedef struct s_gc
 {
 	void		*ptr;
@@ -59,7 +61,7 @@ typedef struct xpm
 typedef struct	s_image
 {
 	void	*img;
-	char	*addr;
+	void	*addr;
 	int		bits_per_pixel;
 	int		line_length;
 	int		endian;
@@ -158,7 +160,7 @@ typedef struct s_game
 	void		*mlx_ptr;
 	void		*mlx_win;
 	t_gc		*gc_lst;
-	int		*textures[4];
+	t_image		*textures[4];
 }   t_game;
 
 /*		Singleton pattern	(Global like)	*/
@@ -178,7 +180,8 @@ void	put_pixels(t_image *img, int color, int x, int y);
 void	my_mlx_pixel_put(t_image *data, int x, int y, int color);
 
 /*		hooks	*/
-int		game_events(int keycode, t_game *game);
+int		key_press(int keycode, t_game *game);
+
 
 int		exit_game();
 int		rendering(void	*data);
