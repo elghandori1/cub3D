@@ -34,11 +34,11 @@
 # define WIDTH  1200
 # define HEIGHT 1000
 # define FOV_RD 1.04719755119
-# define MOVE_SPEED 3
-# define ROTATION_SPEED 0.04
+# define MOVE_SPEED 1
+# define ROTATION_SPEED 0.01
 # define DISTANCE_PROJ_PLANE ((WIDTH / 2) / tan(FOV_RD / 2))
 # define WALL_BUFFER 0.1
-
+# define MAP_SCALE 10
 typedef struct s_gc
 {
 	void		*ptr;
