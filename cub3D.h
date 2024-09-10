@@ -35,8 +35,9 @@
 # define HEIGHT 600
 # define FOV_RD 1.04719755119
 # define MOVE_SPEED 4
-# define ROTATION_SPEED 0.02
+# define ROTATION_SPEED 0.04
 # define DISTANCE_PROJ_PLANE ((WIDTH / 2) / tan(FOV_RD / 2))
+# define WALL_BUFFER 0.1
 
 typedef struct s_gc
 {

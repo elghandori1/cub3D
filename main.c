@@ -73,7 +73,8 @@ void render_wall(t_game *g, t_ray ray)
 	double	distance_from_top;
 	int 	y;
 
-	texture = g->textures[0];
+	// TODO : set textures based on wall directions
+	texture = g->textures[1];
 	wall_h = (SIZE / ray.distance) * DISTANCE_PROJ_PLANE;
 	start_y = (HEIGHT - (int)wall_h) / 2;
 	end_y = start_y + (int)wall_h;
@@ -91,7 +92,7 @@ void render_wall(t_game *g, t_ray ray)
 	y = 0;
 	while (y < start_y)
 	{
-	    my_mlx_pixel_put(&g->frame_buffer, ray.id, y, 0x80808080);
+	    my_mlx_pixel_put(&g->frame_buffer, ray.id, y, get_color(g->data->ciel_color));
 		y++;
 	}
 	tx = (tx * 64) / 64;
@@ -111,7 +112,7 @@ void render_wall(t_game *g, t_ray ray)
 	y = end_y + 1;
 	while (y < HEIGHT)
 	{
-	    my_mlx_pixel_put(&g->frame_buffer, ray.id, y, 0x444444);
+	    my_mlx_pixel_put(&g->frame_buffer, ray.id, y, get_color(g->data->floor_color));
 		y++;
 	}
 }
