@@ -57,8 +57,8 @@ void	cast_ray(t_game *g, t_ray *ray)
 	t_point 	stp;
 
 	set_ray_direction(ray);
-	stp.x = 1 - 2 * !ray->facing_right; // -1 if ray is facing left, 1 if ray is facing right
-	stp.y = 1 - 2 * ray->facing_up; // -1 if ray is facing up, 1 if ray is facing down
+	stp.x = 1 - 2 * !ray->facing_right;
+	stp.y = 1 - 2 * ray->facing_up;
 	vhit = ray_ver_intersect(g, ray, (t_point){stp.x * SIZE, stp.x * SIZE * tan(ray->angle)});
 	double dis1 = sqrt(pow(g->data->player.x - vhit.x, 2) + pow(g->data->player.y - vhit.y, 2));
 	hhit = ray_hor_intersect(g, ray, (t_point){stp.y * SIZE / tan(ray->angle), stp.y * SIZE});
