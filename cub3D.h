@@ -14,7 +14,7 @@
 
 # define SIZE 64
 
-# define PI 	3.14159265358
+# define PI	3.14159265358
 # define PI_2	1.57079632679489661923
 # define PI2	6.28318530718
 
@@ -30,7 +30,15 @@
 # define ALLOC	'A'
 # define FREE	'F'
 
-# define PLAYER_SIZE 0.2
+#define GRAY_COLOR 0xAA404040
+#define BG_COLOR 0xAA808080
+#define WHITE_COLOR 0xAAFFFFFF
+
+
+#define MINIMAP_X_OFFSET 20
+#define MINIMAP_Y_OFFSET (HEIGHT - MINIMAP_SIZE * MAP_SCALE - 20)
+
+# define PLAYER_SIZE 0.3
 # define PLAYER_COLOR 0xFF0000
 # define WIDTH  800
 # define HEIGHT 600
@@ -38,8 +46,10 @@
 # define MOVE_SPEED 1
 # define ROTATION_SPEED 0.01
 # define DISTANCE_PROJ_PLANE ((WIDTH / 2) / tan(FOV_RD / 2))
-# define WALL_BUFFER 0.1
-# define MAP_SCALE 10
+# define WALL_BUFFER 0.2
+# define MAP_SCALE 9
+#define MINIMAP_SIZE 11
+
 typedef struct s_gc
 {
 	void		*ptr;
@@ -68,6 +78,7 @@ typedef struct	s_image
 	int		width;
 	int		height;
 }				t_image;
+
 
 typedef struct s_color
 {
@@ -153,15 +164,24 @@ typedef struct s_ray
 	int		wall_bottom;
 }               t_ray;
 
+typedef struct s_mouse
+{
+    int x;
+    int y;
+} t_mouse;
+
 typedef struct s_game
 {
-	t_data		*data;
-	t_image   	frame_buffer;
-	void		*mlx_ptr;
-	void		*mlx_win;
-	t_gc		*gc_lst;
-	t_image		*textures[4];
-}   t_game;
+    t_data      *data;
+    t_image     frame_buffer;
+    void        *mlx_ptr;
+    void        *mlx_win;
+    t_gc        *gc_lst;
+    int         minimap_radius;
+    t_image     *textures[4];
+    t_mouse     mouse;
+    t_player    player;
+} t_game;
 
 /*		Singleton pattern	(Global like)	*/
 t_game		*instance(void);
@@ -174,14 +194,13 @@ double	normalize_angle(double angle);
 void    move_player(t_game *game);
 /*		Rendring		*/
 void 	render_wall(t_game *g, t_ray ray);
-void	render_map(t_game *game);
-void 	render_player(t_game *game, t_player *player);
+void	minimap(t_game *game);
 void	put_pixels(t_image *img, int color, int x, int y);
 void	my_mlx_pixel_put(t_image *data, int x, int y, int color);
 
 /*		hooks	*/
 int		key_press(int keycode, t_game *game);
-
+int 	mouse_move(int x, int y, t_game *game);
 
 int		exit_game();
 int		rendering(void	*data);

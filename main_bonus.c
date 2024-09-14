@@ -1,6 +1,5 @@
 #include "cub3D.h"
 
-// TODO: i need to create a destructor incase of unexpected exit
 t_game  *instance(void)
 {
 	static  t_game game;
@@ -20,7 +19,6 @@ int	window_init(t_game *game)
 
 int		exit_game(void	*param)
 {
-	// free gc
 	printf("quit\n");
 	exit(1);
 }
@@ -44,6 +42,7 @@ int		key_release(int key, t_game *game)
 
 void	capture_hooks(t_game *game)
 {
+	mlx_hook(game->mlx_win, 6, 1L<<6, mouse_move, game);
 	mlx_hook(game->mlx_win, 2, (1L << 0), key_press, game);
 	mlx_hook(game->mlx_win, 3, (1L << 1), key_release, game);
 	mlx_hook(game->mlx_win, 17, (1L << 17), exit_game, NULL);
@@ -86,9 +85,7 @@ void render_wall(t_game *g, t_ray ray)
 	double	distance_from_top;
 	int 	y;
 
-	// TODO : set textures based on wall directions
 	texture = set_wall_texture(g, ray);
-	// texture = g->textures[3];
 	wall_h = (SIZE / ray.distance) * DISTANCE_PROJ_PLANE;
 	start_y = (HEIGHT / 2) - (wall_h / 2);
 	end_y = (HEIGHT / 2) + (wall_h / 2);
@@ -132,16 +129,15 @@ void render_wall(t_game *g, t_ray ray)
 
 int rendering(void *data)
 {
-	t_game	*game;
-	t_ray	ray[WIDTH];
+    t_game  *game;
+    t_ray   ray[WIDTH];
 
-	game = (t_game *)data;
-	move_player(game);
-	raycasting(game, ray);
-	// render_map(game);
-	// render_player(game, &game->data->player);
-	mlx_put_image_to_window(game->mlx_ptr, game->mlx_win, game->frame_buffer.img, 0, 0);
-	return (0);
+    game = (t_game *)data;
+    raycasting(game, ray);
+    move_player(game);
+	minimap(game);
+    mlx_put_image_to_window(game->mlx_ptr, game->mlx_win, game->frame_buffer.img, 0, 0);
+    return (0);
 }
 
 t_image	*load_texture(t_game *game, char *path)
@@ -154,14 +150,14 @@ t_image	*load_texture(t_game *game, char *path)
 		return (NULL);
 	img->img = mlx_xpm_file_to_image(game->mlx_ptr, path, &img->width, &img->height);
 	if (!img->img)
-		ft_error(game, "Error\nTexture loading failed\n"); // need to check if all the mem are freed !!
+		ft_error(game, "Error\nTexture loading failed\n");
 	img->addr = mlx_get_data_addr(img->img, &n, &n, &n);
 	return (img);
 }
 
 void	load_textures(t_game *game)
 {
-	game->textures[0] = load_texture(game, game->data->no_texture); // i need to check for errors
+	game->textures[0] = load_texture(game, game->data->no_texture);
 	game->textures[1] = load_texture(game, game->data->so_texture);
 	game->textures[2] = load_texture(game, game->data->we_texture);
 	game->textures[3] = load_texture(game, game->data->ea_texture);
@@ -188,7 +184,6 @@ int main(int ac, char **av)
 	check_map(&game, av[1]);
 	if (window_init(game))
 		return (EXIT_FAILURE);
-	
 	load_textures(game);
 	init_buffer(game);
 	capture_hooks(game);
