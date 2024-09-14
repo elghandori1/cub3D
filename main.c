@@ -138,8 +138,8 @@ int rendering(void *data)
 	game = (t_game *)data;
 	move_player(game);
 	raycasting(game, ray);
-	render_map(game);
-	render_player(game, &game->data->player);
+	// render_map(game);
+	// render_player(game, &game->data->player);
 	mlx_put_image_to_window(game->mlx_ptr, game->mlx_win, game->frame_buffer.img, 0, 0);
 	return (0);
 }

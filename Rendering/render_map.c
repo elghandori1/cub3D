@@ -10,7 +10,8 @@ void draw_square(t_image *img, int color, int x, int y)
         j = 0;
         while (j < MAP_SCALE)
         {
-            my_mlx_pixel_put(img, x * MAP_SCALE + j, y * MAP_SCALE + i, color);
+            my_mlx_pixel_put(img, MINIMAP_X_OFFSET + x * MAP_SCALE + j,
+                                  MINIMAP_Y_OFFSET + y * MAP_SCALE + i, color);
             j++;
         }
         i++;
@@ -31,8 +32,8 @@ void draw_player(t_game *game, int start_x, int start_y)
         while (j < MAP_SCALE * PLAYER_SIZE)
         {
             my_mlx_pixel_put(&game->frame_buffer,
-                             (player_minimap_x * MAP_SCALE - player_offset) + i,
-                             (player_minimap_y * MAP_SCALE - player_offset) + j,
+                             MINIMAP_X_OFFSET + (player_minimap_x * MAP_SCALE - player_offset) + i,
+                             MINIMAP_Y_OFFSET + (player_minimap_y * MAP_SCALE - player_offset) + j,
                              PLAYER_COLOR);
             j++;
         }
@@ -42,19 +43,17 @@ void draw_player(t_game *game, int start_x, int start_y)
 
 void minimap(t_game *game)
 {
-    int x, y;
-    int color;
-    int map_x, map_y;
-    int start_x, start_y;
-    t_player *player = &game->data->player;
+    int x, y,color,map_x;
+    int start_x, start_y, map_y;
+    t_player *player;
 
+    player =  &game->data->player;
     start_x = (player->x / SIZE) - MINIMAP_SIZE / 2;
     start_y = (player->y / SIZE) - MINIMAP_SIZE / 2;
-
-    y = 0;
+    y = 1;
     while (y < MINIMAP_SIZE)
     {
-        x = 0;
+        x = 1;
         while (x < MINIMAP_SIZE)
         {
             map_x = start_x + x;

@@ -30,10 +30,15 @@
 # define ALLOC	'A'
 # define FREE	'F'
 
+#define GRAY_COLOR 0xAA404040
+#define BG_COLOR 0xAA808080
+#define WHITE_COLOR 0xAAFFFFFF
 
-#define GRAY_COLOR 0x808080
 
-# define PLAYER_SIZE 0.2
+#define MINIMAP_X_OFFSET 20
+#define MINIMAP_Y_OFFSET (HEIGHT - MINIMAP_SIZE * MAP_SCALE - 20)
+
+# define PLAYER_SIZE 0.3
 # define PLAYER_COLOR 0xFF0000
 # define WIDTH  800
 # define HEIGHT 600
@@ -41,9 +46,9 @@
 # define MOVE_SPEED 1
 # define ROTATION_SPEED 0.01
 # define DISTANCE_PROJ_PLANE ((WIDTH / 2) / tan(FOV_RD / 2))
-# define WALL_BUFFER 0.1
-# define MAP_SCALE 8
-#define MINIMAP_SIZE 10
+# define WALL_BUFFER 0.2
+# define MAP_SCALE 9
+#define MINIMAP_SIZE 11
 
 typedef struct s_gc
 {
