@@ -1,4 +1,4 @@
-#include "../cub3D.h"
+#include "./../cub3D.h"
 
 void draw_square(t_image *img, int color, int x, int y)
 {
@@ -10,7 +10,7 @@ void draw_square(t_image *img, int color, int x, int y)
         j = 0;
         while (j < MAP_SCALE)
         {
-            my_mlx_pixel_put(img, MINIMAP_X_OFFSET + x * MAP_SCALE + j,
+            put_pixels(img, MINIMAP_X_OFFSET + x * MAP_SCALE + j,
                                   MINIMAP_Y_OFFSET + y * MAP_SCALE + i, color);
             j++;
         }
@@ -31,7 +31,7 @@ void draw_player(t_game *game, int start_x, int start_y)
         int j = 0;
         while (j < MAP_SCALE * PLAYER_SIZE)
         {
-            my_mlx_pixel_put(&game->frame_buffer,
+            put_pixels(&game->frame_buffer,
                              MINIMAP_X_OFFSET + (player_minimap_x * MAP_SCALE - player_offset) + i,
                              MINIMAP_Y_OFFSET + (player_minimap_y * MAP_SCALE - player_offset) + j,
                              PLAYER_COLOR);

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   gc.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sait-alo <sait-alo@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: moel-gha <moel-gha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 16:29:30 by sait-alo          #+#    #+#             */
-/*   Updated: 2024/08/19 23:24:53 by sait-alo         ###   ########.fr       */
+/*   Updated: 2024/09/15 12:52:17 by moel-gha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3D.h"
+#include "../cub3D.h"
 
 t_gc	*m_new_node(void *ptr)
 {

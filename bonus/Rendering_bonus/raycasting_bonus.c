@@ -1,4 +1,4 @@
-#include "../cub3D.h"
+#include "./../cub3D.h"
 
 int wall_hit(double x, double y, t_game *g)
 {

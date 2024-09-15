@@ -13,7 +13,6 @@ void mouse_movement(t_game *game, int old_x)
         game->data->player.angle += 2 * PI;
 }
 
-
 int mouse_move(int x, int y, t_game *game)
 {
     static int old_x = 0;

@@ -1,4 +1,4 @@
-#include "../cub3D.h"
+#include "./../cub3D.h"
 
 int is_valid_position(t_game *game, double x, double y)
 {

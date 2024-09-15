@@ -1,4 +1,4 @@
-#include "cub3D.h"
+#include "../cub3D.h"
 
 t_game  *instance(void)
 {
@@ -103,7 +103,7 @@ void render_wall(t_game *g, t_ray ray)
 	y = 0;
 	while (y < start_y)
 	{
-	    my_mlx_pixel_put(&g->frame_buffer, ray.id, y, get_color(g->data->ciel_color));
+	    put_pixels(&g->frame_buffer, ray.id, y, get_color(g->data->ciel_color));
 		y++;
 	}
 	tx = (tx * texture->width) / texture->width;
@@ -115,14 +115,14 @@ void render_wall(t_game *g, t_ray ray)
 		ty = ty % texture->width;
 		if (tx >= 0 && ty <= texture->width && ((ty * texture->width) + tx) >= 0)
 			color = addr[ty * texture->width + tx];
-		my_mlx_pixel_put(&g->frame_buffer, ray.id, y, color);		
+		put_pixels(&g->frame_buffer, ray.id, y, color);		
 		y++;
 	}
 
 	y = end_y;
 	while (y < HEIGHT)
 	{
-	    my_mlx_pixel_put(&g->frame_buffer, ray.id, y, get_color(g->data->floor_color));
+	    put_pixels(&g->frame_buffer, ray.id, y, get_color(g->data->floor_color));
 		y++;
 	}
 }

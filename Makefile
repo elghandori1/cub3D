@@ -2,17 +2,20 @@ NAME = cub3D
 NAME_BONUS = cub3D_bonus
 LIBFT = libft/libft.a
 
-SRC = main.c get_next_line.c \
+SRC = ./mandatory/main.c \
 	  $(addprefix ./check_map/, check_map.c  check_content.c check_texture.c \
-	  	get_textures.c helpers.c get_color.c get_map.c check_player.c check_identifiers.c check_walls.c fill_content_map.c)  \
-	  $(addprefix ./Rendering/, render_map.c  utils.c raycasting.c)\
-	  $(addprefix ./hooks/, moves.c)
+	  	get_textures.c helpers.c get_color.c get_map.c check_player.c check_identifiers.c check_walls.c fill_content_map.c helpe_free.c)  \
+	  $(addprefix ./mandatory/Rendering/, utils.c raycasting.c)\
+	  $(addprefix ./mandatory/hooks/, moves.c) \
+	  $(addprefix ./helpers/, gc.c get_next_line.c)
 
-SRC_BONUS = main_bonus.c get_next_line.c \
+SRC_BONUS = ./bonus/main_bonus.c \
 	  $(addprefix ./check_map/, check_map.c  check_content.c check_texture.c \
-	  	get_textures.c helpers.c get_color.c get_map.c check_player.c check_identifiers.c check_walls.c fill_content_map.c)  \
-	  $(addprefix ./Rendering/, render_map.c utils.c raycasting.c)\
-	  $(addprefix ./hooks/, moves.c move_mouse.c)
+	  	get_textures.c helpers.c get_color.c get_map.c check_player.c check_identifiers.c check_walls.c fill_content_map.c helpe_free.c)  \
+	  $(addprefix ./bonus/minimap_bonus/, minimap_bonus.c)\
+	  $(addprefix ./bonus/Rendering_bonus/, utils_bonus.c raycasting_bonus.c)\
+	  $(addprefix ./bonus/hooks_bonus/, moves_bonus.c mouse_bonus.c) \
+	  $(addprefix ./helpers/, gc.c get_next_line.c)
 
 OBJ = $(SRC:.c=.o)
 OBJSB = $(SRC_BONUS:.c=.o) 

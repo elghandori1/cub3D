@@ -195,8 +195,7 @@ void    move_player(t_game *game);
 /*		Rendring		*/
 void 	render_wall(t_game *g, t_ray ray);
 void	minimap(t_game *game);
-void	put_pixels(t_image *img, int color, int x, int y);
-void	my_mlx_pixel_put(t_image *data, int x, int y, int color);
+void	put_pixels(t_image *data, int x, int y, int color);
 
 /*		hooks	*/
 int		key_press(int keycode, t_game *game);
