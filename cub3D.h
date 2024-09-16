@@ -57,6 +57,13 @@ typedef struct s_gc
 	struct s_gc	*prev;
 }				t_gc;
 
+typedef struct s_color
+{
+	int	r;
+	int	g;
+	int	b;
+}	t_color;
+
 typedef struct xpm
 {
 	int			width;
@@ -78,14 +85,6 @@ typedef struct	s_image
 	int		width;
 	int		height;
 }				t_image;
-
-
-typedef struct s_color
-{
-	int	r;
-	int	g;
-	int	b;
-}	t_color;
 
 typedef struct s_keys
 {
@@ -134,6 +133,7 @@ typedef struct s_data
 	char        *no_texture;
 	char        *ea_texture;
 	char        *we_texture;
+	char		*image_start;
 	char        *f_color;
 	char        *c_color;
 	t_color     *ciel_color;
@@ -170,6 +170,7 @@ typedef struct s_mouse
     int y;
 } t_mouse;
 
+
 typedef struct s_game
 {
     t_data      *data;
@@ -177,11 +178,29 @@ typedef struct s_game
     void        *mlx_ptr;
     void        *mlx_win;
     t_gc        *gc_lst;
-    int         minimap_radius;
     t_image     *textures[4];
     t_mouse     mouse;
     t_player    player;
+	t_image     *start_image;
+	int         start_image_displayed;
 } t_game;
+
+typedef struct s_minimap
+{
+    int map_x;
+    int map_y;
+    int x;
+    int y;
+} t_minimap;
+
+typedef struct s_wall_data {
+    int start_y;
+    int end_y;
+    int tx;
+    double wall_h;
+    t_image *texture;
+} t_wall_data;
+
 
 /*		Singleton pattern	(Global like)	*/
 t_game		*instance(void);
@@ -189,15 +208,26 @@ t_game		*instance(void);
 /* 		Raycasting	*/
 
 int		raycasting(t_game *game, t_ray *rays);
-
+int		window_init(t_game *game);
+int		key_release(int key, t_game *game);
 double	normalize_angle(double angle);
 void    move_player(t_game *game);
+int		key_release(int key, t_game *game);
+t_image	*set_wall_texture(t_game *g, t_ray r);
 /*		Rendring		*/
 void 	render_wall(t_game *g, t_ray ray);
+void	set_ray_direction(t_ray *ray);
 void	minimap(t_game *game);
 void	put_pixels(t_image *data, int x, int y, int color);
+void 	render_wall(t_game *g, t_ray ray);
+t_image	*load_texture(t_game *game, char *path);
+void	load_textures(t_game *game);
+void	init_buffer(t_game *g);
+int		get_color(t_color *color);
+int wall_hit(double x, double y, t_game *g);
 
 /*		hooks	*/
+void	capture_hooks(t_game *game);
 int		key_press(int keycode, t_game *game);
 int 	mouse_move(int x, int y, t_game *game);
 

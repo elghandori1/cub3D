@@ -1,20 +1,15 @@
 #include "./../cub3D.h"
 
-int wall_hit(double x, double y, t_game *g)
-{
-	return ((x > 0 && x < g->data->width * SIZE && y > 0 && y < g->data->height * SIZE
-		&& g->data->map[(int)(y / SIZE)][(int)(x / SIZE)] != '1'));
-}
-
-t_point ray_hor_intersect(t_game *g, t_ray *ray, t_point delta)
+t_point	ray_hor_intersect(t_game *g, t_ray *ray, t_point delta)
 {
 	t_point	inter;
 	int		pixel;
 
 	inter.y = (int)(g->data->player.y / SIZE) * SIZE + (delta.y > 0) * SIZE;
-	inter.x = g->data->player.x + (inter.y - g->data->player.y) / tan(ray->angle);
+	inter.x = g->data->player.x + (inter.y - g->data->player.y)
+		/ tan(ray->angle);
 	pixel = 1 - 2 * !ray->facing_up;
-	while (wall_hit(inter.x , inter.y - pixel , g))
+	while (wall_hit(inter.x, inter.y - pixel, g))
 	{
 		inter.x += delta.x;
 		inter.y += delta.y;
@@ -22,13 +17,14 @@ t_point ray_hor_intersect(t_game *g, t_ray *ray, t_point delta)
 	return (inter);
 }
 
-t_point ray_ver_intersect(t_game *g, t_ray *ray, t_point delta)
+t_point	ray_ver_intersect(t_game *g, t_ray *ray, t_point delta)
 {
 	t_point	inter;
 	int		pixel;
 
 	inter.x = (int)(g->data->player.x / SIZE) * SIZE + (delta.x > 0) * SIZE;
-	inter.y = g->data->player.y + (inter.x - g->data->player.x) * tan(ray->angle);
+	inter.y = g->data->player.y + (inter.x - g->data->player.x)
+		* tan(ray->angle);
 	pixel = 1 - 2 * ray->facing_right;
 	while (wall_hit(inter.x - pixel, inter.y, g))
 	{
@@ -38,31 +34,25 @@ t_point ray_ver_intersect(t_game *g, t_ray *ray, t_point delta)
 	return (inter);
 }
 
-void	set_ray_direction(t_ray *ray)
-{
-	if (ray->angle > PI)
-		ray->facing_up = 1;
-	else
-		ray->facing_up = 0;
-	if ((ray->angle <= PI_2 || ray->angle > 3 * PI_2))
-		ray->facing_right = 1;
-	else
-		ray->facing_right = 0;
-}
-
 void	cast_ray(t_game *g, t_ray *ray)
 {
-	t_point		vhit;
-	t_point		hhit;
-	t_point 	stp;
+	t_point	vhit;
+	t_point	hhit;
+	t_point	stp;
+	double	dis1;
+	double	dis2;
 
 	set_ray_direction(ray);
 	stp.x = 1 - 2 * !ray->facing_right;
 	stp.y = 1 - 2 * ray->facing_up;
-	vhit = ray_ver_intersect(g, ray, (t_point){stp.x * SIZE, stp.x * SIZE * tan(ray->angle)});
-	double dis1 = sqrt(pow(g->data->player.x - vhit.x, 2) + pow(g->data->player.y - vhit.y, 2));
-	hhit = ray_hor_intersect(g, ray, (t_point){stp.y * SIZE / tan(ray->angle), stp.y * SIZE});
-	double dis2 = sqrt(pow(g->data->player.x - hhit.x, 2) + pow(g->data->player.y - hhit.y, 2));
+	vhit = ray_ver_intersect(g, ray, (t_point){stp.x * SIZE, stp.x * SIZE
+			* tan(ray->angle)});
+	dis1 = sqrt(pow(g->data->player.x - vhit.x, 2) + pow(g->data->player.y
+				- vhit.y, 2));
+	hhit = ray_hor_intersect(g, ray, (t_point){stp.y * SIZE / tan(ray->angle),
+			stp.y * SIZE});
+	dis2 = sqrt(pow(g->data->player.x - hhit.x, 2) + pow(g->data->player.y
+				- hhit.y, 2));
 	if (dis1 < dis2)
 	{
 		ray->distance = dis1;
@@ -80,16 +70,15 @@ void	cast_ray(t_game *g, t_ray *ray)
 	ray->distance *= cos(g->data->player.angle - ray->angle);
 }
 
-
-int raycasting(t_game *game, t_ray *rays)
+int	raycasting(t_game *game, t_ray *rays)
 {
-    int     ray;
-    double  ray_angle;
-	double anc;
+	int		ray;
+	double	ray_angle;
+	double	anc;
 
 	ray = -1;
 	anc = FOV_RD / WIDTH - 0.0001;
-    ray_angle = game->data->player.angle - (FOV_RD / 2);
+	ray_angle = game->data->player.angle - (FOV_RD / 2);
 	while (++ray < WIDTH)
 	{
 		rays[ray].id = ray;
@@ -99,5 +88,5 @@ int raycasting(t_game *game, t_ray *rays)
 		render_wall(game, rays[ray]);
 		ray_angle += anc;
 	}
-    return (0);
+	return (0);
 }
