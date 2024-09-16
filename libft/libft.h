@@ -78,6 +78,6 @@ char				*ft_strstr(char *haystack, char *needle);
 char				*ft_strcat(char *dest, char *src);
 long				ft_atol(const char *str);
 char				*ft_strjoin3(char *s1, char *s2);
-char 				*ft_strpbrk(const char *s, const char *accept);
+char				*ft_strpbrk(const char *s, const char *accept);
 
 #endif
