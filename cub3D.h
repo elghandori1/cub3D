@@ -50,12 +50,6 @@
 # define MAP_SCALE 9
 #define MINIMAP_SIZE 11
 
-typedef struct s_gc
-{
-	void		*ptr;
-	struct s_gc	*next;
-	struct s_gc	*prev;
-}				t_gc;
 
 typedef struct s_color
 {
@@ -102,15 +96,6 @@ typedef struct s_point
 	double	y;
 }	t_point;
 
-typedef struct s_line
-{
-	int	dx;
-	int	dy;
-	int	sx;
-	int	sy;
-	int	err;
-}	t_line;
-
 typedef struct s_player
 {
 	double		x;
@@ -123,9 +108,9 @@ typedef struct s_player
 
 typedef struct s_data
 {
-	size_t			height;
-	size_t			width;
-	char        **content;
+	size_t		height;
+	size_t		width;
+	char		**content;
 	char        **map;
 	char        **square_map;
 	char        *so_texture;
@@ -135,10 +120,9 @@ typedef struct s_data
 	char		*image_start;
 	char        *f_color;
 	char        *c_color;
-	t_color     *ciel_color;
-	t_color     *floor_color;
+	t_color     ciel_color;
+	t_color     floor_color;
 	t_player    player;
-	int         len;
 	int         we;
 	int         so; 
 	int         no; 
@@ -171,11 +155,10 @@ typedef struct s_mouse
 
 typedef struct s_game
 {
-    t_data      *data;
-    t_image     frame_buffer;
     void        *mlx_ptr;
     void        *mlx_win;
-    t_gc        *gc_lst;
+    t_data      *data;
+    t_image     frame_buffer;
     t_image     *textures[4];
     t_mouse     mouse;
     t_player    player;
@@ -221,8 +204,8 @@ void 	render_wall(t_game *g, t_ray ray);
 t_image	*load_texture(t_game *game, char *path);
 void	load_textures(t_game *game);
 void	init_buffer(t_game *g);
-int		get_color(t_color *color);
-int wall_hit(double x, double y, t_game *g);
+int		get_color(t_color color);
+int 	wall_hit(double x, double y, t_game *g);
 
 /*		hooks	*/
 void	capture_hooks(t_game *game);

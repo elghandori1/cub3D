@@ -18,10 +18,10 @@ void	free_colors(t_data *map)
 		free(map->c_color);
 	if (map->f_color)
 		free(map->f_color);
-	if (map->floor_color)
-		free(map->floor_color);
-	if (map->ciel_color)
-		free(map->ciel_color);
+	// if (map->floor_color)
+	// 	free(map->floor_color);
+	// if (map->ciel_color)
+	// 	free(map->ciel_color);
 }
 
 void	free_map_content(t_data *map)
@@ -31,7 +31,7 @@ void	free_map_content(t_data *map)
 	if (map->map && map->square_map)
 	{
 		i = 0;
-		while (i < map->len)
+		while (i < map->height)
 		{
 			free(map->map[i]);
 			free(map->square_map[i]);

@@ -13,7 +13,7 @@ int rendering(void *data)
 }
 int main(int ac, char **av)
 {
-	t_game game;
+	static t_game game;
 	
 	if (ac != 2)
 		return (ft_putstr_fd("Error:\nUSAGE:./cub3d maps/*.cub\n", 2), EXIT_FAILURE);

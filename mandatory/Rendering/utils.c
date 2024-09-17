@@ -9,9 +9,9 @@ double	normalize_angle(double angle)
 	return (angle);
 }
 
-int	get_color(t_color *color)
+int	get_color(t_color color)
 {
-	return (color->r << 16 | color->g << 8 | color->b);
+	return (color.r << 16 | color.g << 8 | color.b);
 }
 
 void	put_pixels(t_image *data, int x, int y, int color)
