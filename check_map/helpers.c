@@ -14,7 +14,6 @@ void	ft_error(t_game *cub3d, char *message)
 {
 	if (cub3d)
 		free_cub3d(cub3d);
-	ft_putstr_fd("Error\n", 2);
 	ft_putstr_fd(message, 2);
 	exit(EXIT_FAILURE);
 }

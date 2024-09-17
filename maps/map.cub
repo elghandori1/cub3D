@@ -4,11 +4,9 @@ SO      ./textures/wall2.xpm
 NO      ./textures/wall3.xpm
 EA      ./textures/wall4.xpm
 
-
 C       10,10,50
 
 F       105,105,105
-
 
 
 1111111111111111111111111

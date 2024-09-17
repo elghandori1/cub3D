@@ -73,10 +73,10 @@ void	minimap(t_game *game)
 	player = &game->data->player;
 	start_x = (player->x / SIZE) - MINIMAP_SIZE / 2;
 	start_y = (player->y / SIZE) - MINIMAP_SIZE / 2;
-	minimap.y = 1;
+	minimap.y = 0;
 	while (minimap.y < MINIMAP_SIZE)
 	{
-		minimap.x = 1;
+		minimap.x = 0;
 		while (minimap.x < MINIMAP_SIZE)
 		{
 			minimap.map_x = start_x + minimap.x;
