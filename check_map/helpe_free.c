@@ -71,5 +71,4 @@ void	free_cub3d(t_game *cub3d)
 		free_map(cub3d->data);
 		free(cub3d->data);
 	}
-	free(cub3d);
 }

@@ -13,7 +13,6 @@ void	check_content(t_game *cub3d)
 	get_textures(cub3d);
 	get_colors(cub3d);
 	get_data(cub3d);
-	cub3d->data->width = cub3d->data->max_len;
 	check_player(cub3d);
 	get_square_map(cub3d);
 	check_map_walls(cub3d);

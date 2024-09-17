@@ -15,25 +15,25 @@ void	check_texture_identifiers(t_data *map, char *line, t_game *cub3d)
 	if (ft_strncmp(line, "WE", 2) == 0)
 	{
 		if (map->we)
-			ft_error(cub3d, "Error: Duplicate WE identifier\n");
+			ft_error(cub3d, "Error\nDuplicate WE identifier\n");
 		map->we = 1;
 	}
 	else if (ft_strncmp(line, "SO", 2) == 0)
 	{
 		if (map->so)
-			ft_error(cub3d, "Error: Duplicate SO identifier\n");
+			ft_error(cub3d, "Error\nDuplicate SO identifier\n");
 		map->so = 1;
 	}
 	else if (ft_strncmp(line, "NO", 2) == 0)
 	{
 		if (map->no)
-			ft_error(cub3d, "Error: Duplicate NO identifier\n");
+			ft_error(cub3d, "Error\nDuplicate NO identifier\n");
 		map->no = 1;
 	}
 	else if (ft_strncmp(line, "EA", 2) == 0)
 	{
 		if (map->ea)
-			ft_error(cub3d, "Error: Duplicate EA identifier\n");
+			ft_error(cub3d, "Error\nDuplicate EA identifier\n");
 		map->ea = 1;
 	}
 }
@@ -67,7 +67,7 @@ void	check_identifier(t_game *content)
 	int	i;
 
 	i = 0;
-	initialize_identifiers(content->data);
+	// initialize_identifiers(content->data);
 	while (content->data->content[i])
 	{
 		if (ft_strcmp(content->data->content[i], "\n") == 0

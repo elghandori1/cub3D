@@ -43,7 +43,7 @@
 # define WIDTH  800
 # define HEIGHT 600
 # define FOV_RD 1.04719755119
-# define MOVE_SPEED 1
+# define MOVE_SPEED 5
 # define ROTATION_SPEED 0.01
 # define DISTANCE_PROJ_PLANE ((WIDTH / 2) / tan(FOV_RD / 2))
 # define WALL_BUFFER 0.2
@@ -123,9 +123,8 @@ typedef struct s_player
 
 typedef struct s_data
 {
-	int         rows;
-	int			height;
-	int			width;
+	size_t			height;
+	size_t			width;
 	char        **content;
 	char        **map;
 	char        **square_map;
@@ -139,7 +138,6 @@ typedef struct s_data
 	t_color     *ciel_color;
 	t_color     *floor_color;
 	t_player    player;
-	size_t      max_len;
 	int         len;
 	int         we;
 	int         so; 
@@ -240,7 +238,7 @@ void	ft_free(char	**arr);
 int		ft_search(char c, char *set);
 int		has_cub_extension(const char *f_name);
 int 	check_empty(char *f_name);
-void 	check_map(t_game **cub3d,char *file);
+void 	check_map(t_game *cub3d, char *file);
 char	*get_next_line(int fd);
 void 	fill_content_data(char *map_file, t_game *cub3d);
 void	check_content(t_game *cub3d);
