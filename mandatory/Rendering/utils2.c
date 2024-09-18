@@ -48,6 +48,11 @@ void	init_buffer(t_game *g)
 
 int	wall_hit(double x, double y, t_game *g)
 {
-	return ((x > 0 && x < g->data->width * SIZE && y > 0 && y < g->data->height
-			* SIZE && g->data->map[(int)(y / SIZE)][(int)(x / SIZE)] != '1'));
+
+	if (x >= 0 && x <= g->data->width * SIZE && y >= 0 && y <= g->data->height * SIZE)
+	{
+		if (g->data->square_map[(int)(y / SIZE)][(int)(x / SIZE)] != '1')
+			return (1);
+	}
+	return (0);
 }

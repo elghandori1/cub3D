@@ -15,7 +15,7 @@ int	check_right(t_game *cub3d, int i, int j)
 
 int	check_left(t_game *cub3d, int i, int j)
 {
-	while (j >= 0 && cub3d->data->map[i][j])
+	while (j >= 0 && cub3d->data->square_map[i][j])
 	{
 		if (cub3d->data->square_map[i][j] == '1')
 			return (1);

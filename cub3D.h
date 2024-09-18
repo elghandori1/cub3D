@@ -108,8 +108,8 @@ typedef struct s_player
 
 typedef struct s_data
 {
-	size_t		height;
-	size_t		width;
+	int			height;
+	int			width;
 	char		**content;
 	char        **map;
 	char        **square_map;
