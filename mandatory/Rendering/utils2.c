@@ -23,7 +23,7 @@ t_image	*load_texture(t_game *game, char *path)
 	img->img = mlx_xpm_file_to_image(game->mlx_ptr, path, &img->width,
 			&img->height);
 	if (!img->img)
-		ft_error(game, "Error\nTexture loading failed\n");
+		ft_error(game, " Texture loading failed\n");
 	img->addr = mlx_get_data_addr(img->img, &n, &n, &n);
 	return (img);
 }
@@ -40,7 +40,7 @@ void	init_buffer(t_game *g)
 {
 	g->frame_buffer.img = mlx_new_image(g->mlx_ptr, WIDTH, HEIGHT);
 	if (!g->frame_buffer.img)
-		ft_error(g, "Error\nFrame buffer creation failed\n");
+		ft_error(g, " Frame buffer creation failed\n");
 	g->frame_buffer.addr = mlx_get_data_addr(g->frame_buffer.img,
 			&g->frame_buffer.bits_per_pixel, &g->frame_buffer.line_length,
 			&g->frame_buffer.endian);

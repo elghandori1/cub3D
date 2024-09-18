@@ -17,7 +17,7 @@ int	init_game(t_game *game)
 	game->gun_anim.is_shooting = 0;
 	game->gun_anim.frame_delay = 20;
 	game->gun_anim.frame_counter = 0;
-	cs_init(NULL, 48000, 4096, NULL);
+	// cs_init(NULL, 48000, 4096, NULL);
 	mlx_mouse_hide(game->mlx_ptr, game->mlx_win); 
 	return (0);
 }
@@ -88,21 +88,21 @@ int rendering(void *data)
 	door_param = cs_sound_params_default();
 	door_param.pitch = 0.15;
 	door_param.volume = 1.;
-	if (game->gun_anim.is_shooting && !game->gun_anim.sound_played)
-    {
-		cs_play_sound(game->gun_sound, game->params);
-		game->gun_anim.sound_played = 1;			
-	}
-	if (game->door_open == 1 && !game->door_sound_played)
-	{
-		cs_play_sound(game->door_sound[0], door_param);
-		game->door_sound_played = 1;
-	}
-	else if (!game->door_open && !game->door_sound_played)
-	{
-		cs_play_sound(game->door_sound[1], door_param);
-		game->door_sound_played = 1;
-	}
+	// if (game->gun_anim.is_shooting && !game->gun_anim.sound_played)
+    // {
+	// 	cs_play_sound(game->gun_sound, game->params);
+	// 	game->gun_anim.sound_played = 1;			
+	// }
+	// if (game->door_open == 1 && !game->door_sound_played)
+	// {
+	// 	cs_play_sound(game->door_sound[0], door_param);
+	// 	game->door_sound_played = 1;
+	// }
+	// else if (!game->door_open && !game->door_sound_played)
+	// {
+	// 	cs_play_sound(game->door_sound[1], door_param);
+	// 	game->door_sound_played = 1;
+	// }
 	minimap(game);
 	put_gun_to_buffer(game->gun[game->gun_anim.curr_frame], (WIDTH / 2) - 250 , HEIGHT - 512, game);
 	mlx_put_image_to_window(game->mlx_ptr, game->mlx_win, game->frame_buffer.img, 0, 0);
@@ -121,26 +121,26 @@ int main(int ac, char **av)
 	if (init_game(&game))
 		return (EXIT_FAILURE);
 	
-	cs_audio_source_t *theme = cs_load_wav("./Textures/e1m1.wav", NULL);
-	game.gun_sound = cs_load_wav("./Textures/weapon_pistol.wav", NULL);
-	game.door_sound[0] = cs_load_wav("./Textures/door_open.wav", NULL);
-	game.door_sound[1] = cs_load_wav("./Textures/door_close.wav", NULL);
-	game.door_open = -1;
-	game.params =  cs_sound_params_default();
-	game.params.pitch = 0.55;
-	cs_sound_params_t theme_param;
+	// cs_audio_source_t *theme = cs_load_wav("../textures/e1m1.wav", NULL);
+	// game.gun_sound = cs_load_wav("../textures/weapon_pistol.wav", NULL);
+	// game.door_sound[0] = cs_load_wav("../textures/door_open.wav", NULL);
+	// game.door_sound[1] = cs_load_wav("../textures/door_close.wav", NULL);
+	// game.door_open = -1;
+	// game.params =  cs_sound_params_default();
+	// game.params.pitch = 0.55;
+	// cs_sound_params_t theme_param;
 
-	theme_param = cs_sound_params_default();
-	theme_param.looped = true;
-	cs_play_sound(theme, theme_param);
+	// theme_param = cs_sound_params_default();
+	// theme_param.looped = true;
+	// cs_play_sound(theme, theme_param);
 
 	capture_hooks(&game);
 	mlx_loop_hook(game.mlx_ptr, &rendering, &game);
 	mlx_loop(game.mlx_ptr);
 	
-	cs_free_audio_source(game.gun_sound);
-	cs_free_audio_source(theme);
-	cs_shutdown();
+	// cs_free_audio_source(game.gun_sound);
+	// cs_free_audio_source(theme);
+	// cs_shutdown();
 	free_cub3d(&game);
 	return (0);
 }

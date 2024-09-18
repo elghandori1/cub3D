@@ -101,7 +101,7 @@ void	get_data(t_game *cub3d)
 	len = map_len(cub3d->data->content);
 	len++;
 	if (len == 1)
-		ft_error(cub3d, "Error\nthe map does not exist!\n");
+		ft_error(cub3d, " the map does not exist!\n");
 	cub3d->data->map = malloc((len) * sizeof(char *));
 	cub3d->data->square_map = malloc((len) * sizeof(char *));
 	while (cub3d->data->content[i] && !map_start)

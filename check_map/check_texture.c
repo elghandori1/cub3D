@@ -19,7 +19,7 @@ void	check_extension_file(char *path, t_game *cub3d)
 		path++;
 	len = line_counter(path) - 4;
 	if (len < 0 || ft_strncmp(path + len, ext, 4) != 0)
-		ft_error(cub3d, "Error\nTexture file must have .xpm extension\n");
+		ft_error(cub3d, " Texture file must have .xpm extension\n");
 }
 
 void	check_textures_path(char **content, t_game *cub3d)
@@ -39,7 +39,7 @@ void	check_textures_path(char **content, t_game *cub3d)
 			if (path != NULL)
 				check_extension_file(path, cub3d);
 			else
-				ft_error(cub3d, "Error\nMissing texture file path\n");
+				ft_error(cub3d, " Missing texture file path\n");
 		}
 		i++;
 	}

@@ -23,7 +23,7 @@ t_image	*load_texture(t_game *game, char *path)
 	img->img = mlx_xpm_file_to_image(game->mlx_ptr, path, &img->width,
 			&img->height);
 	if (!img->img)
-		ft_error(game, "Error\nTexture loading failed\n");
+		ft_error(game, "Texture loading failed\n");
 	img->addr = mlx_get_data_addr(img->img, &n, &n, &n);
 	return (img);
 }
@@ -49,21 +49,22 @@ void	load_textures(t_game *game)
     int i;
 
     i = -1;
-	game->textures[0] = load_texture(game, game->data->no_texture); // i need to check for errors
+	game->textures[0] = load_texture(game, game->data->no_texture);
 	game->textures[1] = load_texture(game, game->data->so_texture);
 	game->textures[2] = load_texture(game, game->data->we_texture);
 	game->textures[3] = load_texture(game, game->data->ea_texture);
-    game->textures[4] = load_texture(game, "./Textures/shot-board.xpm");
-    game->door_texture = load_texture(game, "./Textures/door.xpm");
-    while (++i < 6)
-    {
-        if (game->textures[i] == NULL)
-            free_textures(game->textures);
-    }
-    game->gun[0] = load_texture(game, "./Textures/pis-0.xpm");
-    game->gun[1] = load_texture(game, "./Textures/pis-1.xpm");
-    game->gun[2] = load_texture(game, "./Textures/pis-2.xpm");
-    game->gun[3] = load_texture(game, "./Textures/pis-3.xpm");
+    game->textures[4] = load_texture(game, "./textures/shot-board.xpm");
+    game->door_texture = load_texture(game, "./textures/door.xpm");
+	printf("hi\n");
+    // while (++i < 5)
+    // {
+    //     if (game->textures[i] == NULL)
+    //         free_textures(game->textures);
+    // }
+    game->gun[0] = load_texture(game, "./textures/pis-0.xpm");
+    game->gun[1] = load_texture(game, "./textures/pis-1.xpm");
+    game->gun[2] = load_texture(game, "./textures/pis-2.xpm");
+    game->gun[3] = load_texture(game, "./textures/pis-3.xpm");
 }
 
 void	init_frame_buffer(t_game *g)

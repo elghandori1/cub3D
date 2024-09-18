@@ -46,7 +46,7 @@ void	get_colors(t_game *cub3d)
 	floor = ft_split(cub3d->data->f_color, ',');
 	if (check_colors_format(ciel, cub3d) != 3
 		|| check_colors_format(floor, cub3d) != 3)
-		ft_error(cub3d, "Error\ncolors must be in this form : R,G,B\n");
+		ft_error(cub3d, " colors must be in this form : R,G,B\n");
 	cub3d->data->floor_color.r = get_rgb(ft_atoi(floor[0]), cub3d);
 	cub3d->data->floor_color.g = get_rgb(ft_atoi(floor[1]), cub3d);
 	cub3d->data->floor_color.b = get_rgb(ft_atoi(floor[2]), cub3d);
