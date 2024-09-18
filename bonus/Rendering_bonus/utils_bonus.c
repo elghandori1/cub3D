@@ -1,4 +1,4 @@
-#include "./../cub3D.h"
+#include "../cub3d_bonus.h"
 
 double	normalize_angle(double angle)
 {
@@ -33,19 +33,19 @@ int	window_init(t_game *game)
 	return (0);
 }
 
-int	key_release(int key, t_game *game)
-{
-	if (key == W)
-		game->data->player.keys.up = 0;
-	if (key == S)
-		game->data->player.keys.down = 0;
-	if (key == A)
-		game->data->player.keys.left = 0;
-	if (key == D)
-		game->data->player.keys.right = 0;
-	if (key == LEFT)
-		game->data->player.keys.rot_left = 0;
-	if (key == RIGHT)
-		game->data->player.keys.rot_right = 0;
-	return (0);
-}
+// int	key_release(int key, t_game *game)
+// {
+// 	if (key == W)
+// 		game->data->player.keys.up = 0;
+// 	if (key == S)
+// 		game->data->player.keys.down = 0;
+// 	if (key == A)
+// 		game->data->player.keys.left = 0;
+// 	if (key == D)
+// 		game->data->player.keys.right = 0;
+// 	if (key == LEFT)
+// 		game->data->player.keys.rot_left = 0;
+// 	if (key == RIGHT)
+// 		game->data->player.keys.rot_right = 0;
+// 	return (0);
+// }

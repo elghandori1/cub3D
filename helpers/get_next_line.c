@@ -2,7 +2,7 @@
 
 char	*get_next_line(int fd)
 {
-	char	line[1000000];
+	char	line[10000];
 	char	buffer;
 	int		i;
 	int		ret;

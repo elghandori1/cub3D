@@ -1,4 +1,4 @@
-#include "./../cub3D.h"
+#include "../../cub3D.h"
 
 double	normalize_angle(double angle)
 {

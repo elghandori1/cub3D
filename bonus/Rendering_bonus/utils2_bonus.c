@@ -1,4 +1,4 @@
-#include "./../cub3D.h"
+#include "../cub3d_bonus.h"
 
 void	set_ray_direction(t_ray *ray)
 {
@@ -28,23 +28,55 @@ t_image	*load_texture(t_game *game, char *path)
 	return (img);
 }
 
+void    free_textures(t_image **textures)
+{
+    int i;
+
+    i = 0;
+    while (i < 4)
+    {
+        if (textures[i]->img)
+            free(textures[i]->img);
+        if (textures[i]->addr)
+            free(textures[i]->addr);
+        free(textures[i]);
+        i++;
+    }
+}
+
 void	load_textures(t_game *game)
 {
-	game->textures[0] = load_texture(game, game->data->no_texture);
+    int i;
+
+    i = -1;
+	game->textures[0] = load_texture(game, game->data->no_texture); // i need to check for errors
 	game->textures[1] = load_texture(game, game->data->so_texture);
 	game->textures[2] = load_texture(game, game->data->we_texture);
 	game->textures[3] = load_texture(game, game->data->ea_texture);
-	game->start_image = load_texture(game,"./textures/cub3d2.xpm");
+    game->textures[4] = load_texture(game, "./Textures/shot-board.xpm");
+    game->door_texture = load_texture(game, "./Textures/door.xpm");
+    while (++i < 6)
+    {
+        if (game->textures[i] == NULL)
+            free_textures(game->textures);
+    }
+    game->gun[0] = load_texture(game, "./Textures/pis-0.xpm");
+    game->gun[1] = load_texture(game, "./Textures/pis-1.xpm");
+    game->gun[2] = load_texture(game, "./Textures/pis-2.xpm");
+    game->gun[3] = load_texture(game, "./Textures/pis-3.xpm");
 }
 
-void	init_buffer(t_game *g)
+void	init_frame_buffer(t_game *g)
 {
 	g->frame_buffer.img = mlx_new_image(g->mlx_ptr, WIDTH, HEIGHT);
 	if (!g->frame_buffer.img)
-		ft_error(g, "Error\nFrame buffer creation failed\n");
+		ft_error(g ,"Frame buffer creation failed\n");
 	g->frame_buffer.addr = mlx_get_data_addr(g->frame_buffer.img,
-			&g->frame_buffer.bits_per_pixel, &g->frame_buffer.line_length,
-			&g->frame_buffer.endian);
+											&g->frame_buffer.bits_per_pixel,
+											&g->frame_buffer.line_length,
+											&g->frame_buffer.endian);
+    if (!g->frame_buffer.addr)
+        return (ft_error(g, "Failed to get data addr\n"));
 }
 
 int	wall_hit(double x, double y, t_game *g)

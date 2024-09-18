@@ -1,4 +1,4 @@
-#include "./../cub3D.h"
+#include "../../cub3D.h"
 
 t_image	*set_wall_texture(t_game *g, t_ray r)
 {
@@ -34,7 +34,7 @@ void	render_ceiling(t_game *g, int ray_id, int start_y)
 	int	y;
 
 	y = 0;
-	while (y < start_y)
+	while (y < start_y + 10)
 	{
 		put_pixels(&g->frame_buffer, ray_id, y, get_color(g->data->ciel_color));
 		y++;
@@ -48,7 +48,7 @@ void	render_wall_and_floor(t_game *g, t_ray ray, t_wall_data *wall_data)
 	double	distance_from_top;
 
 	int (ty), (color);
-	y = wall_data->start_y;
+	y = wall_data->start_y + 1;
 	addr = (int *)wall_data->texture->addr;
 	while (y < wall_data->end_y)
 	{
