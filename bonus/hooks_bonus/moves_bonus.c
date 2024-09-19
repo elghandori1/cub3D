@@ -169,35 +169,34 @@ int	gun_fire(int button, int x, int y, void *param)
 
 void mouse_movement(t_game *game, int new_x)
 {
-    float delta_x ;
+	float delta_x;
 	
 	delta_x = (new_x - (WIDTH / 2)) * MOUSE_SENSITIVITY;
-    game->data->player.angle += delta_x;
+	game->data->player.angle += delta_x;
 	mlx_mouse_move(game->mlx_ptr, game->mlx_win, WIDTH / 2, HEIGHT / 2);
 }
 
 int	mouse_move(int x, int y, void *param)
 {
-    t_game *game;
-	
+	t_game *game;
+
 	game = (t_game *)param;
-    if (x >= 0 && x < WIDTH && y >= 0 && y < HEIGHT)
-    {
-        game->mouse.x = x;
-        game->mouse.y = y;
+	if (x >= 0 && x < WIDTH && y >= 0 && y < HEIGHT)
+	{
+		game->mouse.x = x;
+		game->mouse.y = y;
 		if (game->mouse.show_mouse == 0)
-        	mouse_movement(game, x);
-    }
-    return (0);
+			mouse_movement(game, x);
+	}
+	return (0);
 }
 
-void capture_hooks(t_game *game)
+void	capture_hooks(t_game *game)
 {
-    mlx_hook(game->mlx_win, 2, (1L << 0), key_press, game);
-    mlx_hook(game->mlx_win, 3, (1L << 1), key_release, game);
-    mlx_hook(game->mlx_win, 17, (1L << 17), exit_game, NULL);
- 	mlx_hook(game->mlx_win, 6, (1L << 6), mouse_move, game);
-    mlx_mouse_hook(game->mlx_win, gun_fire, game);
-	mlx_mouse_move(game->mlx_ptr, game->mlx_win, WIDTH / 2, HEIGHT / 2);
-
+	mlx_hook(game->mlx_win, 2, (1L << 0), key_press, game);
+	mlx_hook(game->mlx_win, 3, (1L << 1), key_release, game);
+	mlx_hook(game->mlx_win, 17, (1L << 17), exit_game, NULL);
+	mlx_hook(game->mlx_win, 6, (1L << 6), mouse_move, game);
+	mlx_mouse_hook(game->mlx_win, gun_fire, game);
+	mlx_mouse_move(game->mlx_ptr, game->mlx_win, (WIDTH / 2), (HEIGHT / 2));
 }

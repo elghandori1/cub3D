@@ -172,7 +172,7 @@ t_image	*set_wall_texture(t_game *g, t_ray r);
 void 	render_wall(t_game *g, t_ray ray);
 void	set_ray_direction(t_ray *ray);
 void	put_pixels(t_image *data, int x, int y, int color);
-void 	render_wall(t_game *g, t_ray ray);
+// void 	render_wall(t_game *g, t_ray ray);
 t_image	*load_texture(t_game *game, char *path);
 void	load_textures(t_game *game);
 void	init_buffer(t_game *g);

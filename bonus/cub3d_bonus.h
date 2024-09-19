@@ -54,6 +54,10 @@
 # define MAP_SCALE 10
 # define MINIMAP_SIZE 15
 
+// Errors
+
+#define USAGE "Usage: ./cub3d_bonus maps/*.cub\n"
+
 typedef struct s_minimap
 {
     int map_x;
@@ -61,8 +65,6 @@ typedef struct s_minimap
     int x;
     int y;
 } t_minimap;
-
-
 
 typedef struct xpm
 {
@@ -155,8 +157,8 @@ typedef struct s_data
 	char        *we_texture;
 	char        *f_color;
 	char        *c_color;
-	t_color     *ciel_color;
-	t_color     *floor_color;
+	t_color     ciel_color;
+	t_color     floor_color;
 	t_player    player;
 	size_t      max_len;
 	int         len;
@@ -171,10 +173,8 @@ typedef struct s_data
 
 typedef	struct s_animation
 {
+	bool is_shooting;
 	int curr_frame;
-	int totat_frames;
-	int is_shooting;
-	int frame_delay;
 	int frame_counter;
 	int sound_played;
 }	t_animation;
@@ -186,23 +186,41 @@ typedef struct s_mouse
 	bool	show_mouse;
 } t_mouse;
 
-typedef struct s_game
+typedef struct s_audio
 {
-	t_data		*data;
-	t_image   	frame_buffer;
-	void		*mlx_ptr;
-	void		*mlx_win;
-	t_image		*textures[5];
-	t_image		*door_texture;
-	t_image		*gun[7];
-	t_mouse     mouse;
-	t_animation	gun_anim;
+	cs_audio_source_t *sound_track;
 	cs_audio_source_t *gun_sound;
 	cs_audio_source_t *door_sound[2];
-	cs_sound_params_t params;
-	int		door_open;
-	bool door_sound_played;
+	cs_sound_params_t gun_params;
+	cs_sound_params_t theme_params;
+	cs_sound_params_t door_params;
+}	t_audio;
+
+typedef struct s_game
+{
+	void		*mlx_ptr;
+	void		*mlx_win;
+	t_data		*data;
+	t_image   	frame_buffer;
+	t_image		*textures[6];
+	t_image		*door_texture;
+	t_image		*gun[4];
+	t_animation	gun_anim;
+	t_mouse     mouse;
+	t_audio  	audio;
+	bool 		door_sound_played;
+	int			door_open;
 }   t_game;
+
+enum	textures
+{
+	NORTH,
+	SOUTH,
+	WEST,
+	EAST,
+	SHOOT_BOARD,
+	DOOR,
+};
 
 /*		Singleton pattern	(Global like)	*/
 t_game		*instance(void);
@@ -216,27 +234,29 @@ void	cast_ray(t_game *g, t_ray *ray);
 double	normalize_angle(double angle);
 void    move_player(t_game *game);
 /*		Rendring		*/
-void 	render_wall_strip(t_game *g, t_ray ray);
+void	render_wall_strip(t_game *g, t_ray ray);
 void	render_map(t_game *game);
 void 	render_player(t_game *game, t_player *player);
 void	put_pixels(t_image *data, int x, int y, int color);
-void minimap(t_game *game);
+void 	minimap(t_game *game);
+
 /*		Hooks	*/
 void	capture_hooks(t_game *game);
 int		key_press(int keycode, t_game *game);
 int		key_release(int key, t_game *game);
-int mouse_move(int x, int y, void *param);
+int 	mouse_move(int x, int y, void *param);
 
-void	init_frame_buffer(t_game *g);
+void	initialize_frame(t_game *g);
+void	initialize_textures(t_game *game);
 
 /*		Load Textures	*/
-void	load_textures(t_game *game);
-int		get_color(t_color *color);
+
+int		get_color(t_color color);
 int		exit_game();
 int		rendering(void	*data);
 void    ft_error(t_game *cub3d,char *message);
 void    free_map(t_data *map);
-void    free_cub3d(t_game *cub3d);
+void    shutdown(t_game *cub3d);
 void	ft_free(char	**arr);
 int		ft_search(char c, char *set);
 int		has_cub_extension(const char *f_name);
@@ -259,4 +279,5 @@ void	get_square_map(t_game *cub3d);
 void    check_map_last(t_game *cub3d,char **check_last);
 void	check_player(t_game *cub3d);
 int	    check_walls(t_game *cub3d);
+
 #endif

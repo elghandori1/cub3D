@@ -29,11 +29,11 @@ int check_empty(char *f_name)
 void	check_map(t_game *cub3d, char *file)
 {
 	if (open(file, __O_DIRECTORY) != -1)
-		ft_error(NULL, " this is a directory!");
+		ft_error(NULL, "this is a directory!");
 	if (!has_cub_extension(file))
-		ft_error(NULL, " bad extension!");
+		ft_error(NULL, "bad extension!");
 	if (!check_empty(file))
-		ft_error(NULL, " empty file!");
+		ft_error(NULL, "empty file!");
 	cub3d->data = malloc(sizeof(t_data));
 	if (!cub3d->data)
 		ft_error(NULL, " Memory allocation failed!");

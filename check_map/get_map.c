@@ -6,7 +6,7 @@
 /*   By: sait-alo <sait-alo@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 20:55:45 by moel-gha          #+#    #+#             */
-/*   Updated: 2024/09/18 12:24:16 by sait-alo         ###   ########.fr       */
+/*   Updated: 2024/09/18 22:34:59 by sait-alo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,13 +66,13 @@ void	get_square_map(t_game *cub3d)
 		cub3d->data->square_map[i][cub3d->data->width - 1] = '\n';
 		ft_memset(cub3d->data->square_map[i], 'V', cub3d->data->width - 1);
 		tmp = 0;
-		j = 0;
 		while (cub3d->data->map[i][j] && cub3d->data->map[i][j] != '\n')
 		{
    			cub3d->data->square_map[i][j] = cub3d->data->map[i][j];
     		j++;
 		}
 		i++;
+		j = 0;
 	}
 	cub3d->data->square_map[i] = NULL;
 }
@@ -102,8 +102,8 @@ void	get_data(t_game *cub3d)
 	len++;
 	if (len == 1)
 		ft_error(cub3d, " the map does not exist!\n");
-	cub3d->data->map = malloc((len) * sizeof(char *));
-	cub3d->data->square_map = malloc((len) * sizeof(char *));
+	cub3d->data->map = malloc(len * sizeof(char *));
+	cub3d->data->square_map = malloc(len * sizeof(char *));
 	while (cub3d->data->content[i] && !map_start)
 	{
 		if (ft_search(cub3d->data->content[i][0], "01 "))

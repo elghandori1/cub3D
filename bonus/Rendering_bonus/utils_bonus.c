@@ -9,17 +9,20 @@ double	normalize_angle(double angle)
 	return (angle);
 }
 
-int	get_color(t_color *color)
+int	get_color(t_color color)
 {
-	return (color->r << 16 | color->g << 8 | color->b);
+	return (color.r << 16 | color.g << 8 | color.b);
 }
 
 void	put_pixels(t_image *data, int x, int y, int color)
 {
 	char	*dst;
-
-	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
-	*(unsigned int *)dst = color;
+    
+    if (x >= 0 && x < WIDTH && y >= 0 && y < HEIGHT)
+    {
+        dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
+        *(unsigned int*)dst = color;
+    }
 }
 
 int	window_init(t_game *game)

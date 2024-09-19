@@ -67,7 +67,7 @@ void	check_identifier(t_game *content)
 	int	i;
 
 	i = 0;
-	// initialize_identifiers(content->data);
+	initialize_identifiers(content->data);
 	while (content->data->content[i])
 	{
 		if (ft_strcmp(content->data->content[i], "\n") == 0
