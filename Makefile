@@ -21,7 +21,7 @@ OBJ = $(SRC:.c=.o)
 OBJSB = $(SRC_BONUS:.c=.o) 
 
 CC = cc
-CFLAGS = -g3 #-Wall -Wextra -Werror
+CFLAGS = -g3 -Ofast -march=native #-Wall -Wextra -Werror
 SDL = -I/usr/include/SDL2/ -I/usr/include
 
 %.o : %.c libft/libft.h cub3D.h

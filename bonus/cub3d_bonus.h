@@ -203,7 +203,6 @@ typedef struct s_game
 	t_data		*data;
 	t_image   	frame_buffer;
 	t_image		*textures[6];
-	t_image		*door_texture;
 	t_image		*gun[4];
 	t_animation	gun_anim;
 	t_mouse     mouse;
@@ -221,11 +220,6 @@ enum	textures
 	SHOOT_BOARD,
 	DOOR,
 };
-
-/*		Singleton pattern	(Global like)	*/
-t_game		*instance(void);
-
-
 
 /* 		Raycasting	*/
 

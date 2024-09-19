@@ -56,8 +56,12 @@ void	draw_minimap_cell(t_game *game, t_minimap *minimap)
 	{
 		if (game->data->map[minimap->map_y][minimap->map_x] == '1')
 			color = 0xFFFFFF;
+		else if (game->data->map[minimap->map_y][minimap->map_x] == 'R')
+			color = 0xFF0000;
+		else if (game->data->map[minimap->map_y][minimap->map_x] == 'D')
+			color = 0x964B00;
 		else
-			color = GRAY_COLOR;
+			color = 0x404040;
 	}
 	else
 		color = 0x404040;

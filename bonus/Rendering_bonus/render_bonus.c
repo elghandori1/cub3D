@@ -3,18 +3,18 @@
 static t_image	*set_wall_texture(t_game *g, t_ray r)
 {
 	if (r.hit_content == 'D')
-		return (g->door_texture);
-	if (r.hit_content == 'R')
-		return (g->textures[4]);
-	if (r.wall_dir == 'N')
-		return (g->textures[0]);
+		return (g->textures[DOOR]);
+	else if (r.hit_content == 'R')
+		return (g->textures[SHOOT_BOARD]);
+	else if (r.wall_dir == 'N')
+		return (g->textures[NORTH]);
 	else if (r.wall_dir == 'S')
-		return (g->textures[1]);
+		return (g->textures[SOUTH]);
 	else if (r.wall_dir == 'W')
-		return (g->textures[2]);
+		return (g->textures[WEST]);
 	else if (r.wall_dir == 'E')
-		return (g->textures[3]);
-	return (g->textures[0]);
+		return (g->textures[EAST]);
+	return (NULL);
 }
 
 void	render_wall_strip(t_game *g, t_ray ray)
