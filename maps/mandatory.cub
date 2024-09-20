@@ -1,8 +1,8 @@
 
-WE      ./textures/wall1.xpm
-SO      ./textures/wall2.xpm
-NO      ./textures/wall3.xpm
-EA      ./textures/wall4.xpm
+WE      ./resources/wall1.xpm
+SO      ./resources/wall2.xpm
+NO      ./resources/wall3.xpm
+EA      ./resources/wall4.xpm
 
 C       10,10,50
 F       105,105,105

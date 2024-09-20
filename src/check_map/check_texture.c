@@ -1,4 +1,4 @@
-#include "../../cub3D.h"
+#include "../cub3D.h"
 
 
 int	line_counter(char *str)
@@ -20,7 +20,7 @@ void	check_extension_file(char *path, t_game *cub3d)
 		path++;
 	len = line_counter(path) - 4;
 	if (len < 0 || ft_strncmp(path + len, ext, 4) != 0)
-		ft_error(cub3d, " Texture file must have .xpm extension\n");
+		ft_error(cub3d, "Texture file must have .xpm extension\n");
 }
 
 void	check_textures_path(char **content, t_game *cub3d)

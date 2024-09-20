@@ -13,51 +13,51 @@ t_image *load_texture(t_game *game, char *path)
 	if (!img->img)
 		ft_error(game, "Texture loading failed\n");
 	img->addr = mlx_get_data_addr(img->img, &n, &n, &n);
-    if (!img->addr)
-        return (NULL);
+	if (img->addr == NULL)
+		return (NULL);
 	return (img);
 }
 
 void    free_textures(t_image **textures)
 {
-    int i;
+	int i;
 
-    i = 0;
-    while (i < 6)
-    {
-        if (textures[i])
-        {
-            if (textures[i]->img)
-                free(textures[i]->img);
-            if (textures[i]->addr)
-                free(textures[i]->addr);
-            free(textures[i]);
-        }
-        i++;
-    }
+	i = 0;
+	while (i < 6)
+	{
+		if (textures[i])
+		{
+			if (textures[i]->img)
+				free(textures[i]->img);
+			if (textures[i]->addr)
+				free(textures[i]->addr);
+			free(textures[i]);
+		}
+		i++;
+	}
 }
 
 void	initialize_textures(t_game *game)
 {
-    int i;
+	int i;
 
 	game->textures[NORTH] = load_texture(game, game->data->no_texture);
 	game->textures[SOUTH] = load_texture(game, game->data->so_texture);
 	game->textures[WEST] = load_texture(game, game->data->we_texture);
 	game->textures[EAST] = load_texture(game, game->data->ea_texture);
-    game->textures[SHOOT_BOARD] = load_texture(game, "./resources/shot-board.xpm");
-    game->textures[DOOR] = load_texture(game, "./resources/door.xpm");
-    i = 0;
-    while (i < 6)
-    {
-        if (!game->textures[i])
-            free_textures(game->textures);
-        i++;
-    }
-    game->gun[0] = load_texture(game, "./resources/pis-0.xpm");
-    game->gun[1] = load_texture(game, "./resources/pis-1.xpm");
-    game->gun[2] = load_texture(game, "./resources/pis-2.xpm");
-    game->gun[3] = load_texture(game, "./resources/pis-3.xpm");
+	game->textures[SHOOT_BOARD] = load_texture(game, "./resources/shot-board.xpm");
+	game->textures[DOOR] = load_texture(game, "./resources/door.xpm");
+	i = 0;
+	while (i < 6)
+	{
+		if (!game->textures[i])
+			free_textures(game->textures);
+		i++;
+	}
+	game->gun[0] = load_texture(game, "./resources/pis-0.xpm");
+	game->gun[1] = load_texture(game, "./resources/pis-1.xpm");
+	game->gun[2] = load_texture(game, "./resources/pis-2.xpm");
+	game->gun[3] = load_texture(game, "./resources/pis-3.xpm");
 }
 
 void	initialize_frame(t_game *g)
@@ -69,7 +69,7 @@ void	initialize_frame(t_game *g)
 											&g->frame_buffer.bits_per_pixel,
 											&g->frame_buffer.line_length,
 											&g->frame_buffer.endian);
-    if (!g->frame_buffer.addr)
-        return (ft_error(g, "Failed to get data addr\n"));
+	if (!g->frame_buffer.addr)
+		return (ft_error(g, "Failed to get data addr\n"));
 }
 

@@ -11,12 +11,13 @@
 /* ************************************************************************** */
 
 #include "libft.h"
+#include "../../src/cub3D.h"
 
 void	*ft_calloc(size_t count, size_t size)
 {
 	void	*ptr;
 
-	ptr = malloc(count * size);
+	ptr = m_alloc(count * size, ALLOC);
 	if (!ptr)
 		return (ptr);
 	ft_bzero(ptr, count * size);

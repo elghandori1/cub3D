@@ -1,4 +1,4 @@
-#include "../../cub3D.h"
+#include "../cub3D.h"
 
 void	check_content(t_game *cub3d)
 {

@@ -8,9 +8,10 @@
 # include <string.h>
 # include <fcntl.h>
 # include <math.h>
-# include "../include/mlx/mlx.h"
-# include "../include/mlx/mlx_int.h"
-# include "cute_sound.h"
+# include "../mlx/mlx.h"
+# include "../mlx/mlx_int.h"
+# include "../include/cute_sound/cute_sound.h"
+# include <stdbool.h>
  #include <sys/time.h>
 
 # define WIDTH  1200 // 1024

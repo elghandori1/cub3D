@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../cub3D.h"
+#include "../cub3D.h"
 
 int	map_len(char **content)
 {
@@ -50,34 +50,31 @@ void	check_map_last(t_game *cub3d, char **check_last)
 	}
 }
 
-void	get_square_map(t_game *cub3d)
+void	get_square_map(t_game *g)
 {
 	int	i;
 	int	j;
-	int	tmp;
 
 	i = 0;
 	j = 0;
-	tmp = 0;
-	while (cub3d->data->map[i])
+	while (g->data->map[i])
 	{
-		cub3d->data->square_map[i] = malloc(sizeof(char) * (cub3d->data->width + 1));
-		cub3d->data->square_map[i][cub3d->data->width] = 0;
-		cub3d->data->square_map[i][cub3d->data->width - 1] = '\n';
-		ft_memset(cub3d->data->square_map[i], 'V', cub3d->data->width - 1);
-		tmp = 0;
-		while (cub3d->data->map[i][j] && cub3d->data->map[i][j] != '\n')
+		g->data->square_map[i] = m_alloc(sizeof(char) * (g->data->width + 1), ALLOC);
+		g->data->square_map[i][g->data->width] = 0;
+		g->data->square_map[i][g->data->width - 1] = '\n';
+		ft_memset(g->data->square_map[i], 'V', g->data->width - 1);
+		while (g->data->map[i][j] && g->data->map[i][j] != '\n')
 		{
-   			cub3d->data->square_map[i][j] = cub3d->data->map[i][j];
+   			g->data->square_map[i][j] = g->data->map[i][j];
     		j++;
 		}
 		i++;
 		j = 0;
 	}
-	cub3d->data->square_map[i] = NULL;
+	g->data->square_map[i] = NULL;
 }
 
-void	copy_map(t_game *cub3d, int i, int j, int len1)
+void	copy_map(t_game *cub3d, int i, int j)
 {
 	while (cub3d->data->content[i])
 	{
@@ -102,8 +99,8 @@ void	get_data(t_game *cub3d)
 	len++;
 	if (len == 1)
 		ft_error(cub3d, " the map does not exist!\n");
-	cub3d->data->map = malloc(len * sizeof(char *));
-	cub3d->data->square_map = malloc(len * sizeof(char *));
+	cub3d->data->map = m_alloc(len * sizeof(char *), ALLOC);
+	cub3d->data->square_map = m_alloc(len * sizeof(char *), ALLOC);
 	while (cub3d->data->content[i] && !map_start)
 	{
 		if (ft_search(cub3d->data->content[i][0], "01 "))
@@ -111,6 +108,6 @@ void	get_data(t_game *cub3d)
 		else
 			i++;
 	}
-	copy_map(cub3d, i, j, len);
+	copy_map(cub3d, i, j);
 	check_map_last(cub3d, cub3d->data->content);
 }

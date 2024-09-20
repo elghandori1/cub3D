@@ -1,4 +1,4 @@
-#include "../../cub3D.h"
+#include "../cub3D.h"
 
 int	check_colors_format(char **tab, t_game *cub3d)
 {

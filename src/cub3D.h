@@ -8,9 +8,9 @@
 # include <fcntl.h>
 # include <math.h>
 # include <stdbool.h>
-# include "include/mlx/mlx.h"
-# include "include/mlx/mlx_int.h"
-# include "include/libft/libft.h"
+# include "../mlx/mlx.h"
+# include "../mlx/mlx_int.h"
+# include "../include/libft/libft.h"
 
 # define SIZE 64
 
@@ -30,8 +30,8 @@
 # define ALLOC	'A'
 # define FREE	'F'
 
-# define WIDTH  1000
-# define HEIGHT 1000
+# define WIDTH  800
+# define HEIGHT 600
 # define FOV_RD 1.04719755119
 # define MOVE_SPEED 5
 # define ROTATION_SPEED 0.01
@@ -44,7 +44,6 @@ typedef struct s_color
 	int	g;
 	int	b;
 }	t_color;
-
 
 typedef struct xpm
 {
@@ -96,8 +95,8 @@ typedef struct s_player
 
 typedef struct s_data
 {
-	int			height;
-	int			width;
+	size_t			height;
+	size_t			width;
 	char		**content;
 	char        **map;
 	char        **square_map;
@@ -143,6 +142,12 @@ typedef struct s_wall_data
     t_image *texture;
 } t_wall_data;
 
+typedef struct s_gc
+{
+	void		*ptr;
+	struct s_gc	*next;
+	struct s_gc	*prev;
+}				t_gc;
 
 typedef struct s_game
 {
@@ -152,13 +157,14 @@ typedef struct s_game
     t_image     frame_buffer;
     t_image     *textures[4];
     t_player    player;
+	t_gc		*gc;
 } t_game;
 
 
 
 /*		Singleton pattern	(Global like)	*/
-t_game		*instance(void);
-
+t_game		*game_instance(void);
+void	*m_alloc(size_t __size, char todo);
 /* 		Raycasting	*/
 
 int		raycasting(t_game *game, t_ray *rays);
@@ -187,7 +193,7 @@ int		exit_game();
 int		rendering(void	*data);
 void    ft_error(t_game *cub3d,char *message);
 void    free_map(t_data *map);
-void    free_cub3d(t_game *cub3d);
+void    shutdown(t_game *cub3d);
 void	ft_free(char	**arr);
 int		ft_search(char c, char *set);
 int		has_cub_extension(const char *f_name);

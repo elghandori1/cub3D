@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "libft.h"
+#include "../../src/cub3D.h"
 
 char	*ft_strdup(const char *s1)
 {
@@ -19,7 +20,7 @@ char	*ft_strdup(const char *s1)
 	char	*dup;
 
 	s = ft_strlen(s1);
-	dup = (char *)malloc(s * sizeof(char) + 1);
+	dup = (char *)m_alloc(s * sizeof(char) + 1, ALLOC);
 	if (!dup)
 		return (NULL);
 	i = 0;

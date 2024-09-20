@@ -158,6 +158,8 @@ int	gun_fire(int button, int x, int y, void *param)
 {
 	t_game *game;
 
+	(void)x;
+	(void)y;
 	game = (t_game *)param;
 	if (button == 1)
 	{

@@ -1,4 +1,4 @@
-#include "../../cub3D.h"
+#include "../cub3D.h"
 
 t_point	ray_hor_intersect(t_game *g, t_ray *ray, t_point delta)
 {

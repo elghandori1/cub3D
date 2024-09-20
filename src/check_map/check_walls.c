@@ -1,4 +1,4 @@
-#include "../../cub3D.h"
+#include "../cub3D.h"
 
 
 int	check_right(t_game *cub3d, int i, int j)

@@ -1,4 +1,4 @@
-#include "../../cub3D.h"
+#include "../cub3D.h"
 
 void	ft_free(char **arr)
 {
@@ -12,8 +12,7 @@ void	ft_free(char **arr)
 
 void	ft_error(t_game *cub3d, char *message)
 {
-	if (cub3d)
-		free_cub3d(cub3d);
+	shutdown(cub3d);
 	ft_putstr_fd(" ", 2);
 	ft_putstr_fd(message, 2);
 	exit(EXIT_FAILURE);

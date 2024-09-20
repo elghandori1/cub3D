@@ -1,4 +1,4 @@
-#include "../../cub3D.h"
+#include "../cub3D.h"
 
 t_image	*set_wall_texture(t_game *g, t_ray r)
 {

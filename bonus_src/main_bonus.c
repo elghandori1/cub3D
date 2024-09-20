@@ -1,5 +1,5 @@
 #include "cub3d_bonus.h"
-#include "cute_sound.h"
+#include "../include/cute_sound/cute_sound.h"
 
 void	initialize_window(t_game *game)
 {

@@ -1,4 +1,11 @@
-#include "../cub3D.h"
+#include "cub3D.h"
+
+t_game	*game_instance(void)
+{
+	static t_game	game;
+
+	return (&game);
+}
 
 int rendering(void *data)
 {
@@ -13,18 +20,19 @@ int rendering(void *data)
 }
 int main(int ac, char **av)
 {
-	static t_game game;
+	t_game *game;
 	
 	if (ac != 2)
 		return (ft_putstr_fd("Error:\nUSAGE:./cub3d maps/*.cub\n", 2), EXIT_FAILURE);
-	check_map(&game, av[1]);
-	if (window_init(&game))
+	game = game_instance();
+	check_map(game, av[1]);
+	if (window_init(game))
 		return (EXIT_FAILURE);
-	load_textures(&game);
-	init_buffer(&game);
-	capture_hooks(&game);
-	mlx_loop_hook(game.mlx_ptr, &rendering, &game);
-	mlx_loop(game.mlx_ptr);
-	free_cub3d(&game);
+	load_textures(game);
+	init_buffer(game);
+	capture_hooks(game);
+	mlx_loop_hook(game->mlx_ptr, &rendering, game);
+	mlx_loop(game->mlx_ptr);
+	shutdown(game);
 	return (0);
 }

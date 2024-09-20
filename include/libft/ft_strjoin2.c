@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "libft.h"
+#include "../../src/cub3D.h"
 
 char	*ft_strjoin2(char *s1, char *s2)
 {
@@ -24,7 +25,7 @@ char	*ft_strjoin2(char *s1, char *s2)
 		return (NULL);
 	if (!s1)
 		return (ft_strdup(s2));
-	str = malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
+	str = m_alloc(ft_strlen(s1) + ft_strlen(s2) + 1, ALLOC);
 	if (!str)
 		return (NULL);
 	while (s1[i])

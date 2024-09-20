@@ -1,4 +1,4 @@
-#include "../../cub3D.h"
+#include "../cub3D.h"
 
 void	free_textures(t_data *map)
 {
@@ -26,7 +26,7 @@ void	free_colors(t_data *map)
 
 void	free_map_content(t_data *map)
 {
-	int	i;
+	size_t	i;
 
 	if (map->map && map->square_map)
 	{

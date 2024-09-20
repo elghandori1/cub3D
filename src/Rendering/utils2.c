@@ -1,4 +1,4 @@
-#include "../../cub3D.h"
+#include "../cub3D.h"
 
 void	set_ray_direction(t_ray *ray)
 {
@@ -17,9 +17,7 @@ t_image	*load_texture(t_game *game, char *path)
 	int		n;
 	t_image	*img;
 
-	img = malloc(sizeof(t_image));
-	if (!img)
-		return (NULL);
+	img = m_alloc(sizeof(t_image), ALLOC);
 	img->img = mlx_xpm_file_to_image(game->mlx_ptr, path, &img->width,
 			&img->height);
 	if (!img->img)

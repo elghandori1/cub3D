@@ -1,4 +1,4 @@
-#include "../../cub3D.h"
+#include "../cub3D.h"
 
 void	get_player(t_game *cub3d, int i, int j, int *found)
 {
