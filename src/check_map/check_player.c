@@ -14,8 +14,8 @@ void	get_player(t_game *cub3d, int i, int j, int *found)
 		cub3d->data->player.angle = 0;
 	else if (cub3d->data->map[i][j] == 'W')
 		cub3d->data->player.angle = PI;
-	// cub3d->data->player.dir_x = cos(cub3d->data->player.angle);
-	// cub3d->data->player.dir_y = sin(cub3d->data->player.angle);
+	cub3d->data->player.dir_x = cos(cub3d->data->player.angle);
+	cub3d->data->player.dir_y = sin(cub3d->data->player.angle);
 }
 
 void	check_player(t_game *cub3d)

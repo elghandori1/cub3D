@@ -32,7 +32,7 @@ int	window_init(t_game *game)
 		return (-1);
 	game->mlx_win = mlx_new_window(game->mlx_ptr, WIDTH, HEIGHT, "cub3D");
 	if (!game->mlx_win)
-		return (-1);
+		return (free(game->mlx_ptr), -1);
 	return (0);
 }
 

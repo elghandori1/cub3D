@@ -18,7 +18,7 @@ int rendering(void *data)
 	mlx_put_image_to_window(game->mlx_ptr, game->mlx_win, game->frame_buffer.img, 0, 0);
 	return (0);
 }
-int main(int ac, char **av)
+int	main(int ac, char **av)
 {
 	t_game *game;
 	
@@ -33,6 +33,6 @@ int main(int ac, char **av)
 	capture_hooks(game);
 	mlx_loop_hook(game->mlx_ptr, &rendering, game);
 	mlx_loop(game->mlx_ptr);
-	shutdown(game);
+	// shutdown(game);
 	return (0);
 }

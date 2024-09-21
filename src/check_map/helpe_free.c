@@ -68,7 +68,7 @@ void	free_cub3d(t_game *cub3d)
 		mlx_destroy_display(cub3d->mlx_ptr);
 	if (cub3d->data)
 	{
-		free_map(cub3d->data);
-		free(cub3d->data);
+		// free_map(cub3d->data);
+		// free(cub3d->data);
 	}
 }

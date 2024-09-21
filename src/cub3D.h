@@ -8,13 +8,13 @@
 # include <fcntl.h>
 # include <math.h>
 # include <stdbool.h>
-# include "../mlx/mlx.h"
-# include "../mlx/mlx_int.h"
+# include "../include/mlx/mlx.h"
+# include "../include/mlx/mlx_int.h"
 # include "../include/libft/libft.h"
 
-# define SIZE 64
+# define SIZE	 64
 
-# define PI	3.14159265358
+# define PI		3.14159265358
 # define PI_2	1.57079632679489661923
 # define PI2	6.28318530718
 
@@ -30,11 +30,11 @@
 # define ALLOC	'A'
 # define FREE	'F'
 
-# define WIDTH  800
-# define HEIGHT 600
+# define WIDTH  1000
+# define HEIGHT 1000
 # define FOV_RD 1.04719755119
-# define MOVE_SPEED 5
-# define ROTATION_SPEED 0.01
+# define MOVE_SPEED 3
+# define ROTATION_SPEED 0.02
 # define DISTANCE_PROJ_PLANE ((WIDTH / 2) / tan(FOV_RD / 2))
 # define WALL_BUFFER 0.2
 
@@ -164,7 +164,7 @@ typedef struct s_game
 
 /*		Singleton pattern	(Global like)	*/
 t_game		*game_instance(void);
-void	*m_alloc(size_t __size, char todo);
+void		*m_alloc(size_t __size, char todo);
 /* 		Raycasting	*/
 
 int		raycasting(t_game *game, t_ray *rays);

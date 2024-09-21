@@ -9,11 +9,9 @@ int rows_nbr(int fd)
     line = get_next_line(fd);
     while (line)
     {
-        free(line);
         line = get_next_line(fd);
         len++;
     }
-    free(line);
     return (len);
 }
 
