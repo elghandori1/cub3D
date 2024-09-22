@@ -1,23 +1,32 @@
 #include "cub3d_bonus.h"
-#include "../include/cute_sound/cute_sound.h"
+#include "cute_sound.h"
 
 void	initialize_window(t_game *game)
 {
 	game->mlx_ptr = mlx_init();
 	if (!game->mlx_ptr)
-		ft_error(NULL, "Failed to init mlx\n"); // to  check if it failes
+		ft_error(game, "Failed to init mlx\n");
 	game->mlx_win = mlx_new_window(game->mlx_ptr, WIDTH, HEIGHT, "cub3D");
 	if (!game->mlx_win)
-		return (free(game->mlx_ptr), ft_error(NULL, "Failed to init mlx\n"));
+		return (ft_error(game, "Failed to init mlx win\n"));
 }
 
 void	initialize_sound(t_game *game)
 {
-	cs_init(NULL, 48000, 4096, NULL);
+	if (cs_init(NULL, 48000, 4096, NULL))
+		return (ft_error(game, "Failed to init cs context\n"));
 	game->audio.sound_track = cs_load_wav("./resources/e1m1.wav", NULL);
+	if (!game->audio.sound_track)
+		return (ft_error(game, "Failed to load audio.sound_track\n"));
 	game->audio.gun_sound = cs_load_wav("./resources/weapon_pistol.wav", NULL);
+	if (!game->audio.gun_sound)
+		return (ft_error(game, "Failed to load audio.gun_sound\n"));
 	game->audio.door_sound[0] = cs_load_wav("./resources/door_open.wav", NULL);
+	if (!game->audio.door_sound[0])
+		return (ft_error(game, "Failed to load audio.door_sound[0]\n"));
 	game->audio.door_sound[1] = cs_load_wav("./resources/door_close.wav", NULL);
+	if (!game->audio.door_sound[1])
+		return (ft_error(game, "Failed to load audio.door_sound[1]\n"));
 	game->door_open = -1;
 	game->audio.gun_params =  cs_sound_params_default();
 	game->audio.gun_params.pitch = 0.55;
@@ -39,11 +48,9 @@ int	init_game(t_game *game)
 	return (0);
 }
 
-int		exit_game(void	*param)
+int		exit_game(t_game *game)
 {
-	// free gc
-	// ("quit\n");
-	(void)param;
+	shutdown2(game);
 	exit(1);
 }
 
@@ -114,7 +121,7 @@ int	rendering(void *data)
 	t_ray	ray[WIDTH];
 
 	game = (t_game *)data;
-	memset(ray, 0, sizeof(t_ray) * WIDTH);
+	ft_memset(ray, 0, sizeof(t_ray) * WIDTH);
 	mlx_clear_window(game->mlx_ptr, game->mlx_win);
 	move_player(game);
 	raycasting(game, ray);
@@ -128,19 +135,17 @@ int	rendering(void *data)
 }
 
 
-int main(int ac, char **av)
+int	main(int ac, char **av)
 {
-	t_game game;
+	static t_game game;
 	
 	if (ac != 2)
 		ft_error(NULL, USAGE);
-	game = (t_game){0};
 	check_map(&game, av[1]);
 	if (init_game(&game))
 		return (EXIT_FAILURE);
 	capture_hooks(&game);
 	mlx_loop_hook(game.mlx_ptr, &rendering, &game);
 	mlx_loop(game.mlx_ptr);
-	shutdown(&game);
 	return (0);
 }

@@ -50,32 +50,72 @@ void free_map(t_data *map)
         free(map->square_map);
     }
 }
-
-void shutdown(t_game *cub3d)
+void    free_sound_resources(t_game *game)
 {
-    m_alloc(0, FREE);
-    if (cub3d->mlx_win)
-        mlx_destroy_window(cub3d->mlx_ptr ,cub3d->mlx_win);
-    if (cub3d->mlx_ptr)
-        mlx_destroy_display(cub3d->mlx_ptr);  
-    if (cub3d->frame_buffer.img)
-        mlx_destroy_image(cub3d->mlx_ptr, cub3d->frame_buffer.img);
-    // if (cub3d->data)
-    // {
-    //     free_map(cub3d->data);
-    //     free(cub3d->data);
-    // }
-    cs_free_audio_source(cub3d->audio.sound_track);
-    cs_free_audio_source(cub3d->audio.gun_sound);
-    cs_free_audio_source(cub3d->audio.door_sound[0]);
-    cs_free_audio_source(cub3d->audio.door_sound[1]);
-    cs_shutdown();
+    if (game->audio.sound_track)
+    {
+        cs_stop_all_playing_sounds();
+        if (game->audio.door_sound[0])
+            cs_free_audio_source(game->audio.door_sound[0]);
+        if (game->audio.door_sound[1])
+            cs_free_audio_source(game->audio.door_sound[1]);
+        if (game->audio.gun_sound)
+            cs_free_audio_source(game->audio.gun_sound);
+        cs_free_audio_source(game->audio.sound_track);
+        cs_shutdown();
+        SDL_Quit();
+    }
+}
+void    free_textures_resources(t_game *game)
+{
+    int i;
+
+    i = -1;
+    while (++i < 6)
+    {
+        if (game->textures[i])
+        {
+             mlx_destroy_image(game->mlx_ptr, game->textures[i]->img);
+             free(game->textures[i]);
+        }
+    }
+    i = -1;
+    while (++i < 4)
+    {
+        if (game->gun[i])
+        {
+            mlx_destroy_image(game->mlx_ptr, game->gun[i]->img);
+            free(game->gun[i]);
+        }
+    }
+    if (game->frame_buffer.img)
+	    mlx_destroy_image(game->mlx_ptr, game->frame_buffer.img);
+}
+
+void    shutdown2(t_game *game)
+{
+	if (!game)
+		return ;
+    free_textures_resources(game);
+    free_sound_resources(game);
+	if (game->data)
+	{
+		free_map(game->data);
+		free(game->data);
+	}
+	if (game->mlx_win)
+		mlx_destroy_window(game->mlx_ptr, game->mlx_win);
+	if (game->mlx_ptr)
+    {
+        mlx_destroy_display(game->mlx_ptr);
+	    free(game->mlx_ptr);
+    }
 }
 
 void ft_error(t_game *cub3d, char *message)
 {
-    if (cub3d)
-        shutdown(cub3d);
+    printf("complied\n");
+    shutdown2(cub3d);
     ft_putstr_fd("Error\n",2);
     ft_putstr_fd(message,2);
     exit(EXIT_FAILURE);

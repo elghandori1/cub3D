@@ -15,6 +15,7 @@ char	*get_from_file(char **content, char *target)
 			tmp = ft_substr(content[i - 1] + ft_strlen(target), 0,
 					ft_strlen(content[i - 1] + ft_strlen(target)) - 1);
 			ret = ft_strtrim(tmp, " \t");
+			free(tmp);
 			return (ret);
 		}
 	}

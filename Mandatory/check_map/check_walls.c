@@ -1,6 +1,5 @@
 #include "../cub3D.h"
 
-
 int	check_right(t_game *cub3d, int i, int j)
 {
 	while (cub3d->data->square_map[i][j])

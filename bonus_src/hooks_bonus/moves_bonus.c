@@ -134,7 +134,7 @@ int	key_press(int keycode, t_game *game)
 
 	p = &game->data->player;
 	if (keycode == ESC)
-		exit_game();
+		exit_game(game);
 	if (keycode == LCTRL)
 		control_mouse(game);
 	if (keycode == W)
@@ -158,15 +158,13 @@ int	gun_fire(int button, int x, int y, void *param)
 {
 	t_game *game;
 
-	(void)x;
-	(void)y;
 	game = (t_game *)param;
 	if (button == 1)
 	{
 		game->gun_anim.is_shooting = 1;
 		game->gun_anim.sound_played = 0;
 	}
-	return 0;
+	return (0);
 }	
 
 void mouse_movement(t_game *game, int new_x)
@@ -197,7 +195,7 @@ void	capture_hooks(t_game *game)
 {
 	mlx_hook(game->mlx_win, 2, (1L << 0), key_press, game);
 	mlx_hook(game->mlx_win, 3, (1L << 1), key_release, game);
-	mlx_hook(game->mlx_win, 17, (1L << 17), exit_game, NULL);
+	mlx_hook(game->mlx_win, 17, (1L << 17), exit_game, game);
 	mlx_hook(game->mlx_win, 6, (1L << 6), mouse_move, game);
 	mlx_mouse_hook(game->mlx_win, gun_fire, game);
 	mlx_mouse_move(game->mlx_ptr, game->mlx_win, (WIDTH / 2), (HEIGHT / 2));

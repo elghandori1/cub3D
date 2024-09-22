@@ -8,15 +8,17 @@
 # include <fcntl.h>
 # include <math.h>
 # include <stdbool.h>
-# include "../include/mlx/mlx.h"
-# include "../include/mlx/mlx_int.h"
+# include "../mlx/mlx.h"
+# include "../mlx/mlx_int.h"
 # include "../include/libft/libft.h"
 
-# define SIZE	 64
+# define SIZE 64
 
-# define PI		3.14159265358
+# define PI	3.14159265358
 # define PI_2	1.57079632679489661923
 # define PI2	6.28318530718
+
+#define USAGE "Usage: ./cub3d_bonus maps/*.cub\n"
 
 /* Keysyms from : keysymdef.h */
 # define ESC	0xff1b
@@ -33,8 +35,8 @@
 # define WIDTH  1000
 # define HEIGHT 1000
 # define FOV_RD 1.04719755119
-# define MOVE_SPEED 3
-# define ROTATION_SPEED 0.02
+# define MOVE_SPEED 5
+# define ROTATION_SPEED 0.01
 # define DISTANCE_PROJ_PLANE ((WIDTH / 2) / tan(FOV_RD / 2))
 # define WALL_BUFFER 0.2
 
@@ -44,6 +46,7 @@ typedef struct s_color
 	int	g;
 	int	b;
 }	t_color;
+
 
 typedef struct xpm
 {
@@ -95,8 +98,8 @@ typedef struct s_player
 
 typedef struct s_data
 {
-	size_t			height;
-	size_t			width;
+	int			height;
+	int			width;
 	char		**content;
 	char        **map;
 	char        **square_map;
@@ -142,12 +145,6 @@ typedef struct s_wall_data
     t_image *texture;
 } t_wall_data;
 
-typedef struct s_gc
-{
-	void		*ptr;
-	struct s_gc	*next;
-	struct s_gc	*prev;
-}				t_gc;
 
 typedef struct s_game
 {
@@ -157,14 +154,10 @@ typedef struct s_game
     t_image     frame_buffer;
     t_image     *textures[4];
     t_player    player;
-	t_gc		*gc;
 } t_game;
 
 
 
-/*		Singleton pattern	(Global like)	*/
-t_game		*game_instance(void);
-void		*m_alloc(size_t __size, char todo);
 /* 		Raycasting	*/
 
 int		raycasting(t_game *game, t_ray *rays);
@@ -189,7 +182,7 @@ int 	wall_hit(double x, double y, t_game *g);
 void	capture_hooks(t_game *game);
 int		key_press(int keycode, t_game *game);
 
-int		exit_game();
+int		quit_game(t_game *game);
 int		rendering(void	*data);
 void    ft_error(t_game *cub3d,char *message);
 void    free_map(t_data *map);

@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "libft.h"
-#include "../../src/cub3D.h"
 
 static int	count_digit(int c)
 {
@@ -40,7 +39,7 @@ char	*ft_itoa(int n)
 	if (n == 0)
 		return (ft_strdup("0"));
 	len = count_digit(n);
-	str = m_alloc(len * sizeof(char), ALLOC);
+	str = malloc(len * sizeof(char));
 	if (!str)
 		return (NULL);
 	str[len - 1] = '\0';

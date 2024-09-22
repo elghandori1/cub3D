@@ -1,7 +1,6 @@
 #ifndef CUB3D_BONUS_H
 # define CUB3D_BONUS_H
 
-# include "../include/libft/libft.h"
 # include <unistd.h>
 # include <stdlib.h>
 # include <stdio.h>
@@ -10,13 +9,12 @@
 # include <math.h>
 # include "../mlx/mlx.h"
 # include "../mlx/mlx_int.h"
-# include "../include/cute_sound/cute_sound.h"
-# include <stdbool.h>
- #include <sys/time.h>
+# include "../include/libft/libft.h"
+# include "cute_sound.h"
+# include <SDL2/SDL.h>
 
 # define WIDTH  1200 // 1024
 # define HEIGHT 700 // 720
-# define FRAME_TARGET_TIME (1000 / 60)
 # define SIZE 	64
 # define PI 	3.14159265358
 # define PI_2	1.57079632679489661923
@@ -68,16 +66,6 @@ typedef struct s_minimap
     int y;
 } t_minimap;
 
-typedef struct xpm
-{
-	int			width;
-	int			height;
-	int			x;
-	int			y;
-	char		*path;
-	void		*img;
-	int			*addr;
-}				t_xpm;
 
 typedef struct	s_image
 {
@@ -223,6 +211,7 @@ enum	textures
 	DOOR,
 };
 
+void    end(t_game  *game);
 /* 		Raycasting	*/
 
 int		raycasting(t_game *game, t_ray *rays);
@@ -248,11 +237,11 @@ void	initialize_textures(t_game *game);
 /*		Load Textures	*/
 
 int		get_color(t_color color);
-int		exit_game();
+int		exit_game(t_game *game);
 int		rendering(void	*data);
 void    ft_error(t_game *cub3d,char *message);
 void    free_map(t_data *map);
-void    shutdown(t_game *cub3d);
+void    shutdown2(t_game *game);
 void	ft_free(char	**arr);
 int		ft_search(char c, char *set);
 int		has_cub_extension(const char *f_name);

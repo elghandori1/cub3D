@@ -18,11 +18,15 @@ t_image	*load_texture(t_game *game, char *path)
 	t_image	*img;
 
 	img = malloc(sizeof(t_image));
+	if (!img)
+		return (NULL);
 	img->img = mlx_xpm_file_to_image(game->mlx_ptr, path, &img->width,
 			&img->height);
 	if (!img->img)
-		ft_error(game, "Texture loading failed\n");
+		ft_error(game, " Texture loading failed\n");
 	img->addr = mlx_get_data_addr(img->img, &n, &n, &n);
+	if (img->addr == NULL)
+        return (NULL);
 	return (img);
 }
 

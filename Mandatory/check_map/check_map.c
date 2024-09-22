@@ -1,6 +1,5 @@
 #include "../cub3D.h"
 
-
 int	has_cub_extension(const char *f_name)
 {
 	const char	*ext;
@@ -36,7 +35,10 @@ void	check_map(t_game *cub3d, char *file)
 		ft_error(NULL, " bad extension!");
 	if (!check_empty(file))
 		ft_error(NULL, " empty file!");
-	cub3d->data = m_alloc(sizeof(t_data), ALLOC);
+	cub3d->data = malloc(sizeof(t_data));
+	if (!cub3d->data)
+		ft_error(NULL, " Memory allocation failed!");
+	ft_memset(cub3d->data, 0, sizeof(t_data));
 	fill_content_data(file, cub3d);
 	check_content(cub3d);
 }
