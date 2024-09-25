@@ -92,10 +92,8 @@ void    free_textures_resources(t_game *game)
 	    mlx_destroy_image(game->mlx_ptr, game->frame_buffer.img);
 }
 
-void    shutdown2(t_game *game)
+int    shutdown2(t_game *game)
 {
-	if (!game)
-		return ;
     free_textures_resources(game);
     free_sound_resources(game);
 	if (game->data)
@@ -110,15 +108,14 @@ void    shutdown2(t_game *game)
         mlx_destroy_display(game->mlx_ptr);
 	    free(game->mlx_ptr);
     }
+    return (exit(0), 0);
 }
 
-void ft_error(t_game *cub3d, char *message)
+void    ft_error(t_game *cub3d, char *message)
 {
-    printf("complied\n");
-    shutdown2(cub3d);
     ft_putstr_fd("Error\n",2);
     ft_putstr_fd(message,2);
-    exit(EXIT_FAILURE);
+    shutdown2(cub3d);
 }
 
 int	ft_search(char c, char *set)

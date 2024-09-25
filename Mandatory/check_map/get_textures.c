@@ -1,6 +1,5 @@
 #include "../cub3D.h"
 
-
 char	*get_from_file(char **content, char *target)
 {
 	int		i;

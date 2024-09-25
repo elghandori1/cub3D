@@ -30,7 +30,7 @@ t_image	*load_texture(t_game *game, char *path)
 	return (img);
 }
 
-void	load_textures(t_game *game)
+void	initialize_textures(t_game *game)
 {
 	game->textures[0] = load_texture(game, game->data->no_texture);
 	game->textures[1] = load_texture(game, game->data->so_texture);
@@ -38,14 +38,14 @@ void	load_textures(t_game *game)
 	game->textures[3] = load_texture(game, game->data->ea_texture);
 }
 
-void	init_buffer(t_game *g)
+void	initialize_frame_buffer(t_game *game)
 {
-	g->frame_buffer.img = mlx_new_image(g->mlx_ptr, WIDTH, HEIGHT);
-	if (!g->frame_buffer.img)
-		ft_error(g, " Frame buffer creation failed\n");
-	g->frame_buffer.addr = mlx_get_data_addr(g->frame_buffer.img,
-			&g->frame_buffer.bits_per_pixel, &g->frame_buffer.line_length,
-			&g->frame_buffer.endian);
+	game->frame_buffer.img = mlx_new_image(game->mlx_ptr, WIDTH, HEIGHT);
+	if (!game->frame_buffer.img)
+		ft_error(game, " Frame buffer creation failed\n");
+	game->frame_buffer.addr = mlx_get_data_addr(game->frame_buffer.img,
+			&game->frame_buffer.bits_per_pixel, &game->frame_buffer.line_length,
+			&game->frame_buffer.endian);
 }
 
 int	wall_hit(double x, double y, t_game *g)

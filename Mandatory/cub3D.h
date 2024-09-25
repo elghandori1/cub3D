@@ -18,9 +18,6 @@
 # define PI_2	1.57079632679489661923
 # define PI2	6.28318530718
 
-#define USAGE "Usage: ./cub3d_bonus maps/*.cub\n"
-
-/* Keysyms from : keysymdef.h */
 # define ESC	0xff1b
 # define W		0x0077
 # define S		0x0073
@@ -35,10 +32,11 @@
 # define WIDTH  1000
 # define HEIGHT 1000
 # define FOV_RD 1.04719755119
-# define MOVE_SPEED 5
+# define MOVE_SPEED 1
 # define ROTATION_SPEED 0.01
+# define WALL_BUFFER 0.1
 # define DISTANCE_PROJ_PLANE ((WIDTH / 2) / tan(FOV_RD / 2))
-# define WALL_BUFFER 0.2
+# define USAGE "Usage: ./cub3d_bonus maps/*.cub\n"
 
 typedef struct s_color
 {
@@ -46,18 +44,6 @@ typedef struct s_color
 	int	g;
 	int	b;
 }	t_color;
-
-
-typedef struct xpm
-{
-	int			width;
-	int			height;
-	int			x;
-	int			y;
-	char		*path;
-	void		*img;
-	int			*addr;
-}				t_xpm;
 
 typedef struct	s_image
 {
@@ -72,12 +58,12 @@ typedef struct	s_image
 
 typedef struct s_keys
 {
-	int up;
-	int down;
-	int left;
-	int right;
-	int rot_left;
-	int rot_right;
+	int		up;
+	int		down;
+	int		left;
+	int		right;
+	int		rot_left;
+	int		rot_right;
 }	t_keys;
 
 typedef struct s_point
@@ -154,27 +140,30 @@ typedef struct s_game
     t_image     frame_buffer;
     t_image     *textures[4];
     t_player    player;
+	t_ray		ray[WIDTH];
 } t_game;
 
 
+/*	init	*/
+
+void	initialize_window(t_game *game);
+void	initialize_textures(t_game *game);
+void	initialize_frame_buffer(t_game *game);
 
 /* 		Raycasting	*/
 
 int		raycasting(t_game *game, t_ray *rays);
-int		window_init(t_game *game);
 int		key_release(int key, t_game *game);
 double	normalize_angle(double angle);
 void    move_player(t_game *game);
 int		key_release(int key, t_game *game);
 t_image	*set_wall_texture(t_game *g, t_ray r);
+
 /*		Rendring		*/
 void 	render_wall(t_game *g, t_ray ray);
 void	set_ray_direction(t_ray *ray);
 void	put_pixels(t_image *data, int x, int y, int color);
-// void 	render_wall(t_game *g, t_ray ray);
 t_image	*load_texture(t_game *game, char *path);
-void	load_textures(t_game *game);
-void	init_buffer(t_game *g);
 int		get_color(t_color color);
 int 	wall_hit(double x, double y, t_game *g);
 
@@ -182,11 +171,20 @@ int 	wall_hit(double x, double y, t_game *g);
 void	capture_hooks(t_game *game);
 int		key_press(int keycode, t_game *game);
 
+
+void 	free_textures(t_data *map);
+
+void	get_square_map(t_game *cub3d);
+void	map_borders(t_game *cub3d);
+int		check_row(char *row);
+void	check_map_height(t_game *cub3d);
+
 int		quit_game(t_game *game);
 int		rendering(void	*data);
 void    ft_error(t_game *cub3d,char *message);
 void    free_map(t_data *map);
 void    shutdown(t_game *cub3d);
+int		turnoff(t_game *game);
 void	ft_free(char	**arr);
 int		ft_search(char c, char *set);
 int		has_cub_extension(const char *f_name);

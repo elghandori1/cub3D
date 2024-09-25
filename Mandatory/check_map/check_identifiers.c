@@ -1,15 +1,5 @@
 #include "../cub3D.h"
 
-void	initialize_identifiers(t_data *map)
-{
-	map->we = 0;
-	map->so = 0;
-	map->no = 0;
-	map->ea = 0;
-	map->c = 0;
-	map->f = 0;
-}
-
 void	check_texture_identifiers(t_data *map, char *line, t_game *cub3d)
 {
 	if (ft_strncmp(line, "WE", 2) == 0)
@@ -67,7 +57,6 @@ void	check_identifier(t_game *content)
 	int	i;
 
 	i = 0;
-	initialize_identifiers(content->data);
 	while (content->data->content[i])
 	{
 		if (ft_strcmp(content->data->content[i], "\n") == 0

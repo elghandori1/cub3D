@@ -1,10 +1,5 @@
 #include "../cub3D.h"
 
-int	quit_game(t_game *game)
-{
-	shutdown(game);
-	exit(1);
-}
 
 int	key_press(int keycode, t_game *game)
 {
@@ -12,7 +7,7 @@ int	key_press(int keycode, t_game *game)
 
 	p = &game->data->player;
 	if (keycode == ESC)
-		quit_game(game);
+		turnoff(game);
 	if (keycode == W)
 		p->keys.up = 1;
 	if (keycode == S)
@@ -32,5 +27,5 @@ void	capture_hooks(t_game *game)
 {
 	mlx_hook(game->mlx_win, 2, (1L << 0), key_press, game);
 	mlx_hook(game->mlx_win, 3, (1L << 1), key_release, game);
-	mlx_hook(game->mlx_win, 17, (1L << 17), quit_game, game);
+	mlx_hook(game->mlx_win, 17, (1L << 17), &turnoff, game);
 }

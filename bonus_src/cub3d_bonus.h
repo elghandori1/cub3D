@@ -12,9 +12,13 @@
 # include "../include/libft/libft.h"
 # include "cute_sound.h"
 # include <SDL2/SDL.h>
+#include <sys/time.h>
+# include <X11/X.h>
 
-# define WIDTH  1200 // 1024
-# define HEIGHT 700 // 720
+# define FPS 60
+# define FRAME_TARGET_TIME (1000000 / FPS)
+# define WIDTH  1280 // 600
+# define HEIGHT 700 // 350
 # define SIZE 	64
 # define PI 	3.14159265358
 # define PI_2	1.57079632679489661923
@@ -28,6 +32,8 @@
 # define E		0x0065
 # define LEFT	65363
 # define RIGHT	65361
+# define UP 	0xff52
+# define DOWN 	0xff54
 # define LCTRL 	0xffe3
 # define ALLOC	'A'
 # define FREE	'F'
@@ -42,13 +48,13 @@
 
 # define PLAYER_SIZE 0.4
 # define PLAYER_COLOR 0xFF0000
-# define MOUSE_SENSITIVITY 0.002
+# define MOUSE_SENSITIVITY 0.0005
 //
 
 # define PLAYER_COLOR 0xFF0000
 # define FOV_RD 1.04719755119
-# define MOVE_SPEED 1
-# define ROTATION_SPEED 0.03
+# define MOVE_SPEED 3
+# define ROTATION_SPEED 0.01
 # define DISTANCE_PROJ_PLANE ((WIDTH / 2) / tan(FOV_RD / 2))
 # define WALL_BUFFER 0.1
 # define MAP_SCALE 10
@@ -199,6 +205,8 @@ typedef struct s_game
 	t_audio  	audio;
 	bool 		door_sound_played;
 	int			door_open;
+	t_ray		ray[WIDTH];
+	int			screen_center;
 }   t_game;
 
 enum	textures
@@ -241,7 +249,7 @@ int		exit_game(t_game *game);
 int		rendering(void	*data);
 void    ft_error(t_game *cub3d,char *message);
 void    free_map(t_data *map);
-void    shutdown2(t_game *game);
+int    shutdown2(t_game *game);
 void	ft_free(char	**arr);
 int		ft_search(char c, char *set);
 int		has_cub_extension(const char *f_name);

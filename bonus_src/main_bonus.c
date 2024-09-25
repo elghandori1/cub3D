@@ -38,20 +38,14 @@ void	initialize_sound(t_game *game)
 	cs_play_sound(game->audio.sound_track, game->audio.theme_params);
 }
 
-int	init_game(t_game *game)
+void	init_game(t_game *game)
 {
 	initialize_window(game);
 	initialize_frame(game);
 	initialize_textures(game);
-	initialize_sound(game);
+	// initialize_sound(game);
+	mlx_mouse_move(game->mlx_ptr, game->mlx_win, (WIDTH / 2), (HEIGHT / 2));
 	mlx_mouse_hide(game->mlx_ptr, game->mlx_win); 
-	return (0);
-}
-
-int		exit_game(t_game *game)
-{
-	shutdown2(game);
-	exit(1);
 }
 
 void	put_gun_to_buffer(t_image *gun, int x, int y, t_game *g)
@@ -82,11 +76,11 @@ void	gun_animation(t_game *game)
 	if (game->gun_anim.is_shooting == true)
 	{
 		game->gun_anim.frame_counter++;
-		if (game->gun_anim.frame_counter >= 10) // frame delay
+		if (game->gun_anim.frame_counter >= 5) // frame delay
 		{
 			game->gun_anim.frame_counter = 0;
 			game->gun_anim.curr_frame++;
-			if (game->gun_anim.curr_frame >= 4)
+			if (game->gun_anim.curr_frame == 4)
 			{
 				game->gun_anim.curr_frame = 0;
 				game->gun_anim.is_shooting = 0;
@@ -118,22 +112,18 @@ void	play_sounds(t_game *game)
 int	rendering(void *data)
 {
 	t_game	*game;
-	t_ray	ray[WIDTH];
 
 	game = (t_game *)data;
-	ft_memset(ray, 0, sizeof(t_ray) * WIDTH);
-	mlx_clear_window(game->mlx_ptr, game->mlx_win);
 	move_player(game);
-	raycasting(game, ray);
+	raycasting(game, game->ray);
 	gun_animation(game);
-	play_sounds(game);
+	// play_sounds(game);
 	minimap(game);
 	put_gun_to_buffer(game->gun[game->gun_anim.curr_frame], (WIDTH / 2) - 256 , (HEIGHT - 512), game);
 	mlx_put_image_to_window(game->mlx_ptr, game->mlx_win, game->frame_buffer.img, 0, 0);
-	cs_update(0);
+	// cs_update(0);
 	return (0);
 }
-
 
 int	main(int ac, char **av)
 {
@@ -142,8 +132,8 @@ int	main(int ac, char **av)
 	if (ac != 2)
 		ft_error(NULL, USAGE);
 	check_map(&game, av[1]);
-	if (init_game(&game))
-		return (EXIT_FAILURE);
+	game.screen_center = HEIGHT / 2;
+	init_game(&game);
 	capture_hooks(&game);
 	mlx_loop_hook(game.mlx_ptr, &rendering, &game);
 	mlx_loop(game.mlx_ptr);

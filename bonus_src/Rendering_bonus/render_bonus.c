@@ -21,10 +21,11 @@ void	render_wall_strip(t_game *g, t_ray ray)
 
 	texture = set_wall_texture(g, ray);
 	wall_h = (SIZE / ray.distance) * DISTANCE_PROJ_PLANE;
-	start_y = (HEIGHT / 2) - (wall_h / 2);
-	end_y = (HEIGHT / 2) + (wall_h / 2);
+	start_y = g->screen_center - (wall_h / 2);
+	end_y = g->screen_center + (wall_h / 2);
 	int *addr = (int *)texture->addr;
-
+	struct s_col_name col;
+	col.color[""];
 	if (start_y < 0)
 		start_y = 0;
 	if (end_y > HEIGHT)
@@ -44,7 +45,7 @@ void	render_wall_strip(t_game *g, t_ray ray)
 	y = start_y + 1;
 	while (y < end_y)
 	{
-		distance_from_top = y + (wall_h / 2) - (HEIGHT / 2);
+		distance_from_top = y + (wall_h / 2) - g->screen_center;
 		ty = (int)(distance_from_top * (texture->width / wall_h));
 		ty = ty % texture->height;
 		if (tx >= 0 && ty <= texture->width && ((ty * texture->width) + tx) >= 0)

@@ -77,7 +77,7 @@ int	raycasting(t_game *game, t_ray *rays)
 	double	anc;
 
 	ray = -1;
-	anc = FOV_RD / WIDTH - 0.0001;
+	anc = FOV_RD / WIDTH;
 	ray_angle = game->data->player.angle - (FOV_RD / 2);
 	while (++ray < WIDTH)
 	{

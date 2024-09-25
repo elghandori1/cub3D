@@ -19,14 +19,11 @@ int is_valid_position(t_game *game, double x, double y)
 		return (0);
 	return (1);
 }
-
-void move_player(t_game *game)
+t_point	calculate_new_position(t_player *p)
 {
-	t_player	*p;
 	t_point		move;
 
 	move = (t_point){0};
-	p = &game->data->player;
 	if (p->keys.up)
 	{
 		move.x += p->dir_x * MOVE_SPEED;
@@ -47,14 +44,24 @@ void move_player(t_game *game)
 		move.x -= p->dir_y * MOVE_SPEED;
 		move.y += p->dir_x * MOVE_SPEED;
 	}
+	return (move);
+}
+
+void	move_player(t_game *game)
+{
+	t_player	*p;
+	t_point		move;
+
+	p = &game->data->player;
+	move = calculate_new_position(p);
 	if (is_valid_position(game, p->x + move.x, p->y + move.y))
 	{
 		p->x += move.x;
 		p->y += move.y;
 	}
-	if (is_valid_position(game, p->x + move.x, p->y))
+	else if (is_valid_position(game, p->x + move.x, p->y))
 		p->x += move.x;
-	if (is_valid_position(game, p->x, p->y + move.y))
+	else if (is_valid_position(game, p->x, p->y + move.y))
 		p->y += move.y;
 	if (p->keys.rot_left)
 		p->angle += ROTATION_SPEED;
@@ -104,14 +111,14 @@ void	open_door(t_game *game)
 		map_x = (int)(p->ray.wall_hit.x / SIZE);
 		map_y = (int)((p->ray.wall_hit.y - pixel) / SIZE);
 	}
-	if (p->ray.distance < SIZE && p->ray.hit_content == 'D')
+	if (p->ray.distance < SIZE * 2 && p->ray.hit_content == 'D')
 	{
 		game->door_sound_played = 0;
 		game->door_open = 1;
 		game->data->square_map[map_y][map_x] = 'd';
 
 	}
-	else if (p->ray.distance < (SIZE) && p->ray.hit_content == 'd')
+	else if (p->ray.distance < SIZE * 2 && p->ray.hit_content == 'd')
 	{
 		game->door_open = 0;
 		game->door_sound_played = 0;
@@ -134,7 +141,7 @@ int	key_press(int keycode, t_game *game)
 
 	p = &game->data->player;
 	if (keycode == ESC)
-		exit_game(game);
+		shutdown2(game);
 	if (keycode == LCTRL)
 		control_mouse(game);
 	if (keycode == W)
@@ -151,6 +158,10 @@ int	key_press(int keycode, t_game *game)
 		p->keys.rot_right = 1;
 	if (keycode == E)
 		open_door(game);
+	if (keycode == UP)
+		game->screen_center += 10;
+	if (keycode == DOWN)
+		game->screen_center -= 10; 
 	return (0);
 }
 
@@ -158,6 +169,8 @@ int	gun_fire(int button, int x, int y, void *param)
 {
 	t_game *game;
 
+	(void)x;
+	(void)y;
 	game = (t_game *)param;
 	if (button == 1)
 	{
@@ -167,13 +180,20 @@ int	gun_fire(int button, int x, int y, void *param)
 	return (0);
 }	
 
-void mouse_movement(t_game *game, int new_x)
+void	mouse_movement(t_game *game, int new_x, int new_y)
 {
-	float delta_x;
-	
-	delta_x = (new_x - (WIDTH / 2)) * MOUSE_SENSITIVITY;
+	double	delta_x;
+	double 	delta_y;
+
+	delta_x = (new_x - 600) * MOUSE_SENSITIVITY;
+	delta_y = (new_y - 350);
 	game->data->player.angle += delta_x;
-	mlx_mouse_move(game->mlx_ptr, game->mlx_win, WIDTH / 2, HEIGHT / 2);
+	game->screen_center -= delta_y;
+	if (game->screen_center >= HEIGHT)
+		game->screen_center = HEIGHT;
+	if (game->screen_center <= 0)
+		game->screen_center = 0;
+	mlx_mouse_move(game->mlx_ptr, game->mlx_win, 600, 350);
 }
 
 int	mouse_move(int x, int y, void *param)
@@ -181,12 +201,10 @@ int	mouse_move(int x, int y, void *param)
 	t_game *game;
 
 	game = (t_game *)param;
-	if (x >= 0 && x < WIDTH && y >= 0 && y < HEIGHT)
+	if (x >= 0 && x <= WIDTH && y >= 0 && y <= HEIGHT)
 	{
-		game->mouse.x = x;
-		game->mouse.y = y;
-		if (game->mouse.show_mouse == 0)
-			mouse_movement(game, x);
+		if (game->mouse.show_mouse == false)
+			mouse_movement(game, x, y);
 	}
 	return (0);
 }
@@ -195,8 +213,7 @@ void	capture_hooks(t_game *game)
 {
 	mlx_hook(game->mlx_win, 2, (1L << 0), key_press, game);
 	mlx_hook(game->mlx_win, 3, (1L << 1), key_release, game);
-	mlx_hook(game->mlx_win, 17, (1L << 17), exit_game, game);
+	mlx_hook(game->mlx_win, 17, (1L << 17), &shutdown2, game);
 	mlx_hook(game->mlx_win, 6, (1L << 6), mouse_move, game);
 	mlx_mouse_hook(game->mlx_win, gun_fire, game);
-	mlx_mouse_move(game->mlx_ptr, game->mlx_win, (WIDTH / 2), (HEIGHT / 2));
 }

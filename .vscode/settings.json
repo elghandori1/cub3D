@@ -8,6 +8,8 @@
         "mlx.h": "c",
         "stdlib.h": "c",
         "math.h": "c",
-        "mlx_int.h": "c"
+        "mlx_int.h": "c",
+        "x.h": "c",
+        "time.h": "c"
     }
 }

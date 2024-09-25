@@ -12,10 +12,9 @@ void	ft_free(char **arr)
 
 void	ft_error(t_game *cub3d, char *message)
 {
-	shutdown(cub3d);
 	ft_putstr_fd(" ", 2);
 	ft_putstr_fd(message, 2);
-	exit(EXIT_FAILURE);
+	turnoff(cub3d);
 }
 
 int	ft_search(char c, char *set)

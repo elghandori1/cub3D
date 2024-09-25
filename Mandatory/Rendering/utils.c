@@ -25,15 +25,14 @@ void	put_pixels(t_image *data, int x, int y, int color)
     }
 }
 
-int	window_init(t_game *game)
+void	initialize_window(t_game *game)
 {
 	game->mlx_ptr = mlx_init();
 	if (!game->mlx_ptr)
-		return (-1);
+		ft_error(game, "Failed to init mlx\n");
 	game->mlx_win = mlx_new_window(game->mlx_ptr, WIDTH, HEIGHT, "cub3D");
 	if (!game->mlx_win)
-		return (-1);
-	return (0);
+		return (ft_error(game, "Failed to init mlx win\n"));
 }
 
 int	key_release(int key, t_game *game)

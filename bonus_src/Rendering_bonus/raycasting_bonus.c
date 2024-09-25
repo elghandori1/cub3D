@@ -32,7 +32,7 @@ t_point ray_hor_intersect(t_game *g, t_ray *ray, t_point delta)
 		inter.y += delta.y;
 	}
 	if (inter.x > 0 && inter.x < g->data->width * SIZE && inter.y > 0 && inter.y < g->data->height * SIZE)
-		ray->hhit_content = g->data->square_map[(int)floor((inter.y - pixel) / SIZE)][(int)floor(inter.x / SIZE)];
+		ray->hhit_content = g->data->square_map[(int)((inter.y - pixel) / SIZE)][(int)(inter.x / SIZE)];
 	return (inter);
 }
 
@@ -50,7 +50,7 @@ t_point ray_ver_intersect(t_game *g, t_ray *ray, t_point delta)
 		inter.y += delta.y;
 	}
 	if (inter.x > 0 && inter.x < g->data->width * SIZE && inter.y > 0 && inter.y < g->data->height * SIZE)
-		ray->vhit_content = g->data->square_map[(int)floor(inter.y / SIZE)][(int)floor((inter.x - pixel) / SIZE)];
+		ray->vhit_content = g->data->square_map[(int)(inter.y / SIZE)][(int)((inter.x - pixel) / SIZE)];
 	return (inter);
 }
 
@@ -106,7 +106,7 @@ int raycasting(t_game *game, t_ray *rays)
 	double anc;
 
 	ray = -1;
-	anc = FOV_RD / WIDTH - 0.0001;
+	anc = FOV_RD / WIDTH;
     ray_angle = game->data->player.angle - (FOV_RD / 2);
 	while (++ray < WIDTH)
 	{

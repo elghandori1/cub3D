@@ -22,18 +22,26 @@ void	free_colors(t_data *map)
 
 void	free_map_content(t_data *map)
 {
-	int	i;
+	 int	i;
 
-	if (map->map && map->square_map)
+	if (map->map)
 	{
 		i = 0;
 		while (i < map->height)
 		{
 			free(map->map[i]);
-			free(map->square_map[i]);
 			i++;
 		}
 		free(map->map);
+	}
+	if (map->square_map)
+	{
+		i = 0;
+		while (i < map->height)
+		{
+			free(map->square_map[i]);
+			i++;
+		}
 		free(map->square_map);
 	}
 }
@@ -56,10 +64,8 @@ void	free_map(t_data *map)
 	free_map_content(map);
 }
 
-void	shutdown(t_game *game)
+int	turnoff(t_game *game)
 {
-	if (!game)
-		return ;
 	if (game->textures[0])
 	{
 		mlx_destroy_image(game->mlx_ptr, game->textures[0]->img);
@@ -79,9 +85,10 @@ void	shutdown(t_game *game)
 	}
 	if (game->mlx_win)
 		mlx_destroy_window(game->mlx_ptr, game->mlx_win);
-	// if (game->mlx_ptr)
-	// {
-	// 	mlx_destroy_display(game->mlx_ptr);
-	// 	free(game->mlx_ptr);
-	// }
+	if (game->mlx_ptr)
+	{
+		mlx_destroy_display(game->mlx_ptr);
+		free(game->mlx_ptr);
+	}
+	return (exit(0), 0);
 }
