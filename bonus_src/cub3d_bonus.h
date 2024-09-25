@@ -237,7 +237,7 @@ void 	minimap(t_game *game);
 void	capture_hooks(t_game *game);
 int		key_press(int keycode, t_game *game);
 int		key_release(int key, t_game *game);
-int 	mouse_move(int x, int y, void *param);
+// int 	mouse_move(int x, int y, void *param);
 
 void	initialize_frame(t_game *g);
 void	initialize_textures(t_game *game);

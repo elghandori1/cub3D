@@ -161,7 +161,7 @@ int	key_press(int keycode, t_game *game)
 	if (keycode == UP)
 		game->screen_center += 10;
 	if (keycode == DOWN)
-		game->screen_center -= 10; 
+		game->screen_center -= 10;
 	return (0);
 }
 
@@ -196,24 +196,24 @@ void	mouse_movement(t_game *game, int new_x, int new_y)
 	mlx_mouse_move(game->mlx_ptr, game->mlx_win, 600, 350);
 }
 
-int	mouse_move(int x, int y, void *param)
+int	mouse_move(int x, int y, void *game)
 {
-	t_game *game;
-
-	game = (t_game *)param;
+	t_game *g;
+	
+	g = (t_game *)game;
 	if (x >= 0 && x <= WIDTH && y >= 0 && y <= HEIGHT)
 	{
-		if (game->mouse.show_mouse == false)
-			mouse_movement(game, x, y);
+		if (g->mouse.show_mouse == false)
+			mouse_movement(g, x, y);
 	}
 	return (0);
 }
 
 void	capture_hooks(t_game *game)
 {
-	mlx_hook(game->mlx_win, 2, (1L << 0), key_press, game);
-	mlx_hook(game->mlx_win, 3, (1L << 1), key_release, game);
-	mlx_hook(game->mlx_win, 17, (1L << 17), &shutdown2, game);
-	mlx_hook(game->mlx_win, 6, (1L << 6), mouse_move, game);
+	mlx_hook(game->mlx_win, KeyPress, KeyPressMask, key_press, game);
+	mlx_hook(game->mlx_win, KeyRelease, KeyReleaseMask, key_release, game);
+	mlx_hook(game->mlx_win, DestroyNotify, StructureNotifyMask, &shutdown2, game);
+	mlx_hook(game->mlx_win, MotionNotify, PointerMotionMask, mouse_move, game);
 	mlx_mouse_hook(game->mlx_win, gun_fire, game);
 }
