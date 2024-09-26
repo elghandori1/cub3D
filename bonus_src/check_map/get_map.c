@@ -37,18 +37,15 @@ void	get_square_map(t_game *cub3d)
 {
 	int	i;
 	int	j;
-	int	tmp;
 
 	i = 0;
 	j = 0;
-	tmp = 0;
 	while (cub3d->data->map[i])
 	{
-		cub3d->data->square_map[i] = malloc(sizeof(char) * cub3d->data->max_len + 1);
+		cub3d->data->square_map[i] = m_alloc(sizeof(char) * (cub3d->data->max_len + 1), ALLOC);
 		cub3d->data->square_map[i][cub3d->data->max_len] = 0;
 		cub3d->data->square_map[i][cub3d->data->max_len - 1] = '\n';
 		ft_memset(cub3d->data->square_map[i], 'V', cub3d->data->max_len - 1);
-		tmp = 0;
 		while (cub3d->data->map[i][j] && cub3d->data->map[i][j] != '\n')
 		{
 			cub3d->data->square_map[i][j] = cub3d->data->map[i][j];
@@ -72,8 +69,8 @@ void get_data(t_game *cub3d)
     len = cub3d->data->len + 1;
     if (len == 1)
         ft_error(cub3d, "Error: the map does not exist!\n");
-    cub3d->data->map = malloc(len * sizeof(char *));
-	cub3d->data->square_map = malloc(len * sizeof(char *));
+    cub3d->data->map = m_alloc(len * sizeof(char *), ALLOC);
+	cub3d->data->square_map = m_alloc(len * sizeof(char *), ALLOC);
     while (cub3d->data->content[i] && !map_start)
     {
         if (ft_search(cub3d->data->content[i][0], "01 "))

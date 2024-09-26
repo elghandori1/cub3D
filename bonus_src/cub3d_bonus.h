@@ -11,6 +11,7 @@
 # include "../mlx/mlx_int.h"
 # include "../include/libft/libft.h"
 # include "cute_sound.h"
+# include "../include/gc.h"
 # include <SDL2/SDL.h>
 #include <sys/time.h>
 # include <X11/X.h>
@@ -35,8 +36,6 @@
 # define UP 	0xff52
 # define DOWN 	0xff54
 # define LCTRL 	0xffe3
-# define ALLOC	'A'
-# define FREE	'F'
 
 #define GRAY_COLOR 0x404040
 #define BG_COLOR 0x808080
@@ -48,7 +47,7 @@
 
 # define PLAYER_SIZE 0.4
 # define PLAYER_COLOR 0xFF0000
-# define MOUSE_SENSITIVITY 0.0005
+# define MOUSE_SENSITIVITY 0.0004
 //
 
 # define PLAYER_COLOR 0xFF0000
@@ -205,8 +204,8 @@ typedef struct s_game
 	t_audio  	audio;
 	bool 		door_sound_played;
 	int			door_open;
-	t_ray		ray[WIDTH];
 	int			screen_center;
+	t_ray		ray[WIDTH];
 }   t_game;
 
 enum	textures
@@ -237,19 +236,17 @@ void 	minimap(t_game *game);
 void	capture_hooks(t_game *game);
 int		key_press(int keycode, t_game *game);
 int		key_release(int key, t_game *game);
-// int 	mouse_move(int x, int y, void *param);
 
 void	initialize_frame(t_game *g);
 void	initialize_textures(t_game *game);
 
 /*		Load Textures	*/
-
 int		get_color(t_color color);
 int		exit_game(t_game *game);
-int		rendering(void	*data);
+int		rendering(t_game	*game);
 void    ft_error(t_game *cub3d,char *message);
 void    free_map(t_data *map);
-int    shutdown2(t_game *game);
+int   	shutdown2(t_game *game);
 void	ft_free(char	**arr);
 int		ft_search(char c, char *set);
 int		has_cub_extension(const char *f_name);

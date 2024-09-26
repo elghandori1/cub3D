@@ -74,19 +74,13 @@ void    free_textures_resources(t_game *game)
     while (++i < 6)
     {
         if (game->textures[i])
-        {
              mlx_destroy_image(game->mlx_ptr, game->textures[i]->img);
-             free(game->textures[i]);
-        }
     }
     i = -1;
     while (++i < 4)
     {
         if (game->gun[i])
-        {
             mlx_destroy_image(game->mlx_ptr, game->gun[i]->img);
-            free(game->gun[i]);
-        }
     }
     if (game->frame_buffer.img)
 	    mlx_destroy_image(game->mlx_ptr, game->frame_buffer.img);
@@ -94,13 +88,10 @@ void    free_textures_resources(t_game *game)
 
 int    shutdown2(t_game *game)
 {
+    if (!game)
+        return (exit(0), 0);
     free_textures_resources(game);
     free_sound_resources(game);
-	if (game->data)
-	{
-		free_map(game->data);
-		free(game->data);
-	}
 	if (game->mlx_win)
 		mlx_destroy_window(game->mlx_ptr, game->mlx_win);
 	if (game->mlx_ptr)
@@ -108,6 +99,7 @@ int    shutdown2(t_game *game)
         mlx_destroy_display(game->mlx_ptr);
 	    free(game->mlx_ptr);
     }
+    m_alloc(0, FREE);
     return (exit(0), 0);
 }
 

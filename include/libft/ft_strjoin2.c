@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strjoin2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moel-gha <moel-gha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sait-alo <sait-alo@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 15:46:04 by moel-gha          #+#    #+#             */
-/*   Updated: 2024/05/27 21:05:44 by moel-gha         ###   ########.fr       */
+/*   Updated: 2024/09/26 14:55:13 by sait-alo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ char	*ft_strjoin2(char *s1, char *s2)
 		return (NULL);
 	if (!s1)
 		return (ft_strdup(s2));
-	str = malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
+	str = m_alloc(ft_strlen(s1) + ft_strlen(s2) + 1, ALLOC);
 	if (!str)
 		return (NULL);
 	while (s1[i])

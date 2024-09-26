@@ -6,7 +6,7 @@
 /*   By: sait-alo <sait-alo@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 19:48:08 by moel-gha          #+#    #+#             */
-/*   Updated: 2024/09/24 22:06:14 by sait-alo         ###   ########.fr       */
+/*   Updated: 2024/09/26 15:20:23 by sait-alo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@ void	check_map_height(t_game *cub3d)
 	len = cub3d->data->height - 1;
 	if (len == 0)
 	{   
-        printf("here 1\n");
-		free(cub3d->data->square_map);
+        // printf("here 1\n");
+		// free(cub3d->data->square_map);
 		cub3d->data->square_map = NULL;
-		ft_error(cub3d, "Error: Map borders are invalid!\n");
+		ft_error(cub3d, "Map borders are invalid!\n");
 	}
 }
 
@@ -66,19 +66,15 @@ void	get_square_map(t_game *cub3d)
 {
 	int	i;
 	int	j;
-	int	tmp;
 
 	i = 0;
 	j = 0;
-	tmp = 0;
 	while (cub3d->data->map[i])
 	{
-		cub3d->data->square_map[i] = malloc(sizeof(char) * (cub3d->data->width
-					+ 1));
+		cub3d->data->square_map[i] = m_alloc(sizeof(char) * (cub3d->data->width + 1), ALLOC);
 		cub3d->data->square_map[i][cub3d->data->width] = 0;
 		cub3d->data->square_map[i][cub3d->data->width - 1] = '\n';
 		ft_memset(cub3d->data->square_map[i], 'V', cub3d->data->width - 1);
-		tmp = 0;
 		while (cub3d->data->map[i][j] && cub3d->data->map[i][j] != '\n')
 		{
 			cub3d->data->square_map[i][j] = cub3d->data->map[i][j];

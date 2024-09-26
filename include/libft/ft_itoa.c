@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moel-gha <moel-gha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sait-alo <sait-alo@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/12 15:38:01 by moel-gha          #+#    #+#             */
-/*   Updated: 2023/11/24 17:54:24 by moel-gha         ###   ########.fr       */
+/*   Updated: 2024/09/26 14:54:54 by sait-alo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ char	*ft_itoa(int n)
 	if (n == 0)
 		return (ft_strdup("0"));
 	len = count_digit(n);
-	str = malloc(len * sizeof(char));
+	str = m_alloc(len * sizeof(char), ALLOC);
 	if (!str)
 		return (NULL);
 	str[len - 1] = '\0';

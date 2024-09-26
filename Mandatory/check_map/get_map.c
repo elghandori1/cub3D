@@ -6,7 +6,7 @@
 /*   By: sait-alo <sait-alo@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 20:55:45 by moel-gha          #+#    #+#             */
-/*   Updated: 2024/09/24 23:35:23 by sait-alo         ###   ########.fr       */
+/*   Updated: 2024/09/26 14:53:15 by sait-alo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,8 @@ void	get_data(t_game *cub3d)
 	len++;
 	if (len == 1)
 		ft_error(cub3d, "The map does not exist!\n");
-	cub3d->data->map = malloc(len * sizeof(char *));
-	cub3d->data->square_map = malloc(len * sizeof(char *));
+	cub3d->data->map = m_alloc(len * sizeof(char *), ALLOC);
+	cub3d->data->square_map = m_alloc(len * sizeof(char *), ALLOC);
 	while (cub3d->data->content[i] && !map_start)
 	{
 		if (ft_search(cub3d->data->content[i][0], "01 "))

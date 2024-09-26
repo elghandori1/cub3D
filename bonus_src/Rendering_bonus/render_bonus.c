@@ -24,8 +24,6 @@ void	render_wall_strip(t_game *g, t_ray ray)
 	start_y = g->screen_center - (wall_h / 2);
 	end_y = g->screen_center + (wall_h / 2);
 	int *addr = (int *)texture->addr;
-	struct s_col_name col;
-	col.color[""];
 	if (start_y < 0)
 		start_y = 0;
 	if (end_y > HEIGHT)

@@ -1,6 +1,5 @@
 #include "../cub3d_bonus.h"
 
-
 void	check_content(t_game *cub3d)
 {
     check_identifier(cub3d);
@@ -12,5 +11,5 @@ void	check_content(t_game *cub3d)
     check_player(cub3d);
    	get_square_map(cub3d);
     if (!check_walls(cub3d))
-		ft_error(cub3d,"Error: Map is not surrounded by walls !\n");
+		ft_error(cub3d,"Map is not surrounded by walls !\n");
 }

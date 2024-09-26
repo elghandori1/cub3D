@@ -64,25 +64,27 @@ void	free_map(t_data *map)
 	free_map_content(map);
 }
 
+void	free_textures_res(t_game *game)
+{
+	int i;
+
+	i = -1;
+	while (++i < 4)
+	{
+		if (game->textures[i])
+			mlx_destroy_image(game->mlx_ptr, game->textures[i]->img);
+	}
+	if (game->frame_buffer.img)
+		mlx_destroy_image(game->mlx_ptr, game->frame_buffer.img);
+}
+
+
 int	turnoff(t_game *game)
 {
-	if (game->textures[0])
-	{
-		mlx_destroy_image(game->mlx_ptr, game->textures[0]->img);
-		mlx_destroy_image(game->mlx_ptr, game->textures[1]->img);
-		mlx_destroy_image(game->mlx_ptr, game->textures[2]->img);
-		mlx_destroy_image(game->mlx_ptr, game->textures[3]->img);
-		mlx_destroy_image(game->mlx_ptr, game->frame_buffer.img);
-		free(game->textures[0]);
-		free(game->textures[1]);
-		free(game->textures[2]);
-		free(game->textures[3]);
-	}
-	if (game->data)
-	{
-		free_map(game->data);
-		free(game->data);
-	}
+	if (!game)
+		return (exit(0), 0);
+	free_textures_res(game);
+	m_alloc(0, FREE);
 	if (game->mlx_win)
 		mlx_destroy_window(game->mlx_ptr, game->mlx_win);
 	if (game->mlx_ptr)

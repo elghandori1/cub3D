@@ -10,6 +10,8 @@
         "math.h": "c",
         "mlx_int.h": "c",
         "x.h": "c",
-        "time.h": "c"
+        "time.h": "c",
+        "gc.h": "c",
+        "stdbool.h": "c"
     }
 }

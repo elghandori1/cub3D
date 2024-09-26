@@ -43,34 +43,6 @@ void	calculate_movement(t_player *p, t_point *move)
 	}
 }
 
-void	apply_movement(t_game *game, t_player *p, t_point move)
-{
-	if (is_valid_position(game, p->x + move.x, p->y + move.y))
-	{
-		p->x += move.x;
-		p->y += move.y;
-	}
-	else if (is_valid_position(game, p->x + move.x, p->y))
-	{
-		p->x += move.x;
-	}
-	else if (is_valid_position(game, p->x, p->y + move.y))
-	{
-		p->y += move.y;
-	}
-}
-
-void	handle_rotation(t_player *p)
-{
-	if (p->keys.rot_left)
-		p->angle += ROTATION_SPEED;
-	if (p->keys.rot_right)
-		p->angle -= ROTATION_SPEED;
-	p->angle = normalize_angle(p->angle);
-	p->dir_x = cos(p->angle);
-	p->dir_y = sin(p->angle);
-}
-
 void	move_player(t_game *game)
 {
 	t_point		move;
@@ -78,6 +50,16 @@ void	move_player(t_game *game)
 
 	p = &game->data->player;
 	calculate_movement(p, &move);
-	apply_movement(game, p, move);
-	handle_rotation(p);
+	if (is_valid_position(game, p->x + move.x, p->y + move.y))
+	{
+		p->x += move.x;
+		p->y += move.y;
+	}
+	if (p->keys.rot_left)
+		p->angle += ROTATION_SPEED;
+	if (p->keys.rot_right)
+		p->angle -= ROTATION_SPEED;
+	p->angle = normalize_angle(p->angle);
+	p->dir_x = cos(p->angle);
+	p->dir_y = sin(p->angle);
 }

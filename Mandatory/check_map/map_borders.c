@@ -6,7 +6,7 @@
 /*   By: sait-alo <sait-alo@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 19:46:50 by moel-gha          #+#    #+#             */
-/*   Updated: 2024/09/24 23:41:49 by sait-alo         ###   ########.fr       */
+/*   Updated: 2024/09/26 15:19:43 by sait-alo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,18 +19,18 @@ void	check_top_border(t_game *cub3d)
 	idx = 0;
 	if (!check_row(cub3d->data->map[0]))
 	{
-		free(cub3d->data->square_map);
-		cub3d->data->square_map = NULL;
-		ft_error(cub3d, "Error: Map borders are invalid!\n");
+		// free(cub3d->data->square_map);
+		// cub3d->data->square_map = NULL;
+		ft_error(cub3d, "Map borders are invalid!\n");
 	}
 	while (cub3d->data->map[0][idx])
 	{
 		if (ft_search(cub3d->data->map[0][idx], "ENSW"))
 		{
             printf("here 1\n");
-			free(cub3d->data->square_map);
-			cub3d->data->square_map = NULL;
-			ft_error(cub3d, "Error: Map borders are invalid!\n");
+			// free(cub3d->data->square_map);
+			// cub3d->data->square_map = NULL;
+			ft_error(cub3d, "Map borders are invalid!\n");
 		}
 		idx++;
 	}
@@ -43,17 +43,17 @@ void	check_bottom_border(t_game *cub3d)
 	idx = 0;
 	if (!check_row(cub3d->data->map[len]))
 	{
-		free(cub3d->data->square_map);
-		cub3d->data->square_map = NULL;
-		ft_error(cub3d, "Error: Map borders are invalid!\n");
+		// free(cub3d->data->square_map);
+		// cub3d->data->square_map = NULL;
+		ft_error(cub3d, "Map borders are invalid!\n");
 	}
 	while (cub3d->data->map[len][idx])
 	{
 		if (ft_search(cub3d->data->map[len][idx], "ENSW"))
 		{
-			free(cub3d->data->square_map);
-			cub3d->data->square_map = NULL;
-			ft_error(cub3d, "Error: Map borders are invalid!\n");
+			// free(cub3d->data->square_map);
+			// cub3d->data->square_map = NULL;
+			ft_error(cub3d, "Map borders are invalid!\n");
 		}
 		idx++;
 	}
@@ -83,9 +83,9 @@ void	check_left_right_borders(t_game *cub3d)
 		if (cub3d->data->map[i][start] != '1'
 			|| cub3d->data->map[i][end] != '1')
 		{
-			free(cub3d->data->square_map);
-			cub3d->data->square_map = NULL;
-			ft_error(cub3d, "Error: Map borders are invalid!\n");
+			// free(cub3d->data->square_map);
+			// cub3d->data->square_map = NULL;
+			ft_error(cub3d, "Map borders are invalid!\n");
 		}
 		i++;
 	}

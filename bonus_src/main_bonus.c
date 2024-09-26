@@ -1,6 +1,13 @@
 #include "cub3d_bonus.h"
 #include "cute_sound.h"
 
+void 	*instance(void)
+{
+	static t_game game;
+
+	return (&game);
+}
+
 void	initialize_window(t_game *game)
 {
 	game->mlx_ptr = mlx_init();
@@ -43,9 +50,10 @@ void	init_game(t_game *game)
 	initialize_window(game);
 	initialize_frame(game);
 	initialize_textures(game);
-	// initialize_sound(game);
+	initialize_sound(game);
 	mlx_mouse_move(game->mlx_ptr, game->mlx_win, (WIDTH / 2), (HEIGHT / 2));
 	mlx_mouse_hide(game->mlx_ptr, game->mlx_win); 
+	game->screen_center = HEIGHT / 2;
 }
 
 void	put_gun_to_buffer(t_image *gun, int x, int y, t_game *g)
@@ -76,7 +84,7 @@ void	gun_animation(t_game *game)
 	if (game->gun_anim.is_shooting == true)
 	{
 		game->gun_anim.frame_counter++;
-		if (game->gun_anim.frame_counter >= 5) // frame delay
+		if (game->gun_anim.frame_counter >= 10) // frame delay
 		{
 			game->gun_anim.frame_counter = 0;
 			game->gun_anim.curr_frame++;
@@ -93,7 +101,7 @@ void	gun_animation(t_game *game)
 void	play_sounds(t_game *game)
 {
 	if (game->gun_anim.is_shooting && !game->gun_anim.sound_played)
-    {
+	{
 		cs_play_sound(game->audio.gun_sound, game->audio.gun_params);
 		game->gun_anim.sound_played = 1;			
 	}
@@ -109,33 +117,30 @@ void	play_sounds(t_game *game)
 	}
 }
 
-int	rendering(void *data)
+int	rendering(t_game *game)
 {
-	t_game	*game;
-
-	game = (t_game *)data;
 	move_player(game);
 	raycasting(game, game->ray);
 	gun_animation(game);
-	// play_sounds(game);
+	play_sounds(game);
 	minimap(game);
 	put_gun_to_buffer(game->gun[game->gun_anim.curr_frame], (WIDTH / 2) - 256 , (HEIGHT - 512), game);
 	mlx_put_image_to_window(game->mlx_ptr, game->mlx_win, game->frame_buffer.img, 0, 0);
-	// cs_update(0);
+	cs_update(0);
 	return (0);
 }
 
 int	main(int ac, char **av)
 {
-	static t_game game;
+	t_game *game;
 	
 	if (ac != 2)
 		ft_error(NULL, USAGE);
-	check_map(&game, av[1]);
-	game.screen_center = HEIGHT / 2;
-	init_game(&game);
-	capture_hooks(&game);
-	mlx_loop_hook(game.mlx_ptr, &rendering, &game);
-	mlx_loop(game.mlx_ptr);
+	game = instance();
+	check_map(game, av[1]);
+	init_game(game);
+	capture_hooks(game);
+	mlx_loop_hook(game->mlx_ptr, &rendering, game);
+	mlx_loop(game->mlx_ptr);
 	return (0);
 }

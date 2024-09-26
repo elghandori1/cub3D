@@ -53,7 +53,5 @@ void	get_colors(t_game *cub3d)
 	cub3d->data->ciel_color.r = get_rgb(ft_atoi(ciel[0]), cub3d);
 	cub3d->data->ciel_color.g = get_rgb(ft_atoi(ciel[1]), cub3d);
 	cub3d->data->ciel_color.b = get_rgb(ft_atoi(ciel[2]), cub3d);
-	ft_free(ciel);
-	ft_free(floor);
 }
 

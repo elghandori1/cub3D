@@ -6,7 +6,7 @@ t_image *load_texture(t_game *game, char *path)
 	t_image	*img;
 	int		n;
 
-	img = malloc(sizeof(t_image));
+	img = m_alloc(sizeof(t_image), ALLOC);
 	if (!img)
 		return (NULL);
 	img->img = mlx_xpm_file_to_image(game->mlx_ptr, path, &img->width, &img->height);

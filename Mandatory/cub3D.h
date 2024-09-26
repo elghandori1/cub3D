@@ -11,10 +11,11 @@
 # include "../mlx/mlx.h"
 # include "../mlx/mlx_int.h"
 # include "../include/libft/libft.h"
+# include "../include/gc.h"
 
-# define SIZE 64
 
-# define PI	3.14159265358
+# define SIZE 	64
+# define PI		3.14159265358
 # define PI_2	1.57079632679489661923
 # define PI2	6.28318530718
 
@@ -26,17 +27,14 @@
 # define LEFT	65363
 # define RIGHT	65361
 
-# define ALLOC	'A'
-# define FREE	'F'
-
 # define WIDTH  1000
 # define HEIGHT 1000
 # define FOV_RD 1.04719755119
-# define MOVE_SPEED 1
-# define ROTATION_SPEED 0.01
+# define MOVE_SPEED 2
+# define ROTATION_SPEED 0.02 // in rad
 # define WALL_BUFFER 0.1
 # define DISTANCE_PROJ_PLANE ((WIDTH / 2) / tan(FOV_RD / 2))
-# define USAGE "Usage: ./cub3d_bonus maps/*.cub\n"
+# define USAGE "Error\nUsage: ./cub3d maps/*.cub\n"
 
 typedef struct s_color
 {
@@ -131,7 +129,6 @@ typedef struct s_wall_data
     t_image *texture;
 } t_wall_data;
 
-
 typedef struct s_game
 {
     void        *mlx_ptr;
@@ -180,7 +177,6 @@ int		check_row(char *row);
 void	check_map_height(t_game *cub3d);
 
 int		quit_game(t_game *game);
-int		rendering(void	*data);
 void    ft_error(t_game *cub3d,char *message);
 void    free_map(t_data *map);
 void    shutdown(t_game *cub3d);

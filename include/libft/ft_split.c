@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moel-gha <moel-gha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sait-alo <sait-alo@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 20:05:43 by moel-gha          #+#    #+#             */
-/*   Updated: 2024/05/23 20:26:15 by moel-gha         ###   ########.fr       */
+/*   Updated: 2024/09/26 15:12:11 by sait-alo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static	void	ft_free(char **s)
+static	void	ft_free2(char **s)
 {
 	int	i;
 
@@ -75,7 +75,7 @@ static char	**fill_array(char **dst, char const *src, char c, int number_word)
 	{
 		dst[i] = get_word(dst[i], src, c, &index_word);
 		if (!dst[i])
-			ft_free(dst);
+			ft_free2(dst);
 		i++;
 	}
 	return (dst);

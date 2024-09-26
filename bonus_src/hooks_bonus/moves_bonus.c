@@ -186,7 +186,7 @@ void	mouse_movement(t_game *game, int new_x, int new_y)
 	double 	delta_y;
 
 	delta_x = (new_x - 600) * MOUSE_SENSITIVITY;
-	delta_y = (new_y - 350);
+	delta_y = (new_y - 350) * 0.4;
 	game->data->player.angle += delta_x;
 	game->screen_center -= delta_y;
 	if (game->screen_center >= HEIGHT)
@@ -199,10 +199,13 @@ void	mouse_movement(t_game *game, int new_x, int new_y)
 int	mouse_move(int x, int y, void *game)
 {
 	t_game *g;
+	static int mouse_mouve = 0;
+	mouse_mouve++;
 	
 	g = (t_game *)game;
-	if (x >= 0 && x <= WIDTH && y >= 0 && y <= HEIGHT)
+	if (mouse_mouve % 3 == 0 && x >= 0 && x <= WIDTH && y >= 0 && y <= HEIGHT )
 	{
+		mouse_mouve = 0;
 		if (g->mouse.show_mouse == false)
 			mouse_movement(g, x, y);
 	}

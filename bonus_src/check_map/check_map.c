@@ -34,7 +34,7 @@ void	check_map(t_game *cub3d, char *file)
 		ft_error(NULL, "bad extension!");
 	if (!check_empty(file))
 		ft_error(NULL, "empty file!");
-	cub3d->data = malloc(sizeof(t_data));
+	cub3d->data = m_alloc(sizeof(t_data), ALLOC);
 	if (!cub3d->data)
 		ft_error(NULL, " Memory allocation failed!");
 	ft_memset(cub3d->data, 0, sizeof(t_data));

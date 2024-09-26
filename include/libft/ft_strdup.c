@@ -6,7 +6,7 @@
 /*   By: sait-alo <sait-alo@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 16:16:25 by moel-gha          #+#    #+#             */
-/*   Updated: 2024/09/18 12:23:34 by sait-alo         ###   ########.fr       */
+/*   Updated: 2024/09/26 14:55:07 by sait-alo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char	*ft_strdup(const char *s1)
 	char	*dup;
 
 	s = ft_strlen(s1);
-	dup = (char *)malloc(s * sizeof(char) + 1);
+	dup = (char *)m_alloc(s * sizeof(char) + 1, ALLOC);
 	if (!dup)
 		return (NULL);
 	i = 0;
