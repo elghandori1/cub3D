@@ -16,13 +16,13 @@ SRC_BONUS = helpers/get_next_line.c helpers/gc.c\
 	  $(addprefix ./bonus_src/check_map/, check_map.c  check_content.c check_texture.c \
 	  									get_textures.c helpers.c get_color.c get_map.c \
 										check_player.c check_identifiers.c check_walls.c \
-										fill_content_map.c)
+										fill_content_map.c get_square_map.c map_borders.c)
 
 OBJ = $(SRC:.c=.o)
 OBJSB = $(SRC_BONUS:.c=.o) 
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -Ofast
+CFLAGS = -Wall -Wextra -Werror -Ofast #-g3 -fsanitize=address 
 MLXFLAGS = -Lmlx -lmlx -L/usr/lib -Imlx -lXext -lX11 -lm -lz
 SDL = -I/usr/include/SDL2/ -I/usr/include
 

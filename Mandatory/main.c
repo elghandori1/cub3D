@@ -19,7 +19,7 @@ static void	initialize_game(t_game *game)
 
 int	main(int ac, char **av)
 {
-	t_game game;
+	static t_game game;
 	
 	if (ac != 2)
 		return (ft_putstr_fd(USAGE, 2), EXIT_FAILURE);

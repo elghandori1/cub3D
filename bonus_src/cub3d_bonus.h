@@ -143,6 +143,7 @@ typedef struct s_data
 	int			width;
 	char        **content;
 	char        **map;
+	char		**last_map;
 	char        **square_map;
 	char        *so_texture;
 	char        *no_texture;
@@ -262,10 +263,13 @@ void 	check_textures_path(char **content,t_game *cub3d);
 void 	get_textures(t_game *cub3d);
 char	*get_from_file(char **content, char *target);
 void 	get_colors(t_game *cub3d);
-void 	get_data(t_game *cub3d);
+void 	get_map(t_game *cub3d);
 void	get_square_map(t_game *cub3d);
-void    check_map_last(t_game *cub3d,char **check_last);
 void	check_player(t_game *cub3d);
 int	    check_walls(t_game *cub3d);
+int 	map_len(char **content);
+void	map_borders(t_game *cub3d);
+void	check_map_height(t_game *cub3d);
+int		check_row(char *row);
 
 #endif

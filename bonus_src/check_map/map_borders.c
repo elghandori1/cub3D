@@ -1,4 +1,4 @@
-#include "../cub3D.h"
+#include "../cub3d_bonus.h"
 
 void	check_map_height(t_game *cub3d)
 {
@@ -29,6 +29,7 @@ void	check_top_border(t_game *cub3d)
 		idx++;
 	}
 }
+
 
 void	check_bottom_border(t_game *cub3d)
 {

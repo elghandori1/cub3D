@@ -124,7 +124,7 @@ int	rendering(t_game *game)
 
 int	main(int ac, char **av)
 {
-	t_game game;
+	static t_game game;
 	
 	if (ac != 2)
 		ft_error(NULL, USAGE);

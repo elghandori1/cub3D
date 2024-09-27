@@ -67,7 +67,7 @@ int	check_walls(t_game *cub3d)
 		j = 0;
 		while (cub3d->data->square_map[i][j])
 		{
-			if (cub3d->data->square_map[i][j] == '0')
+			if (cub3d->data->square_map[i][j] == '0' || ft_search(cub3d->data->square_map[i][j],"ENSW"))
 			{
 				if (!check_right(cub3d, i, j + 1))
 					return (0);

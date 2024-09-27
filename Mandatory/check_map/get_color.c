@@ -35,6 +35,23 @@ int	get_rgb(int color, t_game *cub3d)
 	return (0);
 }
 
+void	check_comma_placement(const char *color_str, t_game *cub3d)
+{
+	if (color_str[0] == ',' || color_str[ft_strlen(color_str) - 1] == ',')
+		ft_error(cub3d, "Error: Color values cannot start or end with a comma!\n");
+	char	*comma_ptr;
+	char	*next_comma;
+
+	comma_ptr = ft_strchr(color_str, ',');
+	while (comma_ptr)
+	{
+		next_comma = comma_ptr + 1;
+		if (*next_comma == ',')
+			ft_error(cub3d, "Error: Multiple commas detected in color input!\n");
+		comma_ptr = ft_strchr(next_comma, ',');
+	}
+}
+
 void	get_colors(t_game *cub3d)
 {
 	char	**floor;
@@ -42,6 +59,8 @@ void	get_colors(t_game *cub3d)
 
 	cub3d->data->c_color = get_from_file(cub3d->data->content, "C");
 	cub3d->data->f_color = get_from_file(cub3d->data->content, "F");
+	check_comma_placement(cub3d->data->c_color, cub3d);
+	check_comma_placement(cub3d->data->f_color, cub3d);
 	ciel = ft_split(cub3d->data->c_color, ',');
 	floor = ft_split(cub3d->data->f_color, ',');
 	if (check_colors_format(ciel, cub3d) != 3

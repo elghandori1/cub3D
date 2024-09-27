@@ -12,21 +12,22 @@ void	set_ray_direction(t_ray *ray)
 		ray->facing_right = 0;
 }
 
-t_image	*load_texture(t_game *game, char *path)
+t_image *load_texture(t_game *game, char *path)
 {
-	int		n;
 	t_image	*img;
+	int		n;
 
 	img = m_alloc(sizeof(t_image), ALLOC);
 	if (!img)
 		return (NULL);
-	img->img = mlx_xpm_file_to_image(game->mlx_ptr, path, &img->width,
-			&img->height);
+	img->img = mlx_xpm_file_to_image(game->mlx_ptr, path, &img->width, &img->height);
 	if (!img->img)
 		ft_error(game, "Texture loading failed\n");
 	img->addr = mlx_get_data_addr(img->img, &n, &n, &n);
-	if (img->addr == NULL)
+    if (img->addr == NULL)
+    {
         return (NULL);
+    }
 	return (img);
 }
 

@@ -1,8 +1,24 @@
 #include "../cub3d_bonus.h"
 
-int map_len(char **content)
+int	check_row(char *row)
 {
-    int	i;
+	int	start;
+	int	end;
+
+	start = 0;
+	while (row[start] == ' ')
+		start++;
+	end = ft_strlen(row) - 1;
+	while (end > start && (row[end] == ' ' || row[end] == '\n'))
+		end--;
+	if (row[start] != '1' || row[end] != '1')
+		return (0);
+	return (1);
+}
+
+int	map_len(char **content)
+{
+	int	i;
 	int	len;
 
 	i = 0;
@@ -18,76 +34,53 @@ int map_len(char **content)
 	return (len);
 }
 
-void check_map_last(t_game *cub3d,char **check_last)
+void check_newline(t_game *cub3d, int i, int len)
 {
-    int i = 0;
-    while (check_last[i])
-    {
-        if (ft_strncmp(check_last[i], "WE", 2) == 0 || ft_strncmp(check_last[i], "NO", 2) == 0 \
-            || ft_strncmp(check_last[i], "EA", 2) == 0 || ft_strncmp(check_last[i], "SO", 2) == 0 \
-            || ft_strncmp(check_last[i], "C", 1) == 0 || ft_strncmp(check_last[i], "F", 1) == 0)
-            break;
-        if (ft_strncmp(check_last[i], "1", 1) == 0 || ft_strncmp(check_last[i], "0", 1) == 0)
-            ft_error(cub3d,"the map must be the last !\n");
-        i++;
-    }
-}
-
-void	get_square_map(t_game *cub3d)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	j = 0;
-	while (cub3d->data->map[i])
+    if (cub3d->data->map[i][0] == '\n')
 	{
-		cub3d->data->square_map[i] = m_alloc(sizeof(char) * (cub3d->data->max_len + 1), ALLOC);
-		cub3d->data->square_map[i][cub3d->data->max_len] = 0;
-		cub3d->data->square_map[i][cub3d->data->max_len - 1] = '\n';
-		ft_memset(cub3d->data->square_map[i], 'V', cub3d->data->max_len - 1);
-		while (cub3d->data->map[i][j] && cub3d->data->map[i][j] != '\n')
-		{
-			cub3d->data->square_map[i][j] = cub3d->data->map[i][j];
-			j++;
-		}
-		i++;
-		j = 0;
+        ft_error(cub3d, "invalid map (extra new line)!\n");
 	}
-	cub3d->data->square_map[i] = NULL;
+    if (i == len - 1 && cub3d->data->map[i][ft_strlen(cub3d->data->map[i]) - 1] == '\n')
+	{
+        ft_error(cub3d, "invalid map (extra new line at the end of the map)!\n");
+	}
 }
 
-void get_data(t_game *cub3d)
+void copy_map(t_game *cub3d, int i)
 {
-    int i, j, len,map_start;
-    
-    map_start = 0;
-    j = 0;
-    i = 0;
-    cub3d->data->max_len = 0;
-    cub3d->data->len = map_len(cub3d->data->content);
-    len = cub3d->data->len + 1;
-    if (len == 1)
-        ft_error(cub3d, "Error: the map does not exist!\n");
-    cub3d->data->map = m_alloc(len * sizeof(char *), ALLOC);
-	cub3d->data->square_map = m_alloc(len * sizeof(char *), ALLOC);
-    while (cub3d->data->content[i] && !map_start)
-    {
-        if (ft_search(cub3d->data->content[i][0], "01 "))
-            map_start = 1;
-        else
-            i++;
-    }
-    while (cub3d->data->content[i])
+    int j = 0;
+    while (cub3d->data->content[i] && ft_search(cub3d->data->content[i][0], "0 1\n"))
     {
         cub3d->data->map[j] = ft_strdup(cub3d->data->content[i]);
-        if (ft_strlen(cub3d->data->map[j]) > cub3d->data->max_len)
-			cub3d->data->max_len = ft_strlen(cub3d->data->map[j]) - 1;
+        if (ft_strlen(cub3d->data->map[j]) > (size_t)cub3d->data->width)
+            cub3d->data->width = ft_strlen(cub3d->data->map[j]);
         i++;
         j++;
     }
-    cub3d->data->height = j;
-    cub3d->data->width = ft_strlen(cub3d->data->map[0]);
     cub3d->data->map[j] = NULL;
-	check_map_last(cub3d,cub3d->data->content);
+    cub3d->data->height = j;
+    int x = 0;
+    while (x < j)
+    {
+        check_newline(cub3d, x, j);
+        x++;
+    }
+}
+
+void	get_map(t_game *cub3d)
+{
+	int (i), (len), (map_start);
+	
+	map_start = 0;
+	i = 0;
+	len = map_len(cub3d->data->content);
+	len++;
+	if (len == 1)
+		ft_error(cub3d, "The map does not exist!\n");
+	cub3d->data->map = m_alloc(len * sizeof(char *), ALLOC);
+	cub3d->data->square_map = m_alloc(len * sizeof(char *), ALLOC);
+	while (cub3d->data->content[i] && !ft_search(cub3d->data->content[i][0], "0 1"))
+		i++;
+	copy_map(cub3d, i);
+	map_borders(cub3d);
 }

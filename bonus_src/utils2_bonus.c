@@ -12,8 +12,10 @@ t_image *load_texture(t_game *game, char *path)
 	if (!img->img)
 		ft_error(game, "Texture loading failed\n");
 	img->addr = mlx_get_data_addr(img->img, &n, &n, &n);
-    if (!img->addr)
+    if (img->addr == NULL)
+    {
         return (NULL);
+    }
 	return (img);
 }
 
