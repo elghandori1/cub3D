@@ -1,4 +1,4 @@
-#include "../cub3d_bonus.h"
+#include "cub3d_bonus.h"
 
 int wall_hit(double x, double y, t_game *g, t_ray *ray)
 {

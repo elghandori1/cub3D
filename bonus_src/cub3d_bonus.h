@@ -7,17 +7,15 @@
 # include <string.h>
 # include <fcntl.h>
 # include <math.h>
-# include "../mlx/mlx.h"
-# include "../mlx/mlx_int.h"
-# include "../include/libft/libft.h"
-# include "cute_sound.h"
-# include "../include/gc.h"
 # include <SDL2/SDL.h>
 #include <sys/time.h>
 # include <X11/X.h>
+# include "../mlx/mlx.h"
+# include "../mlx/mlx_int.h"
+# include "../include/libft/libft.h"
+# include "../include/cute_sound/cute_sound.h"
+# include "../include/gc.h"
 
-# define FPS 60
-# define FRAME_TARGET_TIME (1000000 / FPS)
 # define WIDTH  1280 // 600
 # define HEIGHT 700 // 350
 # define SIZE 	64

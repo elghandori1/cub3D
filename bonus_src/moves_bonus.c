@@ -1,4 +1,4 @@
-#include "../cub3d_bonus.h"
+#include "cub3d_bonus.h"
 
 void	open_door(t_game *game);
 

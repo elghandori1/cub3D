@@ -17,11 +17,11 @@ int	check_empty(char *f_name)
 	char	buf;
 
 	fd = open(f_name, O_RDONLY);
-	if (fd == -1)
+    if (fd == -1)
 	{
-		perror("open");
-		exit(EXIT_FAILURE);
-	}
+        perror("Error\nopen()");
+        exit(EXIT_FAILURE);
+    }
 	rslt = read(fd, &buf, 1);
 	close(fd);
 	return (rslt);
@@ -30,15 +30,14 @@ int	check_empty(char *f_name)
 void	check_map(t_game *cub3d, char *file)
 {
 	if (open(file, __O_DIRECTORY) != -1)
-		ft_error(NULL, "This is a directory!");
+		ft_error(NULL, "This is a directory!\n");
 	if (!has_cub_extension(file))
-		ft_error(NULL, "bad extension!");
+		ft_error(NULL, "Bad extension!\n");
 	if (!check_empty(file))
-		ft_error(NULL, "Empty file!");
+		ft_error(NULL, "Empty file!\n");
 	cub3d->data = m_alloc(sizeof(t_data), ALLOC);
 	if (!cub3d->data)
-		ft_error(NULL, "Memory allocation failed!");
-	ft_memset(cub3d->data, 0, sizeof(t_data));
+		ft_error(NULL, "Memory allocation failed!\n");
 	fill_content_data(file, cub3d);
 	check_content(cub3d);
 }

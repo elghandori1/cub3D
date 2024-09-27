@@ -1,12 +1,4 @@
 #include "cub3d_bonus.h"
-#include "cute_sound.h"
-
-void 	*instance(void)
-{
-	static t_game game;
-
-	return (&game);
-}
 
 void	initialize_window(t_game *game)
 {
@@ -132,15 +124,14 @@ int	rendering(t_game *game)
 
 int	main(int ac, char **av)
 {
-	t_game *game;
+	t_game game;
 	
 	if (ac != 2)
 		ft_error(NULL, USAGE);
-	game = instance();
-	check_map(game, av[1]);
-	init_game(game);
-	capture_hooks(game);
-	mlx_loop_hook(game->mlx_ptr, &rendering, game);
-	mlx_loop(game->mlx_ptr);
+	check_map(&game, av[1]);
+	init_game(&game);
+	capture_hooks(&game);
+	mlx_loop_hook(game.mlx_ptr, &rendering, &game);
+	mlx_loop(game.mlx_ptr);
 	return (0);
 }

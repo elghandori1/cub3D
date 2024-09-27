@@ -1,4 +1,4 @@
-#include "../cub3d_bonus.h"
+#include "cub3d_bonus.h"
 
 void	draw_square(t_image *img, int color, int x, int y)
 {
