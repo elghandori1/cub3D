@@ -2,13 +2,13 @@
 
 void valid_content(t_game *cub3d)
 {
- int i;
- int j;
+  int i;
 
  i = -1;
- j = 0;
  while (cub3d->data->content[++i])
  {
+  if(ft_search(cub3d->data->content[i][0], " 01"))
+    break;
   if (ft_search(cub3d->data->content[i][0], " 10FC\n"))
    continue ;
   else if (ft_strncmp(cub3d->data->content[i], "WE", 2)
