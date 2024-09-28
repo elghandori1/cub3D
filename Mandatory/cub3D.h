@@ -205,4 +205,6 @@ void	check_player(t_game *cub3d);
 int	    check_walls(t_game *cub3d);
 int 	map_len(char **content);
 int		check_row(char *row);
+int 	check_map_last(t_game *cub3d);
+
 #endif

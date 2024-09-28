@@ -271,5 +271,6 @@ int 	map_len(char **content);
 void	map_borders(t_game *cub3d);
 void	check_map_height(t_game *cub3d);
 int		check_row(char *row);
+int 	check_map_last(t_game *cub3d);
 
 #endif

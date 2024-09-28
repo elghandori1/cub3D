@@ -8,7 +8,7 @@ SRC = 	helpers/get_next_line.c helpers/gc.c \
 		$(addprefix ./Mandatory/check_map/, check_map.c check_content.c check_texture.c \
 	  				get_textures.c helpers.c get_color.c get_map.c check_player.c \
 					check_identifiers.c check_walls.c fill_content_map.c help_free.c \
-					get_square_map.c map_borders.c)  \
+					get_square_map.c map_borders.c check_map_last.c)  \
 
 SRC_BONUS = helpers/get_next_line.c helpers/gc.c\
 	  $(addprefix ./bonus_src/, main_bonus.c minimap_bonus.c utils_bonus.c utils2_bonus.c \
@@ -16,7 +16,7 @@ SRC_BONUS = helpers/get_next_line.c helpers/gc.c\
 	  $(addprefix ./bonus_src/check_map/, check_map.c  check_content.c check_texture.c \
 	  									get_textures.c helpers.c get_color.c get_map.c \
 										check_player.c check_identifiers.c check_walls.c \
-										fill_content_map.c get_square_map.c map_borders.c)
+										fill_content_map.c get_square_map.c map_borders.c check_map_last.c)
 
 OBJ = $(SRC:.c=.o)
 OBJSB = $(SRC_BONUS:.c=.o) 

@@ -48,7 +48,8 @@ void check_newline(t_game *cub3d, int i, int len)
 
 void copy_map(t_game *cub3d, int i)
 {
-    int j = 0;
+    int j,k;
+	j = 0;
     while (cub3d->data->content[i])
     {
         cub3d->data->map[j] = ft_strdup(cub3d->data->content[i]);
@@ -59,11 +60,11 @@ void copy_map(t_game *cub3d, int i)
     }
     cub3d->data->map[j] = NULL;
     cub3d->data->height = j;
-    int x = 0;
-    while (x < j)
+    k = 0;
+    while (k < j)
     {
-        check_newline(cub3d, x, j);
-        x++;
+        check_newline(cub3d, k, j);
+        k++;
     }
 }
 

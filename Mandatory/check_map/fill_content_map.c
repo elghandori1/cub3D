@@ -22,7 +22,8 @@ char *skip_spaces(char *line)
     return line;
 }
 
-int is_texture_identifier(char *line) {
+int is_texture_identifier(char *line)
+{
     return (ft_strncmp(line, "NO", 2) == 0 || ft_strncmp(line, "WE", 2) == 0 ||
             ft_strncmp(line, "SO", 2) == 0 || ft_strncmp(line, "EA", 2) == 0 ||
             ft_strncmp(line, "F", 1) == 0 || ft_strncmp(line, "C", 1) == 0);
@@ -30,7 +31,7 @@ int is_texture_identifier(char *line) {
 
 void fill_content_data(char *map_file, t_game *cub3d)
 {
-    int fd, i, rows;
+    int (fd), (i), (rows);
     i = 0;
     fd = open(map_file, O_RDONLY);
     if (fd == -1)
