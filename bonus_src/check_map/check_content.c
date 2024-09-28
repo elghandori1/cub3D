@@ -25,7 +25,7 @@ int check_map_last(t_game *cub3d)
 
     while (cub3d->data->content[x])
     {
-        if (ft_search(cub3d->data->content[x][0], "0 1"))
+        if (ft_search(cub3d->data->content[x][0], "01"))
             break;
         x++;
     }

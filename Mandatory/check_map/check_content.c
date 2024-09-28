@@ -25,7 +25,7 @@ int check_map_last(t_game *cub3d)
 
     while (cub3d->data->content[x])
     {
-        if (ft_search(cub3d->data->content[x][0], "0 1"))
+        if (ft_search(cub3d->data->content[x][0], " 01"))
             break;
         x++;
     }
@@ -63,8 +63,8 @@ void check_content(t_game *cub3d)
     get_map(cub3d);
     get_square_map(cub3d);
     check_player(cub3d);
-    if (!check_walls(cub3d))
-        ft_error(cub3d, "Error: Map borders are invalid!\n");
+     if (!check_walls(cub3d))
+        ft_error(cub3d, "Error: Map borders are invalid! 55\n");
     }else
 		ft_error(cub3d,"Error: The map must be the last!\n");
 }

@@ -49,7 +49,7 @@ void check_newline(t_game *cub3d, int i, int len)
 void copy_map(t_game *cub3d, int i)
 {
     int j = 0;
-    while (cub3d->data->content[i] && ft_search(cub3d->data->content[i][0], "0 1\n"))
+    while (cub3d->data->content[i])
     {
         cub3d->data->map[j] = ft_strdup(cub3d->data->content[i]);
         if (ft_strlen(cub3d->data->map[j]) > (size_t)cub3d->data->width)

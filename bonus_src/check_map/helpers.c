@@ -1,55 +1,6 @@
 #include "../cub3d_bonus.h"
 
-void	ft_free(char	**arr)
-{
-	unsigned int	i;
 
-	i = 0;
-	while (arr[i])
-		free(arr[i++]);
-	free(arr);
-}
-
-void free_map(t_data *map)
-{
-    int i;
-
-    if (!map)
-        return;
-    if (map->content)
-    {
-        i = 0;
-        while (map->content[i])
-            free(map->content[i++]);
-        free(map->content);
-    }
-    if (map->so_texture)
-        free(map->so_texture);
-    if (map->no_texture)
-        free(map->no_texture);
-    if (map->ea_texture)
-        free(map->ea_texture);
-    if (map->we_texture)
-        free(map->we_texture);
-
-    if (map->c_color)
-        free(map->c_color);
-    if (map->f_color)
-        free(map->f_color);
-
-    if (map->map && map->square_map)
-    {
-        i = 0;
-        while (i < map->len)
-        {
-            free(map->map[i]);
-            free(map->square_map[i]);
-            i++;
-        }
-        free(map->map);
-        free(map->square_map);
-    }
-}
 void    free_sound_resources(t_game *game)
 {
     if (game->audio.sound_track)
@@ -105,7 +56,6 @@ int    shutdown2(t_game *game)
 
 void    ft_error(t_game *cub3d, char *message)
 {
-    ft_putstr_fd("Error\n",2);
     ft_putstr_fd(message,2);
     shutdown2(cub3d);
 }
