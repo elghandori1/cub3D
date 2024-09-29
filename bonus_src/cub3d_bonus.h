@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moel-gha <moel-gha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sait-alo <sait-alo@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/29 15:01:58 by sait-alo          #+#    #+#             */
-/*   Updated: 2024/09/29 16:56:25 by moel-gha         ###   ########.fr       */
+/*   Updated: 2024/09/29 18:45:36 by sait-alo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,13 @@
 # include <math.h>
 # include <SDL2/SDL.h>
 # include <X11/X.h>
-# include "../mlx/mlx.h"
-# include "../mlx/mlx_int.h"
+# include <mlx.h>
 # include "../include/libft/libft.h"
 # include "../include/cute_sound/cute_sound.h"
 # include "../include/gc.h"
 
 # define SIZE 	64
-# define WIDTH  1280 // 600
+# define WIDTH  1200 // 600
 # define HEIGHT 700 // 350
 # define MOVE_SPEED 2
 # define MOUSE_SENSITIVITY 0.0004

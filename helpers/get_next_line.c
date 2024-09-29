@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moel-gha <moel-gha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sait-alo <sait-alo@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/29 16:46:43 by moel-gha          #+#    #+#             */
-/*   Updated: 2024/09/29 16:46:47 by moel-gha         ###   ########.fr       */
+/*   Updated: 2024/09/29 18:00:39 by sait-alo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../Mandatory/cub3D.h"
+#include "../mandatory_src/cub3D.h"
 
 char	*get_next_line(int fd)
 {

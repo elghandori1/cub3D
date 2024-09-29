@@ -6,11 +6,22 @@
 /*   By: sait-alo <sait-alo@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/29 15:43:52 by sait-alo          #+#    #+#             */
-/*   Updated: 2024/09/29 15:43:53 by sait-alo         ###   ########.fr       */
+/*   Updated: 2024/09/29 18:32:54 by sait-alo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
+
+void	initialize_window(t_game *game)
+{
+	game->mlx_ptr = mlx_init();
+	if (!game->mlx_ptr)
+		ft_error(game, "Failed to init mlx\n");
+	game->mlx_win = mlx_new_window(game->mlx_ptr, WIDTH, HEIGHT, "cub3D");
+	if (!game->mlx_win)
+		return (ft_error(game, "Failed to init mlx win\n"));
+	game->screen_middle = (double)(HEIGHT) / 2;
+}
 
 double	normalize_angle(double angle)
 {
@@ -37,16 +48,6 @@ void	put_pixels(t_image *data, int x, int y, int color)
 	}
 }
 
-void	initialize_window(t_game *game)
-{
-	game->mlx_ptr = mlx_init();
-	if (!game->mlx_ptr)
-		ft_error(game, "Failed to init mlx\n");
-	game->mlx_win = mlx_new_window(game->mlx_ptr, WIDTH, HEIGHT, "cub3D");
-	if (!game->mlx_win)
-		return (ft_error(game, "Failed to init mlx win\n"));
-	game->screen_middle = (double)(HEIGHT) / 2;
-}
 
 int	key_release(int key, t_game *game)
 {

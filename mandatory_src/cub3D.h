@@ -6,7 +6,7 @@
 /*   By: sait-alo <sait-alo@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/29 15:20:41 by sait-alo          #+#    #+#             */
-/*   Updated: 2024/09/29 16:01:19 by sait-alo         ###   ########.fr       */
+/*   Updated: 2024/09/29 18:45:00 by sait-alo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,7 @@
 # include <fcntl.h>
 # include <math.h>
 # include <stdbool.h>
-# include "../mlx/mlx.h"
-# include "../mlx/mlx_int.h"
+# include <mlx.h>
 # include "../include/libft/libft.h"
 # include "../include/gc.h"
 
