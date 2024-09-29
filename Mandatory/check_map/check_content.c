@@ -24,23 +24,6 @@ void valid_content(t_game *cub3d)
  }
 }
 
-void check_content(t_game *cub3d)
-{ 
-	if (!check_map_last(cub3d))
-    {
-    valid_content(cub3d);
-    check_identifier(cub3d);
-    check_textures_path(cub3d->data->content, cub3d);
-    get_textures(cub3d);
-    get_colors(cub3d);
-    get_map(cub3d);
-    get_square_map(cub3d);
-    check_player(cub3d);
-    if (!check_walls(cub3d))
-        ft_error(cub3d, "Error: Map borders are invalid!\n");
-    }else
-		ft_error(cub3d,"Error: The map must be the last!\n");
-}
 
 void check_content(t_game *cub3d)
 { 

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sait-alo <sait-alo@student.1337.ma>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/09/29 15:43:52 by sait-alo          #+#    #+#             */
+/*   Updated: 2024/09/29 15:43:53 by sait-alo         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3D.h"
 
 double	normalize_angle(double angle)
@@ -17,12 +29,12 @@ int	get_color(t_color color)
 void	put_pixels(t_image *data, int x, int y, int color)
 {
 	char	*dst;
-    
-    if (x >= 0 && x < WIDTH && y >= 0 && y < HEIGHT)
-    {
-        dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
-        *(unsigned int*)dst = color;
-    }
+
+	if (x >= 0 && x < WIDTH && y >= 0 && y < HEIGHT)
+	{
+		dst = data->addr + (y * data->line_length + x * (data->bpp / 8));
+		*(unsigned int *)dst = color;
+	}
 }
 
 void	initialize_window(t_game *game)
@@ -33,6 +45,7 @@ void	initialize_window(t_game *game)
 	game->mlx_win = mlx_new_window(game->mlx_ptr, WIDTH, HEIGHT, "cub3D");
 	if (!game->mlx_win)
 		return (ft_error(game, "Failed to init mlx win\n"));
+	game->screen_middle = (double)(HEIGHT) / 2;
 }
 
 int	key_release(int key, t_game *game)

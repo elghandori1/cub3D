@@ -12,7 +12,8 @@ SRC = 	helpers/get_next_line.c helpers/gc.c \
 
 SRC_BONUS = helpers/get_next_line.c helpers/gc.c\
 	  $(addprefix ./bonus_src/, main_bonus.c minimap_bonus.c utils_bonus.c utils2_bonus.c \
-	  							moves_bonus.c render_bonus.c raycasting_bonus.c)\
+	  							moves_bonus.c render_bonus.c raycasting_bonus.c \
+								hooks_bonus.c init_bonus.c mouse_bonus.c raycasting_bonus2.c) \
 	  $(addprefix ./bonus_src/check_map/, check_map.c  check_content.c check_texture.c \
 	  									get_textures.c helpers.c get_color.c get_map.c \
 										check_player.c check_identifiers.c check_walls.c \

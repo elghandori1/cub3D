@@ -1,79 +1,88 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   render_wall.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sait-alo <sait-alo@student.1337.ma>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/09/29 15:40:22 by sait-alo          #+#    #+#             */
+/*   Updated: 2024/09/29 15:45:09 by sait-alo         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3D.h"
 
-t_image	*set_wall_texture(t_game *g, t_ray r)
+static t_image	*set_wall_texture(t_game *g, t_ray r)
 {
 	if (r.dir == 'N')
-		return (g->textures[0]);
+		return (g->textures[NORTH]);
 	else if (r.dir == 'S')
-		return (g->textures[1]);
+		return (g->textures[SOUTH]);
 	else if (r.dir == 'W')
-		return (g->textures[2]);
+		return (g->textures[WEST]);
 	else if (r.dir == 'E')
-		return (g->textures[3]);
-	return (NULL);
+		return (g->textures[EAST]);
+	return (g->textures[EAST]);
 }
 
-void	calculate_wall_texture(t_game *g, t_ray ray, t_wall_data *wall_data)
-{
-	wall_data->wall_h = (SIZE / ray.distance) * DISTANCE_PROJ_PLANE;
-	wall_data->start_y = (HEIGHT / 2) - (wall_data->wall_h / 2);
-	wall_data->end_y = (HEIGHT / 2) + (wall_data->wall_h / 2);
-	if (wall_data->start_y < 0)
-		wall_data->start_y = 0;
-	if (wall_data->end_y > HEIGHT)
-		wall_data->end_y = HEIGHT;
-	wall_data->texture = set_wall_texture(g, ray);
-	if (ray.was_hit_vertical)
-		wall_data->tx = (int)ray.wall_hit.y % SIZE;
-	else
-		wall_data->tx = (int)ray.wall_hit.x % SIZE;
-}
-
-void	render_ceiling(t_game *g, int ray_id, int start_y)
+static void	render_ceiling(t_game *g, int ray_id)
 {
 	int	y;
 
-	y = 0;
-	while (y < start_y + 10)
-	{
+	y = -1;
+	while (++y < (HEIGHT / 2))
 		put_pixels(&g->frame_buffer, ray_id, y, get_color(g->data->ciel_color));
-		y++;
-	}
 }
 
-void	render_wall_and_floor(t_game *g, t_ray ray, t_wall_data *wall_data)
+static void	render_wall(t_game *g, t_ray ray, t_wall *wall)
 {
-	int		*addr;
-	int		y;
-	double	distance_from_top;
+	const int	*addr = (int *)wall->texture->addr;
+	int			ty;
+	int			color;
+	double		distance_from_top;
+	int			y;
 
-	int (ty), (color);
-	y = wall_data->start_y + 1;
-	addr = (int *)wall_data->texture->addr;
-	while (y < wall_data->end_y)
+	y = wall->start_y;
+	while (y < wall->end_y)
 	{
-		distance_from_top = y + (wall_data->wall_h / 2) - (HEIGHT / 2);
-		ty = (int)(distance_from_top * (wall_data->texture->width
-					/ wall_data->wall_h)) % wall_data->texture->width;
-		if (wall_data->tx >= 0 && ty <= wall_data->texture->width && ((ty
-					* wall_data->texture->width) + wall_data->tx) >= 0)
-			color = addr[ty * wall_data->texture->width + wall_data->tx];
+		distance_from_top = y + (wall->height / 2) - g->screen_middle;
+		ty = (int)(distance_from_top * (wall->texture->width / wall->height));
+		if (wall->tx >= 0 && ty <= wall->texture->width
+			&& ((ty * wall->texture->width) + wall->tx) >= 0)
+			color = addr[ty * wall->texture->width + wall->tx];
 		put_pixels(&g->frame_buffer, ray.id, y, color);
 		y++;
 	}
-	while (y < HEIGHT)
+}
+
+static void	render_floor(t_game *g, int rid, int wall_end)
+{
+	while (wall_end < HEIGHT)
 	{
-		put_pixels(&g->frame_buffer, ray.id, y,
-			get_color(g->data->floor_color));
-		y++;
+		put_pixels(&g->frame_buffer, rid, \
+			wall_end, get_color(g->data->floor_color));
+		wall_end++;
 	}
 }
 
-void	render_wall(t_game *g, t_ray ray)
+void	render_wall_strip(t_game *g, t_ray ray)
 {
-	t_wall_data	wall_data;
+	t_wall	wall;
 
-	calculate_wall_texture(g, ray, &wall_data);
-	render_ceiling(g, ray.id, wall_data.start_y);
-	render_wall_and_floor(g, ray, &wall_data);
+	ray.distance *= cos(g->data->player.angle - ray.angle);
+	wall.height = (SIZE / ray.distance) * DISTANCE_PROJ_PLANE;
+	wall.end_y = g->screen_middle + (wall.height / 2);
+	wall.start_y = g->screen_middle - (wall.height / 2);
+	wall.texture = set_wall_texture(g, ray);
+	if (wall.start_y < 0)
+		wall.start_y = 0;
+	if (wall.end_y > HEIGHT)
+		wall.end_y = HEIGHT;
+	if (ray.was_hit_vertical)
+		wall.tx = (int)ray.wall_hit.y % SIZE;
+	else
+		wall.tx = (int)ray.wall_hit.x % SIZE;
+	render_ceiling(g, ray.id);
+	render_wall(g, ray, &wall);
+	render_floor(g, ray.id, wall.end_y);
 }

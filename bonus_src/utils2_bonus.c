@@ -1,63 +1,89 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils2_bonus.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sait-alo <sait-alo@student.1337.ma>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/09/29 15:17:13 by sait-alo          #+#    #+#             */
+/*   Updated: 2024/09/29 15:59:33 by sait-alo         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d_bonus.h"
 
-t_image *load_texture(t_game *game, char *path)
+void	put_gun_to_buffer(t_image *gun, int x, int y, t_game *g)
 {
-	t_image	*img;
-	int		n;
+	int	i;
+	int	j;	
+	int	*addr;	
+	int	color;
 
-	img = m_alloc(sizeof(t_image), ALLOC);
-	if (!img)
-		return (NULL);
-	img->img = mlx_xpm_file_to_image(game->mlx_ptr, path, &img->width, &img->height);
-	if (!img->img)
-		ft_error(game, "Texture loading failed\n");
-	img->addr = mlx_get_data_addr(img->img, &n, &n, &n);
-    if (img->addr == NULL)
-    {
-        return (NULL);
-    }
-	return (img);
+	j = 0;
+	addr = (int *)gun->addr;
+	while (j < gun->height)
+	{
+		i = 0;
+		while (i < gun->width)
+		{
+			color = addr[j * gun->width + i];
+			if (color > 0)
+				put_pixels(&g->frame_buffer, x + i, y + j, color);
+			i++;
+		}
+		j++;
+	}
 }
 
-void	initialize_textures(t_game *game)
+void	gun_animation(t_game *game)
 {
-    int i;
-
-    i = -1;
-	game->textures[NORTH] = load_texture(game, game->data->no_texture);
-	game->textures[SOUTH] = load_texture(game, game->data->so_texture);
-	game->textures[WEST] = load_texture(game, game->data->we_texture);
-	game->textures[EAST] = load_texture(game, game->data->ea_texture);
-    game->textures[SHOOT_BOARD] = load_texture(game, "./resources/shot-board.xpm");
-    game->textures[DOOR] = load_texture(game, "./resources/door.xpm");
-    while (++i < 6)
-    {
-        if (!game->textures[i])
-            ft_error(game, "Failed to load textures\n");
-    }
-    game->gun[0] = load_texture(game, "./resources/pis-0.xpm");
-    game->gun[1] = load_texture(game, "./resources/pis-1.xpm");
-    game->gun[2] = load_texture(game, "./resources/pis-2.xpm");
-    game->gun[3] = load_texture(game, "./resources/pis-3.xpm");
-    i = -1;
-    while (++i < 4)
-    {
-         if (!game->gun[i])
-            ft_error(game, "Failed to load textures\n");
-    }
-    
+	if (game->gun_anim.is_shooting == true)
+	{
+		game->gun_anim.frame_counter++;
+		if (game->gun_anim.frame_counter >= 10)
+		{
+			game->gun_anim.frame_counter = 0;
+			game->gun_anim.curr_frame++;
+			if (game->gun_anim.curr_frame == 4)
+			{
+				game->gun_anim.curr_frame = 0;
+				game->gun_anim.is_shooting = 0;
+				game->gun_anim.sound_played = 0;
+			}
+		}
+	}
 }
 
-void	initialize_frame(t_game *g)
+int	gun_fire(int button, int x, int y, void *param)
 {
-	g->frame_buffer.img = mlx_new_image(g->mlx_ptr, WIDTH, HEIGHT);
-	if (!g->frame_buffer.img)
-		ft_error(g ,"Frame buffer creation failed\n");
-	g->frame_buffer.addr = mlx_get_data_addr(g->frame_buffer.img,
-											&g->frame_buffer.bits_per_pixel,
-											&g->frame_buffer.line_length,
-											&g->frame_buffer.endian);
-    if (!g->frame_buffer.addr)
-        return (ft_error(g, "Failed to get data addr\n"));
+	t_game	*game;
+
+	(void)x;
+	(void)y;
+	game = (t_game *)param;
+	if (button == 1)
+	{
+		game->gun_anim.is_shooting = 1;
+		game->gun_anim.sound_played = 0;
+	}
+	return (0);
 }
 
+void	play_sounds(t_game *game)
+{
+	if (game->gun_anim.is_shooting && !game->gun_anim.sound_played)
+	{
+		cs_play_sound(game->audio.gun_sound, game->audio.gun_params);
+		game->gun_anim.sound_played = 1;
+	}
+	if (game->door_open == 1 && !game->door_sound_played)
+	{
+		cs_play_sound(game->audio.door_sound[0], game->audio.door_params);
+		game->door_sound_played = 1;
+	}
+	else if (!game->door_open && !game->door_sound_played)
+	{
+		cs_play_sound(game->audio.door_sound[1], game->audio.door_params);
+		game->door_sound_played = 1;
+	}
+}

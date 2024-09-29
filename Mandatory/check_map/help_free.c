@@ -2,7 +2,7 @@
 
 void	free_textures_res(t_game *game)
 {
-	int i;
+	int	i;
 
 	i = -1;
 	while (++i < 4)

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cub3D.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sait-alo <sait-alo@student.1337.ma>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/09/29 15:20:41 by sait-alo          #+#    #+#             */
+/*   Updated: 2024/09/29 16:01:19 by sait-alo         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef CUB3D_H
 # define CUB3D_H
 
@@ -13,12 +25,18 @@
 # include "../include/libft/libft.h"
 # include "../include/gc.h"
 
+// Game settings 
+# define WIDTH  1000
+# define HEIGHT 1000
+# define SIZE 64
+# define MOVE_SPEED 2
+# define ROTATION_SPEED 0.02
 
-# define SIZE 	64
-# define PI		3.14159265358
+# define PI 	3.14159265358979323846
 # define PI_2	1.57079632679489661923
 # define PI2	6.28318530718
 
+// Game Controle
 # define ESC	0xff1b
 # define W		0x0077
 # define S		0x0073
@@ -26,14 +44,10 @@
 # define D		0x0064
 # define LEFT	65363
 # define RIGHT	65361
-
-# define WIDTH  1000
-# define HEIGHT 1000
 # define FOV_RD 1.04719755119
-# define MOVE_SPEED 2
-# define ROTATION_SPEED 0.02 // in rad
+
 # define WALL_BUFFER 0.1
-# define DISTANCE_PROJ_PLANE ((WIDTH / 2) / tan(FOV_RD / 2))
+# define DISTANCE_PROJ_PLANE 1108.51251686 // ((WIDTH / 2) / tan(FOV_RD / 2))
 # define USAGE "Error\nUsage: ./cub3d maps/*.cub\n"
 
 typedef struct s_color
@@ -43,11 +57,11 @@ typedef struct s_color
 	int	b;
 }	t_color;
 
-typedef struct	s_image
+typedef struct s_image
 {
 	void	*img;
 	void	*addr;
-	int		bits_per_pixel;
+	int		bpp;
 	int		line_length;
 	int		endian;
 	int		width;
@@ -74,7 +88,7 @@ typedef struct s_player
 {
 	double		x;
 	double		y;
-	double 		angle;
+	double		angle;
 	double		dir_x;
 	double		dir_y;
 	t_keys		keys;
@@ -82,28 +96,28 @@ typedef struct s_player
 
 typedef struct s_data
 {
-	int		height;
-	int		width;
+	int			height;
+	int			width;
 	char		**content;
-	char        **map;
+	char		**map;
 	char		**last_map;
-	char        **square_map;
-	char        *so_texture;
-	char        *no_texture;
-	char        *ea_texture;
-	char        *we_texture;
+	char		**square_map;
+	char		*so_texture;
+	char		*no_texture;
+	char		*ea_texture;
+	char		*we_texture;
 	char		*image_start;
-	char        *f_color;
-	char        *c_color;
-	t_color     ciel_color;
-	t_color     floor_color;
-	t_player    player;
-	int         we;
-	int         so; 
-	int         no; 
-	int         ea; 
-	int         c; 
-	int         f;
+	char		*f_color;
+	char		*c_color;
+	t_color		ciel_color;
+	t_color		floor_color;
+	t_player	player;
+	int			we;
+	int			so;
+	int			no;
+	int			ea;
+	int			c;
+	int			f;
 }		t_data;
 
 typedef struct s_ray
@@ -119,28 +133,36 @@ typedef struct s_ray
 	size_t		wall_strip_height;
 	int			wall_top;
 	int			wall_bottom;
-}               t_ray;
+}			t_ray;
 
-typedef struct s_wall_data
+typedef struct s_wall
 {
-    int start_y;
-    int end_y;
-    int tx;
-    double wall_h;
-    t_image *texture;
-} t_wall_data;
+	int		start_y;
+	int		end_y;
+	int		tx;
+	double	height;
+	t_image	*texture;
+}	t_wall;
 
 typedef struct s_game
 {
-    void        *mlx_ptr;
-    void        *mlx_win;
-    t_data      *data;
-    t_image     frame_buffer;
-    t_image     *textures[4];
-    t_player    player;
+	void		*mlx_ptr;
+	void		*mlx_win;
+	t_data		*data;
+	t_image		frame_buffer;
+	t_image		*textures[4];
+	t_player	player;
+	double		screen_middle;
 	t_ray		ray[WIDTH];
-} t_game;
+}			t_game;
 
+enum
+{
+	NORTH,
+	SOUTH,
+	WEST,
+	EAST,
+};
 
 /*	init	*/
 
@@ -153,24 +175,22 @@ void	initialize_frame_buffer(t_game *game);
 int		raycasting(t_game *game, t_ray *rays);
 int		key_release(int key, t_game *game);
 double	normalize_angle(double angle);
-void    move_player(t_game *game);
+void	move_player(t_game *game);
 int		key_release(int key, t_game *game);
-t_image	*set_wall_texture(t_game *g, t_ray r);
 
 /*		Rendring		*/
-void 	render_wall(t_game *g, t_ray ray);
-void	set_ray_direction(t_ray *ray);
+void	render_wall_strip(t_game *g, t_ray ray);
+void	set_ray_direction(t_ray *ray, t_point *stp);
 void	put_pixels(t_image *data, int x, int y, int color);
 t_image	*load_texture(t_game *game, char *path);
 int		get_color(t_color color);
-int 	wall_hit(double x, double y, t_game *g);
+int		wall_hit(double x, double y, t_game *g);
 
 /*		hooks	*/
 void	capture_hooks(t_game *game);
 int		key_press(int keycode, t_game *game);
 
-
-void 	free_textures(t_data *map);
+void	free_textures(t_data *map);
 
 void	get_square_map(t_game *cub3d);
 void	map_borders(t_game *cub3d);
@@ -178,33 +198,33 @@ int		check_row(char *row);
 void	check_map_height(t_game *cub3d);
 
 int		quit_game(t_game *game);
-void    ft_error(t_game *cub3d,char *message);
-void    free_map(t_data *map);
-void    shutdown(t_game *cub3d);
+void	ft_error(t_game *game, char *message);
+void	free_map(t_data *map);
+void	shutdown(t_game *cub3d);
 int		turnoff(t_game *game);
 void	ft_free(char	**arr);
 int		ft_search(char c, char *set);
 int		has_cub_extension(const char *f_name);
-int 	check_empty(char *f_name);
-void 	check_map(t_game *cub3d, char *file);
+int		check_empty(char *f_name);
+void	check_map(t_game *cub3d, char *file);
 char	*get_next_line(int fd);
-void 	fill_content_data(char *map_file, t_game *cub3d);
+void	fill_content_data(char *map_file, t_game *cub3d);
 void	check_content(t_game *cub3d);
-void    initialize_identifiers(t_data *map);
-void    check_texture_identifiers(t_data *map, char *line, t_game *cub3d);
-void    check_color_identifiers(t_data *map, char *line, t_game *cub3d);
-void    validate_identifiers(t_data *map, t_game *cub3d);
-void    check_identifier(t_game *content);
-void 	check_textures_path(char **content,t_game *cub3d);
-void 	get_textures(t_game *cub3d);
+void	initialize_identifiers(t_data *map);
+void	check_texture_identifiers(t_data *map, char *line, t_game *cub3d);
+void	check_color_identifiers(t_data *map, char *line, t_game *cub3d);
+void	validate_identifiers(t_data *map, t_game *cub3d);
+void	check_identifier(t_game *content);
+void	check_textures_path(char **content, t_game *cub3d);
+void	get_textures(t_game *cub3d);
 char	*get_from_file(char **content, char *target);
-void 	get_colors(t_game *cub3d);
-void 	get_map(t_game *cub3d);
+void	get_colors(t_game *cub3d);
+void	get_map(t_game *cub3d);
 void	get_square_map(t_game *cub3d);
 void	check_player(t_game *cub3d);
-int	    check_walls(t_game *cub3d);
-int 	map_len(char **content);
+int		check_walls(t_game *cub3d);
+int		map_len(char **content);
 int		check_row(char *row);
-int 	check_map_last(t_game *cub3d);
+int		check_map_last(t_game *cub3d);
 
 #endif

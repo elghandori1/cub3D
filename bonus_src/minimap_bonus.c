@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minimap_bonus.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sait-alo <sait-alo@student.1337.ma>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/09/29 12:03:43 by sait-alo          #+#    #+#             */
+/*   Updated: 2024/09/29 15:19:09 by sait-alo         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d_bonus.h"
 
 void	draw_square(t_image *img, int color, int x, int y)
@@ -62,7 +74,8 @@ void	draw_minimap_cell(t_game *game, t_minimap *minimap)
 			color = 0xd13f3f;
 		else if (game->data->square_map[minimap->map_y][minimap->map_x] == 'd')
 			color = 0x6ad863;
-		else if (ft_strchr("V \n", game->data->square_map[minimap->map_y][minimap->map_x]))
+		else if (ft_strchr("V \n", \
+			game->data->square_map[minimap->map_y][minimap->map_x]))
 			color = 0x404040;
 		else
 			color = 0x202020;

@@ -1,8 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   moves_bonus.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sait-alo <sait-alo@student.1337.ma>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/09/29 12:05:04 by sait-alo          #+#    #+#             */
+/*   Updated: 2024/09/29 15:56:07 by sait-alo         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d_bonus.h"
 
-void	open_door(t_game *game);
-
-int is_valid_position(t_game *game, double x, double y)
+int	is_valid_position(t_game *game, double x, double y)
 {
 	int		map_x;
 	int		map_y;
@@ -19,6 +29,7 @@ int is_valid_position(t_game *game, double x, double y)
 		return (0);
 	return (1);
 }
+
 t_point	calculate_new_position(t_player *p)
 {
 	t_point		move;
@@ -70,153 +81,4 @@ void	move_player(t_game *game)
 	p->angle = normalize_angle(p->angle);
 	p->dir_x = cos(p->angle);
 	p->dir_y = sin(p->angle);
-}
-
-int		key_release(int key, t_game *game)
-{
-	if (key == W)
-		game->data->player.keys.up = 0;
-	if (key == S)
-		game->data->player.keys.down = 0;
-	if (key == A)
-		game->data->player.keys.left = 0;
-	if (key == D)
-		game->data->player.keys.right = 0;
-	if (key == LEFT)
-		game->data->player.keys.rot_left = 0;
-	if (key == RIGHT)
-		game->data->player.keys.rot_right = 0;
-	return (0);
-}
-
-void	open_door(t_game *game)
-{
-	t_player *p;
-	int map_x;
-	int map_y;
-
-	p = &game->data->player;
-	p->ray.angle = p->angle;
-	p->ray.skip_closed_door = 1;
-	cast_ray(game, &p->ray);
-	int pixel = 1 - 2 * !p->ray.facing_up;
-	int pixel2 = 1 - 2 * p->ray.facing_right;
-	if (p->ray.was_hit_vertical)
-	{
-		map_x = (int)((p->ray.wall_hit.x - pixel2) / SIZE);
-		map_y = (int)(p->ray.wall_hit.y / SIZE);
-	}
-	else
-	{
-		map_x = (int)(p->ray.wall_hit.x / SIZE);
-		map_y = (int)((p->ray.wall_hit.y - pixel) / SIZE);
-	}
-	if (p->ray.distance < SIZE * 2 && p->ray.hit_content == 'D')
-	{
-		game->door_sound_played = 0;
-		game->door_open = 1;
-		game->data->square_map[map_y][map_x] = 'd';
-
-	}
-	else if (p->ray.distance < SIZE * 2 && p->ray.hit_content == 'd')
-	{
-		game->door_open = 0;
-		game->door_sound_played = 0;
-		game->data->square_map[map_y][map_x] = 'D';
-	}
-}
-
-void	control_mouse(t_game *game)
-{
-	if (game->mouse.show_mouse == 0)
-		mlx_mouse_show(game->mlx_ptr, game->mlx_win);
-	if (game->mouse.show_mouse == 1)
-		mlx_mouse_hide(game->mlx_ptr, game->mlx_win);
-	game->mouse.show_mouse = !game->mouse.show_mouse;
-}
-
-int	key_press(int keycode, t_game *game)
-{
-	t_player *p;
-
-	p = &game->data->player;
-	if (keycode == ESC)
-		shutdown2(game);
-	if (keycode == LCTRL)
-		control_mouse(game);
-	if (keycode == W)
-		p->keys.up = 1;
-	if (keycode == S)
-		p->keys.down = 1;
-	if (keycode == A)
-		p->keys.left = 1;
-	if (keycode == D)
-		p->keys.right = 1;
-	if (keycode == LEFT)
-		p->keys.rot_left = 1;
-	if (keycode == RIGHT)
-		p->keys.rot_right = 1;
-	if (keycode == E)
-		open_door(game);
-	if (keycode == UP)
-		game->screen_center += 10;
-	if (keycode == DOWN)
-		game->screen_center -= 10;
-	return (0);
-}
-
-int	gun_fire(int button, int x, int y, void *param)
-{
-	t_game *game;
-
-	(void)x;
-	(void)y;
-	game = (t_game *)param;
-	if (button == 1)
-	{
-		game->gun_anim.is_shooting = 1;
-		game->gun_anim.sound_played = 0;
-	}
-	return (0);
-}	
-
-void	mouse_movement(t_game *game, int new_x, int new_y)
-{
-	double	delta_x;
-	double 	delta_y;
-
-	delta_x = (new_x - 600) * MOUSE_SENSITIVITY;
-	delta_y = (new_y - 350) * 0.4;
-	game->data->player.angle += delta_x;
-	game->screen_center -= delta_y;
-	if (game->screen_center >= HEIGHT)
-		game->screen_center = HEIGHT;
-	if (game->screen_center <= 0)
-		game->screen_center = 0;
-	mlx_mouse_move(game->mlx_ptr, game->mlx_win, 600, 350);
-}
-
-int	mouse_move(int x, int y, void *game)
-{
-	t_game *g;
-	static int mouse_mouve = 0;
-	mouse_mouve++;
-	
-	g = (t_game *)game;
-	if (mouse_mouve % 3 == 0 && x >= 0 && x <= WIDTH && y >= 0 && y <= HEIGHT )
-	{
-		mouse_mouve = 0;
-		if (g->mouse.show_mouse == false)
-			mouse_movement(g, x, y);
-	}
-	return (0);
-}
-
-void	capture_hooks(t_game *game)
-{
-	mlx_hook(game->mlx_win, KeyPress, KeyPressMask, key_press, game);
-	mlx_hook(game->mlx_win, KeyRelease, KeyReleaseMask, key_release, game);
-	mlx_hook(game->mlx_win, DestroyNotify, StructureNotifyMask, &shutdown2, game);
-	mlx_hook(game->mlx_win, MotionNotify, PointerMotionMask, mouse_move, game);
-	mlx_mouse_hook(game->mlx_win, gun_fire, game);
 }
