@@ -1,15 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   map_borders.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: moel-gha <moel-gha@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/09/29 14:47:14 by moel-gha          #+#    #+#             */
+/*   Updated: 2024/09/29 14:47:15 by moel-gha         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../cub3d_bonus.h"
-
-void	check_map_height(t_game *cub3d)
-{
-	int	len;
-
-	len = cub3d->data->height - 1;
-	if (len == 0)
-	{
-		ft_error(cub3d, "Error: Map borders are invalid!\n");
-	}
-}
 
 void	check_top_border(t_game *cub3d)
 {
@@ -29,7 +30,6 @@ void	check_top_border(t_game *cub3d)
 		idx++;
 	}
 }
-
 
 void	check_bottom_border(t_game *cub3d)
 {

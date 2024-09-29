@@ -6,7 +6,7 @@
 /*   By: moel-gha <moel-gha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 16:36:59 by moel-gha          #+#    #+#             */
-/*   Updated: 2024/09/27 11:38:09 by moel-gha         ###   ########.fr       */
+/*   Updated: 2024/09/29 16:57:37 by moel-gha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <string.h>
 # include <unistd.h>
 # include "../gc.h"
+
 typedef struct s_list
 {
 	void			*content;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   helpers.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sait-alo <sait-alo@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: moel-gha <moel-gha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/29 16:31:18 by sait-alo          #+#    #+#             */
-/*   Updated: 2024/09/29 16:31:19 by sait-alo         ###   ########.fr       */
+/*   Created: 2024/09/29 14:46:31 by moel-gha          #+#    #+#             */
+/*   Updated: 2024/09/29 14:46:32 by moel-gha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,10 +66,10 @@ int	shutdown2(t_game *game)
 	return (exit(0), 0);
 }
 
-void	ft_error(t_game *game, char *message)
+void	ft_error(t_game *cub3d, char *message)
 {
 	ft_putstr_fd(message, 2);
-	shutdown2(game);
+	shutdown2(cub3d);
 }
 
 int	ft_search(char c, char *set)

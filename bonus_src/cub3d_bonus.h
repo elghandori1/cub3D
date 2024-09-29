@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sait-alo <sait-alo@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: moel-gha <moel-gha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/29 15:01:58 by sait-alo          #+#    #+#             */
-/*   Updated: 2024/09/29 15:57:20 by sait-alo         ###   ########.fr       */
+/*   Updated: 2024/09/29 16:56:25 by moel-gha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@
 
 # define DISTANCE_PROJ_PLANE 1108.51251686 // ((WIDTH / 2) / tan(FOV_RD / 2))
 # define MINIMAP_X_OFFSET 20
-# define MINIMAP_Y_OFFSET (HEIGHT - MINIMAP_SIZE * MAP_SCALE - 20)
 # define PLAYER_SIZE 0.4
 # define PLAYER_COLOR 0xFF0000
 # define FOV_RD 1.04719755119
@@ -264,9 +263,7 @@ void	initialize_sound(t_game *game);
 void	play_sounds(t_game *game);
 
 int		get_color(t_color color);
-int		exit_game(t_game *game);
 void	ft_error(t_game *game, char *message);
-void	free_map(t_data *map);
 int		shutdown2(t_game *game);
 void	ft_free(char	**arr);
 int		ft_search(char c, char *set);

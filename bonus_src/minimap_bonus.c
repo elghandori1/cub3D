@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minimap_bonus.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sait-alo <sait-alo@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: moel-gha <moel-gha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/29 12:03:43 by sait-alo          #+#    #+#             */
-/*   Updated: 2024/09/29 15:19:09 by sait-alo         ###   ########.fr       */
+/*   Updated: 2024/09/29 16:56:02 by moel-gha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,9 @@ void	draw_square(t_image *img, int color, int x, int y)
 		j = 0;
 		while (j < MAP_SCALE)
 		{
-			put_pixels(img, MINIMAP_X_OFFSET + x * MAP_SCALE + j,
-				MINIMAP_Y_OFFSET + y * MAP_SCALE + i, color);
+			put_pixels(img, MINIMAP_X_OFFSET + x * MAP_SCALE + j, (HEIGHT
+					- MINIMAP_SIZE * MAP_SCALE - 20) + y * MAP_SCALE + i,
+				color);
 			j++;
 		}
 		i++;
@@ -50,9 +51,9 @@ void	draw_player(t_game *game, int start_x, int start_y)
 		while (j < MAP_SCALE * PLAYER_SIZE)
 		{
 			put_pixels(&game->frame_buffer, MINIMAP_X_OFFSET + (player_minimap_x
-					* MAP_SCALE - player_offset) + i, MINIMAP_Y_OFFSET
-				+ (player_minimap_y * MAP_SCALE - player_offset) + j,
-				PLAYER_COLOR);
+					* MAP_SCALE - player_offset) + i, (HEIGHT - MINIMAP_SIZE
+					* MAP_SCALE - 20) + (player_minimap_y * MAP_SCALE
+					- player_offset) + j, PLAYER_COLOR);
 			j++;
 		}
 		i++;
@@ -74,8 +75,8 @@ void	draw_minimap_cell(t_game *game, t_minimap *minimap)
 			color = 0xd13f3f;
 		else if (game->data->square_map[minimap->map_y][minimap->map_x] == 'd')
 			color = 0x6ad863;
-		else if (ft_strchr("V \n", \
-			game->data->square_map[minimap->map_y][minimap->map_x]))
+		else if (ft_strchr("V \n",
+				game->data->square_map[minimap->map_y][minimap->map_x]))
 			color = 0x404040;
 		else
 			color = 0x202020;
