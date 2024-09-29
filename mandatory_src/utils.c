@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sait-alo <sait-alo@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: moel-gha <moel-gha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/29 15:43:52 by sait-alo          #+#    #+#             */
-/*   Updated: 2024/09/29 18:32:54 by sait-alo         ###   ########.fr       */
+/*   Updated: 2024/09/29 20:55:22 by moel-gha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ void	put_pixels(t_image *data, int x, int y, int color)
 		*(unsigned int *)dst = color;
 	}
 }
-
 
 int	key_release(int key, t_game *game)
 {

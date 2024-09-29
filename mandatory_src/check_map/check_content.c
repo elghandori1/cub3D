@@ -6,7 +6,7 @@
 /*   By: moel-gha <moel-gha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/29 14:20:00 by moel-gha          #+#    #+#             */
-/*   Updated: 2024/09/29 14:20:01 by moel-gha         ###   ########.fr       */
+/*   Updated: 2024/09/29 20:40:00 by moel-gha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	valid_content(t_game *cub3d)
 		{
 			if (ft_search(cub3d->data->content[i][0], " ")
 				&& !ft_strchr(cub3d->data->content[i], '1'))
-				ft_error(cub3d, "Error: bad character in content of file\n");
+				ft_error(cub3d, "bad character in content of file\n");
 			else
 				break ;
 		}
@@ -33,7 +33,7 @@ void	valid_content(t_game *cub3d)
 			&& ft_strncmp(cub3d->data->content[i], "NO", 2)
 			&& ft_strncmp(cub3d->data->content[i], "EA", 2)
 			&& ft_strncmp(cub3d->data->content[i], "SO", 2))
-			ft_error(cub3d, "Error: bad character in content of file\n");
+			ft_error(cub3d, "bad character in content of file\n");
 	}
 }
 
@@ -50,8 +50,8 @@ void	check_content(t_game *cub3d)
 		get_square_map(cub3d);
 		check_player(cub3d);
 		if (!check_walls(cub3d))
-			ft_error(cub3d, "Error: Map borders are invalid!\n");
+			ft_error(cub3d, "Map borders are invalid!\n");
 	}
 	else
-		ft_error(cub3d, "Error: The map must be the last!\n");
+		ft_error(cub3d, "The map must be the last!\n");
 }

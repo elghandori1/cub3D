@@ -6,7 +6,7 @@
 /*   By: moel-gha <moel-gha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/29 14:20:25 by moel-gha          #+#    #+#             */
-/*   Updated: 2024/09/29 14:20:26 by moel-gha         ###   ########.fr       */
+/*   Updated: 2024/09/29 20:42:39 by moel-gha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	fill_content_data(char *map_file, t_game *cub3d)
 	i = 0;
 	fd = open(map_file, O_RDONLY);
 	if (fd == -1)
-		(perror("Error opening file"), exit(EXIT_FAILURE));
+		(perror("Error\nopening file"), exit(EXIT_FAILURE));
 	rows = rows_nbr(fd);
 	close(fd);
 	fd = open(map_file, O_RDONLY);

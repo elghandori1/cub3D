@@ -6,7 +6,7 @@
 /*   By: moel-gha <moel-gha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/29 14:43:47 by moel-gha          #+#    #+#             */
-/*   Updated: 2024/09/29 14:43:48 by moel-gha         ###   ########.fr       */
+/*   Updated: 2024/09/29 20:52:47 by moel-gha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	check_map_height(t_game *cub3d)
 	len = cub3d->data->height - 1;
 	if (len == 0)
 	{
-		ft_error(cub3d, "Error: Map borders are invalid!\n");
+		ft_error(cub3d, "Map borders are invalid!\n");
 	}
 }
 

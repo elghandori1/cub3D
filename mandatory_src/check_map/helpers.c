@@ -6,7 +6,7 @@
 /*   By: moel-gha <moel-gha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/29 14:20:47 by moel-gha          #+#    #+#             */
-/*   Updated: 2024/09/29 14:20:48 by moel-gha         ###   ########.fr       */
+/*   Updated: 2024/09/29 20:39:04 by moel-gha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void	ft_free(char **arr)
 
 void	ft_error(t_game *cub3d, char *message)
 {
+	ft_putstr_fd("Error\n", 2);
 	ft_putstr_fd(message, 2);
 	turnoff(cub3d);
 }

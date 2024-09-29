@@ -6,7 +6,7 @@
 /*   By: moel-gha <moel-gha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/29 14:19:54 by moel-gha          #+#    #+#             */
-/*   Updated: 2024/09/29 14:19:55 by moel-gha         ###   ########.fr       */
+/*   Updated: 2024/09/29 20:41:34 by moel-gha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,13 @@ void	check_top_border(t_game *cub3d)
 	idx = 0;
 	if (!check_row(cub3d->data->map[0]))
 	{
-		ft_error(cub3d, "Error: Map borders are invalid!\n");
+		ft_error(cub3d, "Map borders are invalid!\n");
 	}
 	while (cub3d->data->map[0][idx])
 	{
 		if (ft_search(cub3d->data->map[0][idx], "ENSW"))
 		{
-			ft_error(cub3d, "Error: Map borders are invalid!\n");
+			ft_error(cub3d, "Map borders are invalid!\n");
 		}
 		idx++;
 	}
@@ -38,13 +38,13 @@ void	check_bottom_border(t_game *cub3d)
 	idx = 0;
 	if (!check_row(cub3d->data->map[len]))
 	{
-		ft_error(cub3d, "Error: Map borders are invalid!\n");
+		ft_error(cub3d, "Map borders are invalid!\n");
 	}
 	while (cub3d->data->map[len][idx])
 	{
 		if (ft_search(cub3d->data->map[len][idx], "ENSW"))
 		{
-			ft_error(cub3d, "Error: Map borders are invalid!\n");
+			ft_error(cub3d, "Map borders are invalid!\n");
 		}
 		idx++;
 	}
@@ -74,7 +74,7 @@ void	check_left_right_borders(t_game *cub3d)
 		if (cub3d->data->map[i][start] != '1'
 			|| cub3d->data->map[i][end] != '1')
 		{
-			ft_error(cub3d, "Error: Map borders are invalid!\n");
+			ft_error(cub3d, "Map borders are invalid!\n");
 		}
 		i++;
 	}

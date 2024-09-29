@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sait-alo <sait-alo@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: moel-gha <moel-gha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/29 15:01:58 by sait-alo          #+#    #+#             */
-/*   Updated: 2024/09/29 18:45:36 by sait-alo         ###   ########.fr       */
+/*   Updated: 2024/09/29 20:49:01 by moel-gha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@
 # define SHOOT_BOARD_PATH	"./resources/shot-board.xpm"
 
 // Errors
-# define USAGE "Usage: ./cub3d_bonus maps/*.cub\n"
+# define USAGE "Error\nUsage: ./cub3d_bonus maps/*.cub\n"
 
 typedef struct s_minimap
 {
