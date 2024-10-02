@@ -1,20 +1,13 @@
 
-NO      ./resources/wall3.xpm
+NO ./resources/wall3.xpm
 WE      ./resources/wall1.xpm
-SO      ./resources/wall2.xpm
-
-EA      ./resources/wall4.xpm
+            EA      resources/wall4.xpm
+SO      resources/wall2.xpm
 
 C       20,20,20
 F       105,105,105
 
-111111111111
-100000000001
-100000000001
-100000000001
-100001000001
-100000100001
-100000000001
-1N0000000001
-100000000001
-111111111111
+
+ 1
+1N1
+ 1

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moel-gha <moel-gha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sait-alo <sait-alo@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/29 15:20:41 by sait-alo          #+#    #+#             */
-/*   Updated: 2024/09/29 20:35:12 by moel-gha         ###   ########.fr       */
+/*   Updated: 2024/10/01 14:17:24 by sait-alo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@
 # define WIDTH  1000
 # define HEIGHT 1000
 # define SIZE 64
-# define MOVE_SPEED 2
-# define ROTATION_SPEED 0.02
+# define MOVE_SPEED 1.5
+# define ROTATION_SPEED 0.01
 
 # define PI 	3.14159265358979323846
 # define PI_2	1.57079632679489661923
@@ -46,7 +46,7 @@
 # define FOV_RD 1.04719755119
 
 # define WALL_BUFFER 0.1
-# define DISTANCE_PROJ_PLANE 1108.51251686 // ((WIDTH / 2) / tan(FOV_RD / 2))
+# define DISTANCE_PROJ_PLANE 866.025403791 // ((WIDTH / 2) / tan(FOV_RD / 2))
 # define USAGE "Error\nUsage: ./cub3d maps/*.cub\n"
 
 typedef struct s_color
@@ -164,44 +164,33 @@ enum
 };
 
 /*	init	*/
-
 void	initialize_window(t_game *game);
 void	initialize_textures(t_game *game);
 void	initialize_frame_buffer(t_game *game);
+t_image	*load_texture(t_game *game, char *path);
 
 /* 		Raycasting	*/
-
 int		raycasting(t_game *game, t_ray *rays);
-int		key_release(int key, t_game *game);
 double	normalize_angle(double angle);
-void	move_player(t_game *game);
-int		key_release(int key, t_game *game);
+void	set_ray_direction(t_ray *ray, t_point *stp);
+int		wall_hit(double x, double y, t_game *g);
 
 /*		Rendring		*/
 void	render_wall_strip(t_game *g, t_ray ray);
-void	set_ray_direction(t_ray *ray, t_point *stp);
-void	put_pixels(t_image *data, int x, int y, int color);
-t_image	*load_texture(t_game *game, char *path);
 int		get_color(t_color color);
-int		wall_hit(double x, double y, t_game *g);
+void	put_pixels(t_image *data, int x, int y, int color);
 
 /*		hooks	*/
 void	capture_hooks(t_game *game);
-int		key_press(int keycode, t_game *game);
-
-void	free_textures(t_data *map);
+void	move_player(t_game *game);
 
 void	get_square_map(t_game *cub3d);
 void	map_borders(t_game *cub3d);
 int		check_row(char *row);
 void	check_map_height(t_game *cub3d);
-
-int		quit_game(t_game *game);
 void	ft_error(t_game *game, char *message);
 void	free_map(t_data *map);
-void	shutdown(t_game *cub3d);
 int		turnoff(t_game *game);
-void	ft_free(char	**arr);
 int		ft_search(char c, char *set);
 int		has_cub_extension(const char *f_name);
 int		check_empty(char *f_name);

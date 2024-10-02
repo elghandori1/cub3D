@@ -6,7 +6,7 @@
 /*   By: sait-alo <sait-alo@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/29 15:17:13 by sait-alo          #+#    #+#             */
-/*   Updated: 2024/09/29 15:59:33 by sait-alo         ###   ########.fr       */
+/*   Updated: 2024/10/01 10:55:01 by sait-alo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,4 +86,9 @@ void	play_sounds(t_game *game)
 		cs_play_sound(game->audio.door_sound[1], game->audio.door_params);
 		game->door_sound_played = 1;
 	}
+}
+
+double	get_distance(double x1, double y1, double x2, double y2)
+{
+	return (sqrt(pow(x1 - x2, 2) + pow(y1 - y2, 2)));
 }

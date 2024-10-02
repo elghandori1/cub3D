@@ -6,7 +6,7 @@
 /*   By: sait-alo <sait-alo@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/29 12:00:38 by sait-alo          #+#    #+#             */
-/*   Updated: 2024/09/29 15:57:37 by sait-alo         ###   ########.fr       */
+/*   Updated: 2024/10/01 12:10:53 by sait-alo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ void	get_hit_position(t_player *p, int *hit_x, int *hit_y)
 	int	px1;
 	int	px2;
 
-	px1 = 1 - 2 * !p->ray.facing_up;
-	px2 = 1 - 2 * p->ray.facing_right;
+	px1 = p->ray.facing_up;
+	px2 = !p->ray.facing_right;
 	if (p->ray.was_hit_vertical)
 	{
 		*hit_x = (int)((p->ray.wall_hit.x - px2) / SIZE);

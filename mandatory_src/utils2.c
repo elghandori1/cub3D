@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moel-gha <moel-gha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sait-alo <sait-alo@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/29 15:28:40 by sait-alo          #+#    #+#             */
-/*   Updated: 2024/09/29 20:41:02 by moel-gha         ###   ########.fr       */
+/*   Updated: 2024/10/01 13:15:04 by sait-alo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,8 +76,8 @@ void	initialize_frame_buffer(t_game *game)
 
 int	wall_hit(double x, double y, t_game *g)
 {
-	if (x >= 0 && x <= g->data->width * SIZE \
-		&& y >= 0 && y <= g->data->height * SIZE)
+	if (x > 0 && x < g->data->width * SIZE \
+		&& y > 0 && y < g->data->height * SIZE)
 	{
 		if (g->data->square_map[(int)(y / SIZE)][(int)(x / SIZE)] != '1')
 			return (1);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moel-gha <moel-gha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sait-alo <sait-alo@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/29 15:01:58 by sait-alo          #+#    #+#             */
-/*   Updated: 2024/09/29 20:49:01 by moel-gha         ###   ########.fr       */
+/*   Updated: 2024/10/01 14:28:57 by sait-alo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@
 # include "../include/gc.h"
 
 # define SIZE 	64
-# define WIDTH  1200 // 600
-# define HEIGHT 700 // 350
+# define WIDTH  1280
+# define HEIGHT 720
 # define MOVE_SPEED 2
 # define MOUSE_SENSITIVITY 0.0004
 
@@ -48,7 +48,7 @@
 # define DOWN 	0xff54
 # define LCTRL 	0xffe3
 
-# define DISTANCE_PROJ_PLANE 1108.51251686 // ((WIDTH / 2) / tan(FOV_RD / 2))
+# define DISTANCE_PROJ_PLANE 1108.51251686
 # define MINIMAP_X_OFFSET 20
 # define PLAYER_SIZE 0.4
 # define PLAYER_COLOR 0xFF0000
@@ -59,7 +59,7 @@
 # define MINIMAP_SIZE 15
 # define SHOOT_BOARD_PATH	"./resources/shot-board.xpm"
 
-// Errors
+/* Errors */
 # define USAGE "Error\nUsage: ./cub3d_bonus maps/*.cub\n"
 
 typedef struct s_minimap
@@ -211,6 +211,7 @@ typedef struct s_game
 	bool		door_sound_played;
 	int			door_open;
 	int			screen_center;
+	bool		key_pressed;
 	t_ray		ray[WIDTH];
 }				t_game;
 
@@ -229,10 +230,8 @@ int		raycasting(t_game *game, t_ray *rays);
 void	cast_ray(t_game *g, t_ray *ray);
 int		wall_hit(double x, double y, t_game *g, t_ray *ray);
 double	normalize_angle(double angle);
-void	set_ray_hit_vertical(t_ray *ray, t_point hit, \
-		double distance, double player_x);
-void	set_ray_hit_horizontal(t_ray *ray, t_point hit, \
-			double distance, double player_y);
+double	get_distance(double x1, double y1, double x2, double y2);
+
 /*		Rendring		*/
 void	render_wall_strip(t_game *g, t_ray ray);
 void	render_map(t_game *game);
@@ -264,7 +263,6 @@ void	play_sounds(t_game *game);
 int		get_color(t_color color);
 void	ft_error(t_game *game, char *message);
 int		shutdown2(t_game *game);
-void	ft_free(char	**arr);
 int		ft_search(char c, char *set);
 int		has_cub_extension(const char *f_name);
 int		check_empty(char *f_name);

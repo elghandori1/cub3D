@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moel-gha <moel-gha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sait-alo <sait-alo@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/29 15:43:52 by sait-alo          #+#    #+#             */
-/*   Updated: 2024/09/29 20:55:22 by moel-gha         ###   ########.fr       */
+/*   Updated: 2024/10/01 12:12:39 by sait-alo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,21 +46,4 @@ void	put_pixels(t_image *data, int x, int y, int color)
 		dst = data->addr + (y * data->line_length + x * (data->bpp / 8));
 		*(unsigned int *)dst = color;
 	}
-}
-
-int	key_release(int key, t_game *game)
-{
-	if (key == W)
-		game->data->player.keys.up = 0;
-	if (key == S)
-		game->data->player.keys.down = 0;
-	if (key == A)
-		game->data->player.keys.left = 0;
-	if (key == D)
-		game->data->player.keys.right = 0;
-	if (key == LEFT)
-		game->data->player.keys.rot_left = 0;
-	if (key == RIGHT)
-		game->data->player.keys.rot_right = 0;
-	return (0);
 }
